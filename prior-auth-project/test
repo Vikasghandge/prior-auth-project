@@ -1,6 +1,27 @@
-doctor_note = """
-    Patient: 34M presenting with unusual progressive muscle weakness, 
-    elevated creatine kinase, and family history suggestive of a possible 
-    inherited muscular dystrophy. Diagnosis not yet confirmed by genetic testing.
-    Neurologist requests specialist consultation and further diagnostic workup.
-    """
+POLICIES = [
+    {
+        "id": "POL-001",
+        "title": "Total Knee Replacement",
+        "text": "Total knee replacement is medically necessary when severe osteoarthritis is documented, conservative therapy (NSAIDs, physiotherapy, or injections) has failed for at least 3 months, and imaging confirms advanced joint degeneration."
+    },
+    {
+        "id": "POL-002",
+        "title": "Cardiac Catheterization",
+        "text": "Cardiac catheterization is medically necessary when a patient presents with chest pain, abnormal stress test results, and at least one major cardiac risk factor such as diabetes, hypertension, or family history of coronary artery disease."
+    },
+    {
+        "id": "POL-003",
+        "title": "MRI for Lower Back Pain",
+        "text": "MRI imaging for lower back pain is medically necessary only after 6 weeks of failed conservative treatment including physical therapy and pain management, unless red flag symptoms such as loss of bladder control or progressive neurological deficit are present."
+    },
+    {
+        "id": "POL-004",
+        "title": "Bariatric Surgery",
+        "text": "Bariatric surgery is medically necessary for patients with a BMI over 40, or BMI over 35 with at least one obesity-related comorbidity such as type 2 diabetes or hypertension, and documented failed attempts at supervised weight loss for at least 6 months."
+    },
+    {
+        "id": "POL-005",
+        "title": "Specialist Referral for Rare Neuromuscular Disorders",
+        "text": "Specialist neurology referral and genetic testing for suspected inherited neuromuscular disorders is medically necessary when there is progressive muscle weakness, elevated creatine kinase levels, and a relevant family history, even without a confirmed diagnosis."
+    },
+]
