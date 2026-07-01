@@ -1,5 +1,19 @@
+import os
+import json
+from dotenv import load_dotenv
+from openai import AzureOpenAI
 from pydantic import BaseModel, Field
 from typing import List
+
+load_dotenv()
+
+client = AzureOpenAI(
+    azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
+    api_key=os.getenv("AZURE_OPENAI_API_KEY"),
+    api_version=os.getenv("AZURE_OPENAI_API_VERSION"),
+)
+deployment = os.getenv("AZURE_OPENAI_DEPLOYMENT")
+
 
 class ExtractedCase(BaseModel):
     age: int = Field(description="Patient age in years")
@@ -9,25 +23,50 @@ class ExtractedCase(BaseModel):
     imaging_evidence: str = Field(description="What imaging (X-ray, MRI etc.) showed")
     requested_procedure: str = Field(description="The procedure the doctor is requesting authorization for")
 
-# Test with GOOD data — should work fine
-good_data = ExtractedCase(
-    age=64,
-    sex="F",
-    diagnosis="severe right knee osteoarthritis",
-    failed_treatments=["NSAIDs", "physiotherapy", "steroid injection"],
-    imaging_evidence="X-ray shows advanced osteoarthritis",
-    requested_procedure="total knee replacement"
-)
-print("GOOD DATA WORKED:")
-print(good_data.model_dump_json(indent=2))
 
-# Test with BAD data — should throw an error on purpose
-print("\nNow testing BAD data (age as text) — this SHOULD fail:")
-bad_data = ExtractedCase(
-    age="sixty-four",  # wrong type on purpose
-    sex="F",
-    diagnosis="severe right knee osteoarthritis",
-    failed_treatments=["NSAIDs"],
-    imaging_evidence="X-ray shows osteoarthritis",
-    requested_procedure="total knee replacement"
-)
+def run_extractor(doctor_note: str) -> ExtractedCase:
+    prompt = f"""
+Extract structured information from this doctor's note.
+
+DOCTOR NOTE:
+{doctor_note}
+
+Respond ONLY with valid JSON matching exactly this structure, no extra text, no markdown:
+{{
+  "age": <number>,
+  "sex": "<M or F>",
+  "diagnosis": "<text>",
+  "failed_treatments": ["<text>", "<text>"],
+  "imaging_evidence": "<text>",
+  "requested_procedure": "<text>"
+}}
+"""
+
+    response = client.chat.completions.create(
+        model=deployment,
+        messages=[{"role": "user", "content": prompt}],
+        temperature=0,
+    )
+
+    raw_text = response.choices[0].message.content.strip()
+
+    # Remove markdown fences if the model added them anyway
+    if raw_text.startswith("```"):
+        raw_text = raw_text.strip("`")
+        raw_text = raw_text.replace("json", "", 1).strip()
+
+    data = json.loads(raw_text)          # turn AI's text into a Python dict
+    validated = ExtractedCase(**data)    # Pydantic checks it matches our schema
+    return validated
+
+
+if __name__ == "__main__":
+    doctor_note = """
+    Patient: 64F with severe right knee pain for 18 months.
+    X-ray shows advanced osteoarthritis. Failed NSAIDs, physiotherapy, and intra-articular steroid injection.
+    Orthopedic surgeon recommends total knee replacement.
+    """
+
+    result = run_extractor(doctor_note)
+    print("AGENT 1 OUTPUT (validated by Pydantic):")
+    print(result.model_dump_json(indent=2))
