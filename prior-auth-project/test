@@ -1,27 +1,39 @@
-POLICIES = [
-    {
-        "id": "POL-001",
-        "title": "Total Knee Replacement",
-        "text": "Total knee replacement is medically necessary when severe osteoarthritis is documented, conservative therapy (NSAIDs, physiotherapy, or injections) has failed for at least 3 months, and imaging confirms advanced joint degeneration."
-    },
-    {
-        "id": "POL-002",
-        "title": "Cardiac Catheterization",
-        "text": "Cardiac catheterization is medically necessary when a patient presents with chest pain, abnormal stress test results, and at least one major cardiac risk factor such as diabetes, hypertension, or family history of coronary artery disease."
-    },
-    {
-        "id": "POL-003",
-        "title": "MRI for Lower Back Pain",
-        "text": "MRI imaging for lower back pain is medically necessary only after 6 weeks of failed conservative treatment including physical therapy and pain management, unless red flag symptoms such as loss of bladder control or progressive neurological deficit are present."
-    },
-    {
-        "id": "POL-004",
-        "title": "Bariatric Surgery",
-        "text": "Bariatric surgery is medically necessary for patients with a BMI over 40, or BMI over 35 with at least one obesity-related comorbidity such as type 2 diabetes or hypertension, and documented failed attempts at supervised weight loss for at least 6 months."
-    },
-    {
-        "id": "POL-005",
-        "title": "Specialist Referral for Rare Neuromuscular Disorders",
-        "text": "Specialist neurology referral and genetic testing for suspected inherited neuromuscular disorders is medically necessary when there is progressive muscle weakness, elevated creatine kinase levels, and a relevant family history, even without a confirmed diagnosis."
-    },
-]
+import os
+import chromadb
+from chromadb.utils import embedding_functions
+from dotenv import load_dotenv
+from policies import POLICIES
+
+load_dotenv()
+
+# Tell ChromaDB to use YOUR Azure OpenAI embedding deployment
+azure_ef = embedding_functions.OpenAIEmbeddingFunction(
+    api_key=os.getenv("AZURE_OPENAI_API_KEY"),
+    api_base=os.getenv("AZURE_OPENAI_ENDPOINT"),
+    api_type="azure",
+    api_version=os.getenv("AZURE_OPENAI_API_VERSION"),
+    model_name=os.getenv("AZURE_OPENAI_EMBEDDING_DEPLOYMENT"),
+)
+
+# Create a local database folder called "chroma_db"
+chroma_client = chromadb.PersistentClient(path="./chroma_db")
+
+# Delete old collection if it exists (so we can rebuild cleanly each time)
+try:
+    chroma_client.delete_collection("insurer_policies")
+except Exception:
+    pass
+
+collection = chroma_client.create_collection(
+    name="insurer_policies",
+    embedding_function=azure_ef,
+)
+
+# Add each policy into the vector database
+collection.add(
+    ids=[p["id"] for p in POLICIES],
+    documents=[p["text"] for p in POLICIES],
+    metadatas=[{"title": p["title"]} for p in POLICIES],
+)
+
+print(f"Indexed {len(POLICIES)} policies into ChromaDB successfully.")
