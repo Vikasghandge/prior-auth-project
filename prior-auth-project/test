@@ -1,31 +1,46 @@
-from presidio_analyzer import AnalyzerEngine
-from presidio_anonymizer import AnonymizerEngine
+from phi_masking import mask_phi
+from agent1_extractor import run_extractor
+from agent2_icd_coder import run_icd_coder, check_confidence_gate
+from agent3_policy_rag import run_policy_rag
+from agent4_form_filler import run_form_filler
 
-analyzer = AnalyzerEngine()
-anonymizer = AnonymizerEngine()
 
+def run_pipeline(doctor_note: str):
+    print("STEP 0: PHI MASKING")
+    masked_note = mask_phi(doctor_note)
+    print(masked_note)
 
-def mask_phi(text: str) -> str:
-    # STEP A: find PHI in the text (names, emails, phone numbers, locations, etc.)
-    results = analyzer.analyze(text=text, language="en")
+    case = run_extractor(masked_note)
+    print("\nAGENT 1 OUTPUT:")
+    print(case.model_dump_json(indent=2))
 
-    # STEP B: replace each found item with a placeholder like <PERSON>, <PHONE_NUMBER>
-    anonymized = anonymizer.anonymize(text=text, analyzer_results=results)
-    return anonymized.text
+    icd_result = run_icd_coder(case)
+    print("\nAGENT 2 OUTPUT:")
+    print(icd_result.model_dump_json(indent=2))
+
+    gate_status = check_confidence_gate(icd_result)
+    print(f"\nGATE STATUS: {gate_status}")
+
+    if gate_status == "SUSPENDED_FOR_HUMAN_REVIEW":
+        print("\nWorkflow suspended — case sent to human reviewer. Stopping here.")
+        return None
+
+    policy_result = run_policy_rag(case, icd_result)
+    print("\nAGENT 3 OUTPUT:")
+    print(policy_result.model_dump_json(indent=2))
+
+    final_form = run_form_filler(case, icd_result, policy_result)
+    print("\nFINAL PRIOR-AUTH FORM:")
+    print(final_form.model_dump_json(indent=2))
+    return final_form
 
 
 if __name__ == "__main__":
-    sample_note = """
+    doctor_note = """
     Patient: John Smith, 64F, residing at 221 Baker Street, Springfield.
     Contact: john.smith@email.com, phone 555-123-4567.
     Presenting with severe right knee pain for 18 months.
     X-ray shows advanced osteoarthritis. Failed NSAIDs, physiotherapy, and intra-articular steroid injection.
     Orthopedic surgeon recommends total knee replacement.
     """
-
-    masked = mask_phi(sample_note)
-
-    print("ORIGINAL NOTE:")
-    print(sample_note)
-    print("\nMASKED NOTE (safe to send to agents):")
-    print(masked)
+    run_pipeline(doctor_note)
