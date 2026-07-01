@@ -1,9 +1,11 @@
+## 2
 import os
 import json
 from dotenv import load_dotenv
 from openai import AzureOpenAI
 from pydantic import BaseModel, Field
-from typing import List
+
+from agent1_extractor import ExtractedCase, run_extractor
 
 load_dotenv()
 
@@ -15,30 +17,26 @@ client = AzureOpenAI(
 deployment = os.getenv("AZURE_OPENAI_DEPLOYMENT")
 
 
-class ExtractedCase(BaseModel):
-    age: int = Field(description="Patient age in years")
-    sex: str = Field(description="Patient sex, e.g. 'M' or 'F'")
-    diagnosis: str = Field(description="Primary diagnosis described in the note")
-    failed_treatments: List[str] = Field(description="List of treatments already tried and failed")
-    imaging_evidence: str = Field(description="What imaging (X-ray, MRI etc.) showed")
-    requested_procedure: str = Field(description="The procedure the doctor is requesting authorization for")
+class ICDResult(BaseModel):
+    icd10_code: str = Field(description="The most likely ICD-10 code")
+    icd10_description: str = Field(description="Official description of that ICD-10 code")
+    confidence: float = Field(description="Confidence score between 0 and 1")
+    is_rare_disease: bool = Field(description="True if this diagnosis is considered a rare disease")
 
 
-def run_extractor(doctor_note: str) -> ExtractedCase:
+def run_icd_coder(case: ExtractedCase) -> ICDResult:
     prompt = f"""
-Extract structured information from this doctor's note.
+You are a medical coding expert. Based on this diagnosis, assign the most accurate ICD-10 code.
 
-DOCTOR NOTE:
-{doctor_note}
+DIAGNOSIS: {case.diagnosis}
+IMAGING EVIDENCE: {case.imaging_evidence}
 
-Respond ONLY with valid JSON matching exactly this structure, no extra text, no markdown:
+Respond ONLY with valid JSON, no extra text, no markdown:
 {{
-  "age": <number>,
-  "sex": "<M or F>",
-  "diagnosis": "<text>",
-  "failed_treatments": ["<text>", "<text>"],
-  "imaging_evidence": "<text>",
-  "requested_procedure": "<text>"
+  "icd10_code": "<code>",
+  "icd10_description": "<official description>",
+  "confidence": <number between 0 and 1>,
+  "is_rare_disease": <true or false>
 }}
 """
 
@@ -49,15 +47,20 @@ Respond ONLY with valid JSON matching exactly this structure, no extra text, no 
     )
 
     raw_text = response.choices[0].message.content.strip()
-
-    # Remove markdown fences if the model added them anyway
     if raw_text.startswith("```"):
         raw_text = raw_text.strip("`")
         raw_text = raw_text.replace("json", "", 1).strip()
 
-    data = json.loads(raw_text)          # turn AI's text into a Python dict
-    validated = ExtractedCase(**data)    # Pydantic checks it matches our schema
+    data = json.loads(raw_text)
+    validated = ICDResult(**data)
     return validated
+
+
+def check_confidence_gate(icd_result: ICDResult) -> str:
+    """This is the special rule from the project brief."""
+    if icd_result.is_rare_disease and icd_result.confidence < 0.90:
+        return "SUSPENDED_FOR_HUMAN_REVIEW"
+    return "CONTINUE"
 
 
 if __name__ == "__main__":
@@ -67,6 +70,16 @@ if __name__ == "__main__":
     Orthopedic surgeon recommends total knee replacement.
     """
 
-    result = run_extractor(doctor_note)
-    print("AGENT 1 OUTPUT (validated by Pydantic):")
-    print(result.model_dump_json(indent=2))
+    # Run Agent 1 first
+    case = run_extractor(doctor_note)
+    print("AGENT 1 OUTPUT:")
+    print(case.model_dump_json(indent=2))
+
+    # Then Agent 2
+    icd_result = run_icd_coder(case)
+    print("\nAGENT 2 OUTPUT:")
+    print(icd_result.model_dump_json(indent=2))
+
+    # Confidence gate check
+    gate_status = check_confidence_gate(icd_result)
+    print(f"\nGATE STATUS: {gate_status}")
