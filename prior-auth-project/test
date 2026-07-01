@@ -1,12 +1,24 @@
 import os
+import json
 import chromadb
 from chromadb.utils import embedding_functions
 from dotenv import load_dotenv
-from policies import POLICIES
+from openai import AzureOpenAI
+from pydantic import BaseModel, Field
+from typing import List
+
+from agent1_extractor import ExtractedCase, run_extractor
+from agent2_icd_coder import ICDResult, run_icd_coder, check_confidence_gate
 
 load_dotenv()
 
-# Tell ChromaDB to use YOUR Azure OpenAI embedding deployment
+client = AzureOpenAI(
+    azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
+    api_key=os.getenv("AZURE_OPENAI_API_KEY"),
+    api_version=os.getenv("AZURE_OPENAI_API_VERSION"),
+)
+deployment = os.getenv("AZURE_OPENAI_DEPLOYMENT")
+
 azure_ef = embedding_functions.OpenAIEmbeddingFunction(
     api_key=os.getenv("AZURE_OPENAI_API_KEY"),
     api_base=os.getenv("AZURE_OPENAI_ENDPOINT"),
@@ -15,25 +27,89 @@ azure_ef = embedding_functions.OpenAIEmbeddingFunction(
     model_name=os.getenv("AZURE_OPENAI_EMBEDDING_DEPLOYMENT"),
 )
 
-# Create a local database folder called "chroma_db"
 chroma_client = chromadb.PersistentClient(path="./chroma_db")
+collection = chroma_client.get_collection(name="insurer_policies", embedding_function=azure_ef)
 
-# Delete old collection if it exists (so we can rebuild cleanly each time)
-try:
-    chroma_client.delete_collection("insurer_policies")
-except Exception:
-    pass
 
-collection = chroma_client.create_collection(
-    name="insurer_policies",
-    embedding_function=azure_ef,
-)
+class PolicyCheckResult(BaseModel):
+    policy_match: bool = Field(description="True if the case meets policy criteria")
+    matched_criteria: List[str] = Field(description="List of criteria that were met")
+    missing_items: List[str] = Field(description="List of criteria that were NOT met or unclear")
+    confidence: float = Field(description="Confidence score between 0 and 1")
 
-# Add each policy into the vector database
-collection.add(
-    ids=[p["id"] for p in POLICIES],
-    documents=[p["text"] for p in POLICIES],
-    metadatas=[{"title": p["title"]} for p in POLICIES],
-)
 
-print(f"Indexed {len(POLICIES)} policies into ChromaDB successfully.")
+def run_policy_rag(case: ExtractedCase, icd_result: ICDResult) -> PolicyCheckResult:
+    # STEP A: RETRIEVE — search ChromaDB for the most relevant policy
+    query_text = f"{case.diagnosis} {case.requested_procedure}"
+    results = collection.query(query_texts=[query_text], n_results=2)
+
+    retrieved_policies = results["documents"][0]
+    retrieved_titles = [meta["title"] for meta in results["metadatas"][0]]
+
+    policy_context = "\n\n".join(
+        f"Policy: {title}\n{text}"
+        for title, text in zip(retrieved_titles, retrieved_policies)
+    )
+
+    # STEP B: REASON — ask the LLM to check the case against the RETRIEVED policy text
+    prompt = f"""
+You are a prior authorization policy reviewer. Compare the patient case below against the insurer policy text retrieved.
+
+PATIENT CASE:
+Diagnosis: {case.diagnosis}
+Failed treatments: {case.failed_treatments}
+Imaging evidence: {case.imaging_evidence}
+Requested procedure: {case.requested_procedure}
+ICD-10 code: {icd_result.icd10_code}
+
+RETRIEVED INSURER POLICY TEXT:
+{policy_context}
+
+Respond ONLY with valid JSON, no extra text, no markdown:
+{{
+  "policy_match": <true or false>,
+  "matched_criteria": ["<text>", "<text>"],
+  "missing_items": ["<text>"],
+  "confidence": <number between 0 and 1>
+}}
+"""
+
+    response = client.chat.completions.create(
+        model=deployment,
+        messages=[{"role": "user", "content": prompt}],
+        temperature=0,
+    )
+
+    raw_text = response.choices[0].message.content.strip()
+    if raw_text.startswith("```"):
+        raw_text = raw_text.strip("`")
+        raw_text = raw_text.replace("json", "", 1).strip()
+
+    data = json.loads(raw_text)
+    return PolicyCheckResult(**data)
+
+
+if __name__ == "__main__":
+    doctor_note = """
+    Patient: 64F with severe right knee pain for 18 months.
+    X-ray shows advanced osteoarthritis. Failed NSAIDs, physiotherapy, and intra-articular steroid injection.
+    Orthopedic surgeon recommends total knee replacement.
+    """
+
+    case = run_extractor(doctor_note)
+    print("AGENT 1 OUTPUT:")
+    print(case.model_dump_json(indent=2))
+
+    icd_result = run_icd_coder(case)
+    print("\nAGENT 2 OUTPUT:")
+    print(icd_result.model_dump_json(indent=2))
+
+    gate_status = check_confidence_gate(icd_result)
+    print(f"\nGATE STATUS: {gate_status}")
+
+    if gate_status == "SUSPENDED_FOR_HUMAN_REVIEW":
+        print("\nWorkflow suspended — case sent to human reviewer. Stopping here.")
+    else:
+        policy_result = run_policy_rag(case, icd_result)
+        print("\nAGENT 3 OUTPUT (Policy RAG):")
+        print(policy_result.model_dump_json(indent=2))
