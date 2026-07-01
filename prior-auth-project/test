@@ -1,0 +1,56 @@
+from pydantic import BaseModel, Field
+from typing import List
+
+class ExtractedCase(BaseModel):
+    age: int = Field(description="Patient age in years")
+    sex: str = Field(description="Patient sex, e.g. 'M' or 'F'")
+    diagnosis: str = Field(description="Primary diagnosis described in the note")
+    failed_treatments: List[str] = Field(description="List of treatments already tried and failed")
+    imaging_evidence: str = Field(description="What imaging (X-ray, MRI etc.) showed")
+    requested_procedure: str = Field(description="The procedure the doctor is requesting authorization for")
+
+
+
+
+
+
+
+
+
+------------------------------
+
+
+
+from pydantic import BaseModel, Field
+from typing import List
+
+class ExtractedCase(BaseModel):
+    age: int = Field(description="Patient age in years")
+    sex: str = Field(description="Patient sex, e.g. 'M' or 'F'")
+    diagnosis: str = Field(description="Primary diagnosis described in the note")
+    failed_treatments: List[str] = Field(description="List of treatments already tried and failed")
+    imaging_evidence: str = Field(description="What imaging (X-ray, MRI etc.) showed")
+    requested_procedure: str = Field(description="The procedure the doctor is requesting authorization for")
+
+# Test with GOOD data — should work fine
+good_data = ExtractedCase(
+    age=64,
+    sex="F",
+    diagnosis="severe right knee osteoarthritis",
+    failed_treatments=["NSAIDs", "physiotherapy", "steroid injection"],
+    imaging_evidence="X-ray shows advanced osteoarthritis",
+    requested_procedure="total knee replacement"
+)
+print("GOOD DATA WORKED:")
+print(good_data.model_dump_json(indent=2))
+
+# Test with BAD data — should throw an error on purpose
+print("\nNow testing BAD data (age as text) — this SHOULD fail:")
+bad_data = ExtractedCase(
+    age="sixty-four",  # wrong type on purpose
+    sex="F",
+    diagnosis="severe right knee osteoarthritis",
+    failed_treatments=["NSAIDs"],
+    imaging_evidence="X-ray shows osteoarthritis",
+    requested_procedure="total knee replacement"
+)
