@@ -17,6 +17,7 @@ dependencies = [
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]
 web = ["fastapi>=0.110", "uvicorn[standard]>=0.29", "python-multipart>=0.0.9"]
+streamlit-ui = ["streamlit>=1.38"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
