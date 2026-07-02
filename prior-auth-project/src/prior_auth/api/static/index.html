@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Prior Authorization &mdash; Multi-Agent Workflow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: {
+          sans: ['Inter', 'ui-sans-serif', 'system-ui'],
+          mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
+        },
+        colors: {
+          brand: {
+            50: '#eef4ff', 100: '#dbe6fe', 200: '#bfd3fe', 300: '#93b4fd',
+            400: '#608bfa', 500: '#3b66f5', 600: '#2547e0', 700: '#1e38b6',
+            800: '#1e3391', 900: '#1e2f73',
+          },
+          ink: {
+            50: '#f7f8fa', 100: '#eef0f4', 200: '#dde1e8', 300: '#c3c9d4',
+            400: '#9aa3b5', 500: '#717c92', 600: '#545e73', 700: '#3f465a',
+            800: '#282d3b', 900: '#171a22',
+          },
+        },
+      },
+    },
+  };
+</script>
+<link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body class="min-h-screen bg-ink-50 text-ink-800 font-sans antialiased">
+
+<header class="border-b border-ink-200 bg-white/90 backdrop-blur sticky top-0 z-30">
+  <div class="mx-auto max-w-[1400px] px-6 py-4 flex items-center justify-between">
+    <div class="flex items-center gap-3">
+      <div class="h-9 w-9 rounded-lg bg-brand-600 text-white flex items-center justify-center font-bold text-sm shadow-sm">PA</div>
+      <div>
+        <h1 class="text-[15px] font-semibold tracking-tight leading-none">Prior Authorization Workflow</h1>
+        <p class="text-xs text-ink-500 mt-0.5">Extractor &rarr; ICD Coder &rarr; Policy RAG &rarr; Form Filler</p>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="inline-flex items-center gap-1.5 rounded-full border border-ink-200 bg-ink-50 px-3 py-1 text-xs font-medium text-ink-600">
+        <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
+        Local demo &middot; synthetic data only
+      </span>
+    </div>
+  </div>
+</header>
+
+<main class="mx-auto max-w-[1400px] px-6 py-8 grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-6">
+
+  <!-- LEFT: input panel -->
+  <section class="lg:sticky lg:top-[88px] h-fit space-y-4">
+    <div class="rounded-xl border border-ink-200 bg-white shadow-sm p-5">
+      <h2 class="text-sm font-semibold text-ink-800 mb-4">Submit a case</h2>
+
+      <label class="block text-xs font-medium text-ink-500 mb-1.5">Sample doctor notes</label>
+      <select id="sampleSelect" class="w-full rounded-lg border border-ink-200 bg-ink-50 px-3 py-2 text-sm mb-4 focus:outline-none focus:ring-2 focus:ring-brand-400">
+        <option value="">Custom note&hellip;</option>
+      </select>
+
+      <label class="block text-xs font-medium text-ink-500 mb-1.5">Specialty</label>
+      <select id="specialtySelect" class="w-full rounded-lg border border-ink-200 bg-ink-50 px-3 py-2 text-sm mb-4 focus:outline-none focus:ring-2 focus:ring-brand-400">
+        <option value="unknown">Unknown</option>
+        <option value="orthopedics">Orthopedics</option>
+        <option value="cardiology">Cardiology</option>
+        <option value="oncology">Oncology</option>
+        <option value="neurology">Neurology</option>
+        <option value="gastroenterology">Gastroenterology</option>
+        <option value="rare_disease">Rare disease</option>
+        <option value="general">General</option>
+      </select>
+
+      <label class="block text-xs font-medium text-ink-500 mb-1.5">Case ID</label>
+      <input id="caseIdInput" type="text" class="w-full rounded-lg border border-ink-200 bg-ink-50 px-3 py-2 text-sm mb-4 font-mono focus:outline-none focus:ring-2 focus:ring-brand-400" />
+
+      <label class="block text-xs font-medium text-ink-500 mb-1.5">Doctor's note</label>
+      <textarea id="noteInput" rows="10" placeholder="Paste or write a doctor's note here&hellip;" class="w-full rounded-lg border border-ink-200 bg-ink-50 px-3 py-2 text-sm font-mono leading-relaxed resize-y focus:outline-none focus:ring-2 focus:ring-brand-400"></textarea>
+
+      <button id="runBtn" class="mt-4 w-full rounded-lg bg-brand-600 hover:bg-brand-700 active:bg-brand-800 text-white text-sm font-semibold py-2.5 shadow-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+        <span id="runBtnLabel">Run workflow</span>
+        <svg id="runSpinner" class="hidden animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+        </svg>
+      </button>
+      <p id="errorMsg" class="hidden mt-3 text-xs text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2"></p>
+    </div>
+
+    <div class="rounded-xl border border-ink-200 bg-white shadow-sm p-5">
+      <h3 class="text-xs font-semibold text-ink-800 mb-2">About this demo</h3>
+      <p class="text-xs text-ink-500 leading-relaxed">
+        Every run executes the real pipeline &mdash; PHI masking, ICD-10 knowledge-graph coding with a
+        rare-disease confidence gate, insurer policy retrieval, and form filling &mdash; against the
+        actual agent code. Nothing here is mocked.
+      </p>
+    </div>
+  </section>
+
+  <!-- RIGHT: results -->
+  <section class="space-y-6">
+
+    <div id="emptyState" class="rounded-xl border border-dashed border-ink-300 bg-white/60 p-16 text-center">
+      <p class="text-sm text-ink-500">Submit a case on the left to see it move through the agent chain.</p>
+    </div>
+
+    <div id="results" class="hidden space-y-6">
+
+      <!-- Status banner -->
+      <div id="statusBanner" class="rounded-xl border p-5 flex items-start gap-4">
+        <div id="statusIcon" class="h-10 w-10 rounded-full flex items-center justify-center shrink-0"></div>
+        <div class="min-w-0">
+          <p id="statusTitle" class="text-sm font-semibold"></p>
+          <p id="statusSubtitle" class="text-xs text-ink-500 mt-0.5"></p>
+        </div>
+        <div class="ml-auto text-right shrink-0">
+          <p class="text-[11px] uppercase tracking-wide text-ink-400 font-medium">Total time</p>
+          <p id="statusDuration" class="text-sm font-mono font-semibold text-ink-700"></p>
+        </div>
+      </div>
+
+      <!-- Pipeline stepper -->
+      <div class="rounded-xl border border-ink-200 bg-white shadow-sm p-5">
+        <h2 class="text-sm font-semibold text-ink-800 mb-5">Agent pipeline</h2>
+        <div id="stepper" class="grid grid-cols-1 sm:grid-cols-4 gap-3"></div>
+        <div id="stepDetails" class="mt-5 space-y-3"></div>
+      </div>
+
+      <!-- PHI boundary -->
+      <div class="rounded-xl border border-ink-200 bg-white shadow-sm p-5">
+        <h2 class="text-sm font-semibold text-ink-800 mb-1">PHI boundary</h2>
+        <p class="text-xs text-ink-500 mb-4">Identifiers stay on the case object and are never forwarded to downstream agents.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="rounded-lg border border-amber-200 bg-amber-50 p-4">
+            <p class="text-[11px] font-semibold uppercase tracking-wide text-amber-700 mb-2">Case identifiers &middot; never forwarded</p>
+            <dl id="identifiersList" class="text-xs font-mono space-y-1 text-amber-900"></dl>
+          </div>
+          <div class="rounded-lg border border-emerald-200 bg-emerald-50 p-4">
+            <p class="text-[11px] font-semibold uppercase tracking-wide text-emerald-700 mb-2">Sent to agents &middot; zero PHI</p>
+            <dl id="maskedSummary" class="text-xs font-mono space-y-1 text-emerald-900"></dl>
+          </div>
+        </div>
+      </div>
+
+      <!-- Final form -->
+      <div id="formCard" class="hidden rounded-xl border border-ink-200 bg-white shadow-sm p-5">
+        <h2 class="text-sm font-semibold text-ink-800 mb-4">Prior-authorization form</h2>
+        <div id="formMeta" class="grid grid-cols-3 gap-4 mb-4 text-xs"></div>
+        <table class="w-full text-xs">
+          <thead>
+            <tr class="text-left text-ink-400 border-b border-ink-200">
+              <th class="py-1.5 font-medium">Field</th>
+              <th class="py-1.5 font-medium">Value</th>
+              <th class="py-1.5 font-medium">Required</th>
+            </tr>
+          </thead>
+          <tbody id="formFields"></tbody>
+        </table>
+      </div>
+
+      <!-- Raw audit trace -->
+      <details class="rounded-xl border border-ink-200 bg-white shadow-sm p-5">
+        <summary class="text-sm font-semibold text-ink-800 cursor-pointer select-none">Raw audit trace (JSON)</summary>
+        <pre id="rawTrace" class="mt-4 text-[11px] font-mono bg-ink-900 text-ink-100 rounded-lg p-4 overflow-auto max-h-[420px]"></pre>
+      </details>
+
+    </div>
+  </section>
+</main>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
