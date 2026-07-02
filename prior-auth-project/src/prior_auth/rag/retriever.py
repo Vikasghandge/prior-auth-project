@@ -21,12 +21,16 @@ def _tokenize(text: str) -> set[str]:
     return set(re.findall(r"[a-z0-9']+", text.lower()))
 
 
+_MIN_MEANINGFUL_MATCH_CHARS = 6
+
+
 def _containment_score(query_lower: str, target_lower: str) -> float:
     """1.0 if `target_lower` appears verbatim in the query (or vice versa) at a word
     boundary; otherwise the longest-common-substring length relative to the *target's*
     length. Normalizing by the target (a short keyword phrase) rather than the combined
     length of both strings keeps long diagnosis narratives from diluting the score, matching
-    the ICD Coder's `_containment_score` (see icd_graph.py)."""
+    the ICD Coder's `_containment_score` (see icd_graph.py) — including the same fix for a
+    short target scoring high on a purely coincidental few-character overlap."""
     if (
         re.search(r"\b" + re.escape(target_lower) + r"\b", query_lower)
         or re.search(r"\b" + re.escape(query_lower) + r"\b", target_lower)
@@ -34,6 +38,8 @@ def _containment_score(query_lower: str, target_lower: str) -> float:
         return 1.0
     matcher = SequenceMatcher(None, query_lower, target_lower)
     match = matcher.find_longest_match(0, len(query_lower), 0, len(target_lower))
+    if match.size < _MIN_MEANINGFUL_MATCH_CHARS:
+        return 0.0
     return match.size / max(1, len(target_lower))
 
 

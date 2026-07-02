@@ -45,6 +45,22 @@ _GENERIC_SHORTCUT_BLOCKLIST = {
     "thyroid", "prostate", "stomach", "bladder", "breast", "ovary",
 }
 
+# A keyword like "left hip" or "right knee" is a *side + body part* locator, not a diagnosis —
+# many different conditions occur in the left hip. It's excluded from the shortcut for the same
+# reason as the blocklist above, but structurally rather than by name: a keyword's diagnostic
+# specificity has to come from the disease/finding word(s), not merely from pairing a laterality
+# word with an anatomy word. (Laterality itself is already handled separately via the dedicated
+# `laterality` field/penalty below — it doesn't need to double as a confidence signal here too.)
+# This is also what closes the loophole where a short 2-word phrase like "left hip" can pass the
+# blocklist AND the doc-count uniqueness check yet still score high by fuzzy coincidence against
+# an unrelated note that merely shares the word "left".
+_LATERALITY_WORDS = {"left", "right", "bilateral"}
+
+
+def _is_bare_laterality_locator(keyword: str) -> bool:
+    words = keyword.lower().split()
+    return len(words) == 2 and words[0] in _LATERALITY_WORDS
+
 
 def _tokenize(text: str) -> set[str]:
     words = re.findall(r"[a-z0-9']+", text.lower())
@@ -63,15 +79,26 @@ def _word_boundary_contains(haystack: str, needle: str) -> bool:
     return re.search(r"\b" + re.escape(needle) + r"\b", haystack) is not None
 
 
+_MIN_MEANINGFUL_MATCH_CHARS = 6
+
+
 def _containment_score(query_lower: str, target_lower: str) -> float:
     """1.0 if `target_lower` (a keyword phrase or description) appears verbatim in the query
     (or vice versa) at a word boundary; otherwise the longest-common-substring length relative
     to the target, which behaves like a "partial ratio" fuzzy match without a rapidfuzz dependency.
+
+    A short target (e.g. an 8-character word like "dementia") can share a purely coincidental
+    substring with unrelated text — "replacement" contains "ement", which also sits inside
+    "dementia" — and score deceptively high purely because the ratio's denominator is small, not
+    because the overlap means anything. Matches shorter than a meaningful floor don't count at
+    all, so a handful of coincidentally shared letters can no longer outscore a real match.
     """
     if _word_boundary_contains(query_lower, target_lower) or _word_boundary_contains(target_lower, query_lower):
         return 1.0
     matcher = SequenceMatcher(None, query_lower, target_lower)
     match = matcher.find_longest_match(0, len(query_lower), 0, len(target_lower))
+    if match.size < _MIN_MEANINGFUL_MATCH_CHARS:
+        return 0.0
     return match.size / max(1, len(target_lower))
 
 
@@ -141,6 +168,7 @@ class ICD10KnowledgeGraph:
                 kw for kw in node["keywords"]
                 if (len(kw.split()) >= 2 or len(kw) >= 8)
                 and kw.lower() not in _GENERIC_SHORTCUT_BLOCKLIST
+                and not _is_bare_laterality_locator(kw)
                 and self._keyword_doc_count[kw.lower()] == 1
             ] + [node["description"]]
             best_fuzzy = 0.0
