@@ -65,60 +65,57 @@ def sample_cases() -> list[dict]:
 _eval_metrics_cache: dict | None = None
 
 
+def _score_case(c: dict) -> dict:
+    """Runs one sample case through the real pipeline and diffs the result against its gold
+    label. `icd_ok`/`policy_ok` require an exact code/policy match — reaching COMPLETED alone
+    isn't "correct", since that status is also reachable with a wrong code underneath."""
+    t0 = time.perf_counter()
+    case, _trace = _workflow.run(
+        c["case_id"], c["note_text"], specialty=c.get("specialty", "unknown"), persist_trace=False
+    )
+    gold = c.get("gold", {})
+    # "Checked" requires the pipeline to have actually reached that stage, not just that gold
+    # data exists — a case correctly suspended at the ICD step never attempted a policy match,
+    # so it shouldn't count as a policy-match failure.
+    return {
+        "status": case.status.value,
+        "duration_ms": (time.perf_counter() - t0) * 1000,
+        "icd_checked": case.icd_result is not None and gold.get("icd10_code") is not None,
+        "icd_ok": bool(case.icd_result) and case.icd_result.icd10_code == gold.get("icd10_code"),
+        "policy_checked": case.policy_result is not None and gold.get("policy_id") is not None,
+        "policy_ok": bool(case.policy_result) and case.policy_result.policy_id == gold.get("policy_id"),
+        "is_approve_variant": gold.get("variant") == "approve",
+    }
+
+
+def _pct(numerator: int, denominator: int) -> float | None:
+    return round(100 * numerator / denominator, 1) if denominator else None
+
+
 @app.get("/api/eval-metrics")
 def eval_metrics() -> dict:
-    """Runs every sample case through the real pipeline once and scores it against its gold
-    label. Computed on first request, then cached in memory for the life of the process."""
+    """Scores every sample case against its gold label. Computed on first request, then cached
+    in memory for the life of the process."""
     global _eval_metrics_cache
     if _eval_metrics_cache is not None:
         return _eval_metrics_cache
 
-    cases = sample_cases_raw()
-    total = len(cases)
-    completed = suspended = errored = 0
-    icd_correct = icd_checked = 0
-    policy_correct = policy_checked = 0
-    approve_total = approve_correct = 0
-    durations: list[float] = []
-
-    for c in cases:
-        t0 = time.perf_counter()
-        case, _trace = _workflow.run(
-            c["case_id"], c["note_text"], specialty=c.get("specialty", "unknown"), persist_trace=False
-        )
-        durations.append((time.perf_counter() - t0) * 1000)
-
-        status = case.status.value
-        if status == "COMPLETED":
-            completed += 1
-        elif status.startswith("SUSPENDED"):
-            suspended += 1
-        else:
-            errored += 1
-
-        gold = c.get("gold", {})
-        if case.icd_result and gold.get("icd10_code"):
-            icd_checked += 1
-            if case.icd_result.icd10_code == gold["icd10_code"]:
-                icd_correct += 1
-        if case.policy_result and gold.get("policy_id"):
-            policy_checked += 1
-            if case.policy_result.policy_id == gold["policy_id"]:
-                policy_correct += 1
-        if gold.get("variant") == "approve":
-            approve_total += 1
-            if status == "COMPLETED":
-                approve_correct += 1
+    scored = [_score_case(c) for c in sample_cases_raw()]
+    icd_checked = [s for s in scored if s["icd_checked"]]
+    policy_checked = [s for s in scored if s["policy_checked"]]
+    approve_cases = [s for s in scored if s["is_approve_variant"]]
 
     _eval_metrics_cache = {
-        "total": total,
-        "completed": completed,
-        "suspended": suspended,
-        "errored": errored,
-        "icd_accuracy": round(100 * icd_correct / icd_checked, 1) if icd_checked else None,
-        "policy_accuracy": round(100 * policy_correct / policy_checked, 1) if policy_checked else None,
-        "approve_accuracy": round(100 * approve_correct / approve_total, 1) if approve_total else None,
-        "avg_latency_ms": round(sum(durations) / len(durations), 1) if durations else None,
+        "total": len(scored),
+        "completed": sum(1 for s in scored if s["status"] == "COMPLETED"),
+        "suspended": sum(1 for s in scored if s["status"].startswith("SUSPENDED")),
+        "errored": sum(1 for s in scored if not s["status"].startswith(("COMPLETED", "SUSPENDED"))),
+        "icd_accuracy": _pct(sum(s["icd_ok"] for s in icd_checked), len(icd_checked)),
+        "policy_accuracy": _pct(sum(s["policy_ok"] for s in policy_checked), len(policy_checked)),
+        "approve_accuracy": _pct(
+            sum(s["status"] == "COMPLETED" and s["icd_ok"] for s in approve_cases), len(approve_cases)
+        ),
+        "avg_latency_ms": round(sum(s["duration_ms"] for s in scored) / len(scored), 1) if scored else None,
     }
     return _eval_metrics_cache
 

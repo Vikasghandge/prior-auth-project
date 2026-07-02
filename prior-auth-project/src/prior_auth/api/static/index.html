@@ -195,7 +195,7 @@
       <div class="info-card">
         <div class="info-icon" style="background:var(--warn-tint);color:#a3610a;"><i data-lucide="scale" class="lucide"></i></div>
         <h4>The AI doesn't guess</h4>
-        <p>If the diagnosis coder isn't at least 90% confident on a rare-disease candidate, the case stops and goes to a human coder &mdash; the flagship safety rule this system is built around. The same principle applies to conflicting details (e.g. left vs. right side) and incomplete policy documentation.</p>
+        <p>Two safety nets, not one: a rare-disease candidate needs 90%+ confidence, and <em>any</em> diagnosis below 70% confidence is sent to a human rather than risk a wrong code &mdash; the second rule is what catches a diagnosis the system simply hasn't seen enough of before. The same don't-guess principle applies to conflicting details (e.g. left vs. right side) and incomplete policy documentation.</p>
       </div>
       <div class="info-card">
         <div class="info-icon" style="background:#fff0e5;color:#c2570a;"><i data-lucide="file-clock" class="lucide"></i></div>

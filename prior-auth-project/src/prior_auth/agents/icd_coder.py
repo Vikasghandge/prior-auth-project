@@ -8,9 +8,12 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from prior_auth.config import RARE_DISEASE_CONFIDENCE_THRESHOLD
 from prior_auth.knowledge_graph.icd_graph import get_graph
-from prior_auth.orchestration.confidence_gate import is_rare_disease_low_confidence
+from prior_auth.orchestration.confidence_gate import (
+    is_generally_low_confidence,
+    is_rare_disease_low_confidence,
+    low_confidence_reason,
+)
 from prior_auth.schemas.common import Laterality
 from prior_auth.schemas.extraction import ExtractedClinicalFacts
 from prior_auth.schemas.handoff import Handoff
@@ -24,7 +27,12 @@ class ICDCoderAgent:
 
     def run(self, facts: ExtractedClinicalFacts, timestamp: datetime) -> Handoff[ICDCodingResult]:
         graph = get_graph()
-        candidates = graph.match(facts.diagnosis, facts.symptoms, laterality=facts.laterality.value, top_k=5)
+        # The requested procedure often carries the only body-part-specific detail (e.g. "total
+        # knee replacement" vs "total hip replacement") when the diagnosis narrative itself is
+        # generic ("degenerative joint disease") — feed it into the match query too, not just the
+        # diagnosis text, or the coder is guessing blind on exactly the cases that matter most.
+        match_query = f"{facts.diagnosis} {facts.requested_procedure}".strip()
+        candidates = graph.match(match_query, facts.symptoms, laterality=facts.laterality.value, top_k=5)
 
         if not candidates:
             return Handoff.failed(self.name, facts.case_id, ["No ICD-10 candidates found in knowledge graph"], timestamp)
@@ -50,15 +58,13 @@ class ICDCoderAgent:
             ),
         )
 
-        if is_rare_disease_low_confidence(result):
+        if is_rare_disease_low_confidence(result) or is_generally_low_confidence(result):
             return Handoff.suspended(
                 self.name,
                 facts.case_id,
                 result,
                 result.confidence,
-                f"Rare disease candidate '{result.code_description}' has coding confidence "
-                f"{result.confidence:.2f}, below the {RARE_DISEASE_CONFIDENCE_THRESHOLD:.2f} gate "
-                f"threshold — suspended for human coding review.",
+                low_confidence_reason(result),
                 timestamp,
             )
 

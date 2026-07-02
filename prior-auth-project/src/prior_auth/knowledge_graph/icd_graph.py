@@ -31,6 +31,20 @@ _HEDGE_PATTERNS = [
 ]
 _HEDGE_DAMPENING = 0.85
 
+# A single word can be long enough (>=8 chars) to pass the "distinctive phrase" length check
+# below while still being medically generic — a descriptor ("degenerative", "bilateral") or a
+# bare organ name ("pancreas", "gallbladder") rather than a diagnosis-specific term. Letting
+# those trigger the verbatim-match confidence shortcut is how a knee note ends up confidently
+# (and wrongly) coded as hip disease, or a benign pancreas mention as pancreatic cancer — so
+# they're excluded from the shortcut regardless of length/uniqueness and fall back to the
+# graduated token-recall + fuzzy score instead.
+_GENERIC_SHORTCUT_BLOCKLIST = {
+    "bilateral", "unilateral", "degenerative", "chronic", "acute", "advanced", "unspecified",
+    "progressive", "recurrent", "severe", "mild", "moderate", "persistent", "intermittent",
+    "pancreas", "gallbladder", "colon", "liver", "kidney", "lung", "brain", "heart", "spleen",
+    "thyroid", "prostate", "stomach", "bladder", "breast", "ovary",
+}
+
 
 def _tokenize(text: str) -> set[str]:
     words = re.findall(r"[a-z0-9']+", text.lower())
@@ -125,7 +139,9 @@ class ICD10KnowledgeGraph:
             # out-rank a real code-specific match elsewhere.
             distinctive_targets = [
                 kw for kw in node["keywords"]
-                if (len(kw.split()) >= 2 or len(kw) >= 8) and self._keyword_doc_count[kw.lower()] == 1
+                if (len(kw.split()) >= 2 or len(kw) >= 8)
+                and kw.lower() not in _GENERIC_SHORTCUT_BLOCKLIST
+                and self._keyword_doc_count[kw.lower()] == 1
             ] + [node["description"]]
             best_fuzzy = 0.0
             best_match_len = 0
