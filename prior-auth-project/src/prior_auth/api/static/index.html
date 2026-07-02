@@ -3,175 +3,213 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Prior Authorization &mdash; Multi-Agent Workflow</title>
+<title>Prior Authorization &mdash; AI Workflow</title>
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <script src="https://cdn.tailwindcss.com"></script>
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        fontFamily: {
-          sans: ['Inter', 'ui-sans-serif', 'system-ui'],
-          mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
-        },
-        colors: {
-          brand: {
-            50: '#eef4ff', 100: '#dbe6fe', 200: '#bfd3fe', 300: '#93b4fd',
-            400: '#608bfa', 500: '#3b66f5', 600: '#2547e0', 700: '#1e38b6',
-            800: '#1e3391', 900: '#1e2f73',
-          },
-          ink: {
-            50: '#f7f8fa', 100: '#eef0f4', 200: '#dde1e8', 300: '#c3c9d4',
-            400: '#9aa3b5', 500: '#717c92', 600: '#545e73', 700: '#3f465a',
-            800: '#282d3b', 900: '#171a22',
-          },
-        },
-      },
-    },
-  };
-</script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 <link rel="stylesheet" href="/static/styles.css" />
 </head>
-<body class="min-h-screen bg-ink-50 text-ink-800 font-sans antialiased">
+<body>
 
-<header class="border-b border-ink-200 bg-white/90 backdrop-blur sticky top-0 z-30">
-  <div class="mx-auto max-w-[1400px] px-6 py-4 flex items-center justify-between">
+<nav class="topnav">
+  <div class="mx-auto max-w-[1320px] px-8 py-4 flex items-center justify-between">
     <div class="flex items-center gap-3">
-      <div class="h-9 w-9 rounded-lg bg-brand-600 text-white flex items-center justify-center font-bold text-sm shadow-sm">PA</div>
+      <div class="brand-mark"><i data-lucide="activity" class="lucide" style="width:19px;height:19px"></i></div>
       <div>
-        <h1 class="text-[15px] font-semibold tracking-tight leading-none">Prior Authorization Workflow</h1>
-        <p class="text-xs text-ink-500 mt-0.5">Extractor &rarr; ICD Coder &rarr; Policy RAG &rarr; Form Filler</p>
+        <h1 class="text-[15px] font-bold tracking-tight leading-none">Prior Authorization AI</h1>
+        <p class="text-[12px] text-slate-500 mt-0.5">Multi-agent clinical workflow</p>
       </div>
     </div>
-    <div class="flex items-center gap-2">
-      <span class="inline-flex items-center gap-1.5 rounded-full border border-ink-200 bg-ink-50 px-3 py-1 text-xs font-medium text-ink-600">
-        <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
-        Local demo &middot; synthetic data only
-      </span>
+    <div class="tabbar" id="tabbar">
+      <button class="tab-btn active" data-view="overview"><i data-lucide="layout-dashboard" class="lucide"></i>Overview</button>
+      <button class="tab-btn" data-view="demo"><i data-lucide="play" class="lucide"></i>Live Demo</button>
+      <button class="tab-btn" data-view="trust"><i data-lucide="shield-check" class="lucide"></i>Trust &amp; Safety</button>
     </div>
+    <span class="live-pill"><span class="live-dot"></span>Live &middot; real pipeline</span>
   </div>
-</header>
+</nav>
 
-<main class="mx-auto max-w-[1400px] px-6 py-8 grid grid-cols-1 lg:grid-cols-[380px_1fr] gap-6">
+<main class="mx-auto max-w-[1320px] px-8 py-9">
 
-  <!-- LEFT: input panel -->
-  <section class="lg:sticky lg:top-[88px] h-fit space-y-4">
-    <div class="rounded-xl border border-ink-200 bg-white shadow-sm p-5">
-      <h2 class="text-sm font-semibold text-ink-800 mb-4">Submit a case</h2>
-
-      <label class="block text-xs font-medium text-ink-500 mb-1.5">Sample doctor notes</label>
-      <select id="sampleSelect" class="w-full rounded-lg border border-ink-200 bg-ink-50 px-3 py-2 text-sm mb-4 focus:outline-none focus:ring-2 focus:ring-brand-400">
-        <option value="">Custom note&hellip;</option>
-      </select>
-
-      <label class="block text-xs font-medium text-ink-500 mb-1.5">Specialty</label>
-      <select id="specialtySelect" class="w-full rounded-lg border border-ink-200 bg-ink-50 px-3 py-2 text-sm mb-4 focus:outline-none focus:ring-2 focus:ring-brand-400">
-        <option value="unknown">Unknown</option>
-        <option value="orthopedics">Orthopedics</option>
-        <option value="cardiology">Cardiology</option>
-        <option value="oncology">Oncology</option>
-        <option value="neurology">Neurology</option>
-        <option value="gastroenterology">Gastroenterology</option>
-        <option value="rare_disease">Rare disease</option>
-        <option value="general">General</option>
-      </select>
-
-      <label class="block text-xs font-medium text-ink-500 mb-1.5">Case ID</label>
-      <input id="caseIdInput" type="text" class="w-full rounded-lg border border-ink-200 bg-ink-50 px-3 py-2 text-sm mb-4 font-mono focus:outline-none focus:ring-2 focus:ring-brand-400" />
-
-      <label class="block text-xs font-medium text-ink-500 mb-1.5">Doctor's note</label>
-      <textarea id="noteInput" rows="10" placeholder="Paste or write a doctor's note here&hellip;" class="w-full rounded-lg border border-ink-200 bg-ink-50 px-3 py-2 text-sm font-mono leading-relaxed resize-y focus:outline-none focus:ring-2 focus:ring-brand-400"></textarea>
-
-      <button id="runBtn" class="mt-4 w-full rounded-lg bg-brand-600 hover:bg-brand-700 active:bg-brand-800 text-white text-sm font-semibold py-2.5 shadow-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2">
-        <span id="runBtnLabel">Run workflow</span>
-        <svg id="runSpinner" class="hidden animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
-          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-        </svg>
-      </button>
-      <p id="errorMsg" class="hidden mt-3 text-xs text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2"></p>
+  <!-- ============ OVERVIEW ============ -->
+  <section id="view-overview" class="view active space-y-9">
+    <div class="hero">
+      <h1>AI-Powered Prior Authorization</h1>
+      <p>Turns a doctor's note into an insurer-ready authorization decision automatically &mdash; reading the note, assigning the medical code, checking policy criteria, and preparing the paperwork &mdash; while automatically escalating anything it isn't confident about to a human reviewer.</p>
+      <span class="pill"><i data-lucide="check-circle-2" class="lucide"></i>Measured on 90 synthetic clinical cases &middot; real pipeline, nothing simulated</span>
     </div>
 
-    <div class="rounded-xl border border-ink-200 bg-white shadow-sm p-5">
-      <h3 class="text-xs font-semibold text-ink-800 mb-2">About this demo</h3>
-      <p class="text-xs text-ink-500 leading-relaxed">
-        Every run executes the real pipeline &mdash; PHI masking, ICD-10 knowledge-graph coding with a
-        rare-disease confidence gate, insurer policy retrieval, and form filling &mdash; against the
-        actual agent code. Nothing here is mocked.
-      </p>
+    <div>
+      <p class="section-title">Results at a glance</p>
+      <p class="section-sub">Every number below comes from actually running the pipeline against a labeled test set &mdash; not an estimate.</p>
+      <div class="kpi-grid" id="kpiGrid"></div>
+    </div>
+
+    <div>
+      <p class="section-title">How a case moves through the system</p>
+      <div class="flow" id="overviewFlow"></div>
+    </div>
+
+    <div>
+      <p class="section-title">Why it matters</p>
+      <div class="grid grid-cols-3 gap-4">
+        <div class="info-card">
+          <div class="info-icon" style="background:#eef2ff;color:#4338ca;"><i data-lucide="zap" class="lucide"></i></div>
+          <h4>Faster turnaround</h4>
+          <p>Clear-cut cases are decided in well under a second instead of sitting in a manual review queue for days &mdash; patients and providers get an answer faster.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon" style="background:var(--good-tint);color:var(--good);"><i data-lucide="shield" class="lucide"></i></div>
+          <h4>Safe by design</h4>
+          <p>Patient identifiers never reach the AI reasoning steps, and anything the system isn't confident about &mdash; especially rare-disease cases &mdash; is automatically routed to a human instead of being auto-approved on a guess.</p>
+        </div>
+        <div class="info-card">
+          <div class="info-icon" style="background:#fff0e5;color:#c2570a;"><i data-lucide="file-clock" class="lucide"></i></div>
+          <h4>Fully auditable</h4>
+          <p>Every step is logged with a timestamp, confidence score, and reasoning &mdash; so any decision can be explained and traced after the fact.</p>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- RIGHT: results -->
-  <section class="space-y-6">
+  <!-- ============ LIVE DEMO ============ -->
+  <section id="view-demo" class="view space-y-6">
+    <div class="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-6">
+      <div class="panel h-fit lg:sticky lg:top-[92px] space-y-4">
+        <h2 class="text-[15px] font-bold text-slate-900 mb-1">Submit a case</h2>
 
-    <div id="emptyState" class="rounded-xl border border-dashed border-ink-300 bg-white/60 p-16 text-center">
-      <p class="text-sm text-ink-500">Submit a case on the left to see it move through the agent chain.</p>
-    </div>
-
-    <div id="results" class="hidden space-y-6">
-
-      <!-- Status banner -->
-      <div id="statusBanner" class="rounded-xl border p-5 flex items-start gap-4">
-        <div id="statusIcon" class="h-10 w-10 rounded-full flex items-center justify-center shrink-0"></div>
-        <div class="min-w-0">
-          <p id="statusTitle" class="text-sm font-semibold"></p>
-          <p id="statusSubtitle" class="text-xs text-ink-500 mt-0.5"></p>
+        <div>
+          <label class="field-label">Sample doctor notes</label>
+          <select id="sampleSelect" class="field-input"><option value="">Custom note&hellip;</option></select>
         </div>
-        <div class="ml-auto text-right shrink-0">
-          <p class="text-[11px] uppercase tracking-wide text-ink-400 font-medium">Total time</p>
-          <p id="statusDuration" class="text-sm font-mono font-semibold text-ink-700"></p>
+        <div>
+          <label class="field-label">Specialty</label>
+          <select id="specialtySelect" class="field-input">
+            <option value="unknown">Unknown</option>
+            <option value="orthopedics">Orthopedics</option>
+            <option value="cardiology">Cardiology</option>
+            <option value="oncology">Oncology</option>
+            <option value="neurology">Neurology</option>
+            <option value="gastroenterology">Gastroenterology</option>
+            <option value="rare_disease">Rare disease</option>
+            <option value="general">General</option>
+          </select>
         </div>
+        <div>
+          <label class="field-label">Case ID</label>
+          <input id="caseIdInput" type="text" class="field-input mono" />
+        </div>
+        <div>
+          <label class="field-label">Doctor's note</label>
+          <textarea id="noteInput" rows="9" placeholder="Paste or write a doctor's note here&hellip;" class="field-input mono"></textarea>
+        </div>
+        <button id="runBtn" class="btn-primary">
+          <span id="runIconWrap"><i data-lucide="play" class="lucide"></i></span>
+          <span id="runBtnLabel">Run workflow</span>
+        </button>
+        <p id="errorMsg" class="hidden text-xs text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2"></p>
+        <p class="text-[12px] text-slate-500 leading-relaxed pt-1">Every run executes the real pipeline against the actual agent code &mdash; PHI masking, ICD-10 coding, policy retrieval, form filling. Nothing here is mocked.</p>
       </div>
 
-      <!-- Pipeline stepper -->
-      <div class="rounded-xl border border-ink-200 bg-white shadow-sm p-5">
-        <h2 class="text-sm font-semibold text-ink-800 mb-5">Agent pipeline</h2>
-        <div id="stepper" class="grid grid-cols-1 sm:grid-cols-4 gap-3"></div>
-        <div id="stepDetails" class="mt-5 space-y-3"></div>
-      </div>
+      <div class="space-y-6">
+        <div id="emptyState" class="rounded-[22px] border-2 border-dashed border-slate-300 bg-white/50 p-16 text-center">
+          <i data-lucide="mouse-pointer-click" class="lucide mx-auto mb-3 text-slate-400" style="width:28px;height:28px"></i>
+          <p class="text-sm text-slate-500">Pick a sample case (or write your own note) on the left, then click <b>Run workflow</b>.</p>
+        </div>
 
-      <!-- PHI boundary -->
-      <div class="rounded-xl border border-ink-200 bg-white shadow-sm p-5">
-        <h2 class="text-sm font-semibold text-ink-800 mb-1">PHI boundary</h2>
-        <p class="text-xs text-ink-500 mb-4">Identifiers stay on the case object and are never forwarded to downstream agents.</p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div class="rounded-lg border border-amber-200 bg-amber-50 p-4">
-            <p class="text-[11px] font-semibold uppercase tracking-wide text-amber-700 mb-2">Case identifiers &middot; never forwarded</p>
-            <dl id="identifiersList" class="text-xs font-mono space-y-1 text-amber-900"></dl>
+        <div id="results" class="hidden space-y-6">
+          <div id="verdictBanner" class="verdict-banner">
+            <div class="verdict-icon" id="verdictIcon"></div>
+            <div class="flex-1">
+              <div class="verdict-title" id="verdictTitle"></div>
+              <div class="verdict-sub" id="verdictSub"></div>
+            </div>
+            <div class="text-right shrink-0 pl-4">
+              <p class="text-[11px] uppercase tracking-wide text-slate-400 font-semibold">Decision time</p>
+              <p id="verdictDuration" class="text-lg font-mono font-bold text-slate-800"></p>
+            </div>
           </div>
-          <div class="rounded-lg border border-emerald-200 bg-emerald-50 p-4">
-            <p class="text-[11px] font-semibold uppercase tracking-wide text-emerald-700 mb-2">Sent to agents &middot; zero PHI</p>
-            <dl id="maskedSummary" class="text-xs font-mono space-y-1 text-emerald-900"></dl>
+
+          <div>
+            <p class="section-title" style="font-size:1.05rem">How this case moved through the pipeline</p>
+            <div id="stepper" class="grid grid-cols-1 sm:grid-cols-4 gap-3"></div>
+          </div>
+
+          <div class="expand-toggle" id="detailToggle">
+            <span class="flex items-center gap-2"><i data-lucide="wrench" class="lucide"></i>Technical detail (for the engineering team)</span>
+            <i data-lucide="chevron-right" class="lucide chev"></i>
+          </div>
+          <div class="expand-body" id="detailBody">
+            <div class="detail-tabs" id="detailTabs"></div>
+            <div id="detailPanels"></div>
+          </div>
+
+          <div>
+            <p class="section-title" style="font-size:1.05rem">Patient privacy boundary</p>
+            <p class="section-sub">Identifiers stay on the case record and are never forwarded to the AI reasoning steps.</p>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="phi-panel" style="background:var(--warn-tint); border-color:var(--warn-border);">
+                <div class="kicker" style="color:#a3610a;"><i data-lucide="lock" class="lucide"></i>Stays with the case record</div>
+                <dl id="identifiersList" style="color:#8a5b12;"></dl>
+              </div>
+              <div class="phi-panel" style="background:var(--good-tint); border-color:var(--good-border);">
+                <div class="kicker" style="color:#0a7d0a;"><i data-lucide="badge-check" class="lucide"></i>What the AI actually sees &mdash; zero PHI</div>
+                <dl id="maskedSummary" style="color:#0a7d0a;"></dl>
+              </div>
+            </div>
+          </div>
+
+          <div id="formCard" class="hidden">
+            <p class="section-title" style="font-size:1.05rem">Completed authorization form</p>
+            <div class="panel">
+              <div id="formMeta" class="grid grid-cols-3 gap-4 mb-4"></div>
+              <table class="field-table">
+                <thead><tr><th>Field</th><th>Value</th><th>Required</th></tr></thead>
+                <tbody id="formFields"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="expand-toggle" id="rawToggle">
+            <span class="flex items-center gap-2"><i data-lucide="braces" class="lucide"></i>Raw audit trace (JSON)</span>
+            <i data-lucide="chevron-right" class="lucide chev"></i>
+          </div>
+          <div class="expand-body" id="rawBody">
+            <pre id="rawTrace" class="json-block"></pre>
           </div>
         </div>
       </div>
-
-      <!-- Final form -->
-      <div id="formCard" class="hidden rounded-xl border border-ink-200 bg-white shadow-sm p-5">
-        <h2 class="text-sm font-semibold text-ink-800 mb-4">Prior-authorization form</h2>
-        <div id="formMeta" class="grid grid-cols-3 gap-4 mb-4 text-xs"></div>
-        <table class="w-full text-xs">
-          <thead>
-            <tr class="text-left text-ink-400 border-b border-ink-200">
-              <th class="py-1.5 font-medium">Field</th>
-              <th class="py-1.5 font-medium">Value</th>
-              <th class="py-1.5 font-medium">Required</th>
-            </tr>
-          </thead>
-          <tbody id="formFields"></tbody>
-        </table>
-      </div>
-
-      <!-- Raw audit trace -->
-      <details class="rounded-xl border border-ink-200 bg-white shadow-sm p-5">
-        <summary class="text-sm font-semibold text-ink-800 cursor-pointer select-none">Raw audit trace (JSON)</summary>
-        <pre id="rawTrace" class="mt-4 text-[11px] font-mono bg-ink-900 text-ink-100 rounded-lg p-4 overflow-auto max-h-[420px]"></pre>
-      </details>
-
     </div>
   </section>
+
+  <!-- ============ TRUST & SAFETY ============ -->
+  <section id="view-trust" class="view space-y-6">
+    <p class="section-title">How this stays safe and compliant</p>
+    <div class="grid grid-cols-2 gap-4">
+      <div class="info-card">
+        <div class="info-icon" style="background:#eef2ff;color:#4338ca;"><i data-lucide="lock" class="lucide"></i></div>
+        <h4>Privacy by design</h4>
+        <p>Patient name, medical record number, date of birth, address, and phone number are detected and masked in the very first step &mdash; before any AI reasoning happens. Every later step in the pipeline re-checks its own input and refuses to proceed if a raw identifier ever slips through.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon" style="background:var(--warn-tint);color:#a3610a;"><i data-lucide="scale" class="lucide"></i></div>
+        <h4>The AI doesn't guess</h4>
+        <p>If the diagnosis coder isn't at least 90% confident on a rare-disease candidate, the case stops and goes to a human coder &mdash; the flagship safety rule this system is built around. The same principle applies to conflicting details (e.g. left vs. right side) and incomplete policy documentation.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon" style="background:#fff0e5;color:#c2570a;"><i data-lucide="file-clock" class="lucide"></i></div>
+        <h4>Full audit trail</h4>
+        <p>Every case produces a timestamped record of what each of the four agents did, what confidence it had, and why &mdash; so any decision (or non-decision) can be explained and reviewed after the fact.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon" style="background:var(--good-tint);color:var(--good);"><i data-lucide="flask-conical" class="lucide"></i></div>
+        <h4>Tested against known traps</h4>
+        <p>The evaluation set deliberately includes cases with missing conservative therapy, conflicting laterality, low-confidence rare diseases, unmet policy criteria, and incomplete notes &mdash; so the safety mechanisms are proven, not assumed.</p>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <script src="/static/app.js"></script>

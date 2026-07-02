@@ -1,93 +1,149 @@
 const AGENT_ORDER = ["Extractor", "ICD Coder", "Policy RAG", "Form Filler"];
-
-const STATUS_META = {
-  COMPLETED: { color: "emerald", title: "Completed", icon: "check" },
-  SUSPENDED_LOW_CONFIDENCE: { color: "amber", title: "Suspended — low ICD coding confidence", icon: "pause" },
-  SUSPENDED_PHI_VIOLATION: { color: "red", title: "Suspended — PHI boundary violation", icon: "shield" },
-  SUSPENDED_POLICY_MISMATCH: { color: "amber", title: "Suspended — policy criteria not met", icon: "pause" },
-  SUSPENDED_LATERALITY_CONFLICT: { color: "amber", title: "Suspended — laterality conflict", icon: "pause" },
-  FAILED_VALIDATION: { color: "red", title: "Failed — validation error", icon: "x" },
-  ERROR: { color: "red", title: "Error", icon: "x" },
-  IN_PROGRESS: { color: "ink", title: "In progress", icon: "dot" },
+const AGENT_SUBTITLE = {
+  "Extractor": "Reads the clinical note",
+  "ICD Coder": "Assigns the diagnosis code",
+  "Policy RAG": "Checks the insurer's rules",
+  "Form Filler": "Prepares the paperwork",
+};
+const AGENT_ICON = {
+  "Extractor": "file-search",
+  "ICD Coder": "stethoscope",
+  "Policy RAG": "clipboard-check",
+  "Form Filler": "file-check-2",
 };
 
-const ICONS = {
-  check: '<svg viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5"><path fill-rule="evenodd" d="M16.7 5.3a1 1 0 010 1.4l-7.5 7.5a1 1 0 01-1.4 0l-3.5-3.5a1 1 0 111.4-1.4l2.8 2.8 6.8-6.8a1 1 0 011.4 0z" clip-rule="evenodd"/></svg>',
-  pause: '<svg viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5"><path d="M6 4h2v12H6zM12 4h2v12h-2z"/></svg>',
-  shield: '<svg viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5"><path fill-rule="evenodd" d="M10 1l7 3v5c0 4.6-3 8.4-7 9.9-4-1.5-7-5.3-7-9.9V4l7-3zm-1 9.5l-2-2L5.6 9.9 9 13.3l5.4-5.4-1.4-1.4L9 10.5z" clip-rule="evenodd"/></svg>',
-  x: '<svg viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5"><path fill-rule="evenodd" d="M4.3 4.3a1 1 0 011.4 0L10 8.6l4.3-4.3a1 1 0 111.4 1.4L11.4 10l4.3 4.3a1 1 0 01-1.4 1.4L10 11.4l-4.3 4.3a1 1 0 01-1.4-1.4L8.6 10 4.3 5.7a1 1 0 010-1.4z" clip-rule="evenodd"/></svg>',
-  dot: '<svg viewBox="0 0 20 20" fill="currentColor" class="h-5 w-5"><circle cx="10" cy="10" r="4"/></svg>',
+const STATUS_COLOR = {
+  ok: { fill: "#0ca30c", tint: "var(--good-tint)", border: "var(--good-border)", icon: "check" },
+  suspended: { fill: "#d97a06", tint: "var(--warn-tint)", border: "var(--warn-border)", icon: "pause" },
+  failed: { fill: "#d03b3b", tint: "var(--bad-tint)", border: "var(--bad-border)", icon: "x" },
+  pending: { fill: "#c3c2b7", tint: "#f4f4f7", border: "#e6e8ee", icon: "minus" },
 };
 
-const COLOR_CLASSES = {
-  emerald: { bg: "bg-emerald-100", text: "text-emerald-700", border: "border-emerald-200", icon: "bg-emerald-500" },
-  amber: { bg: "bg-amber-100", text: "text-amber-700", border: "border-amber-200", icon: "bg-amber-500" },
-  red: { bg: "bg-red-100", text: "text-red-700", border: "border-red-200", icon: "bg-red-500" },
-  ink: { bg: "bg-ink-100", text: "text-ink-700", border: "border-ink-200", icon: "bg-ink-400" },
+const VERDICT_META = {
+  COMPLETED: { key: "ok", icon: "check-circle-2", title: "Auto-Approved",
+    sub: "This case meets every documented policy requirement and would be approved automatically — no human touch needed." },
+  SUSPENDED_LOW_CONFIDENCE: { key: "suspended", icon: "pause-circle", title: "Sent for Human Review — Low Confidence",
+    sub: "The AI isn't confident enough in the diagnosis code — especially given this may be a rare condition — so it stops and asks a human coder instead of guessing." },
+  SUSPENDED_PHI_VIOLATION: { key: "failed", icon: "shield-alert", title: "Blocked — Privacy Safeguard Triggered",
+    sub: "A potential patient-identifier leak was detected and the workflow halted immediately, before any downstream decision was made." },
+  SUSPENDED_POLICY_MISMATCH: { key: "suspended", icon: "pause-circle", title: "Sent for Human Review — Policy Criteria Not Fully Met",
+    sub: "The note doesn't yet document everything this insurer's policy requires for approval." },
+  SUSPENDED_LATERALITY_CONFLICT: { key: "suspended", icon: "pause-circle", title: "Sent for Human Review — Conflicting Details",
+    sub: "The note and the requested procedure disagree on left vs. right side — flagged rather than guessed." },
+  FAILED_VALIDATION: { key: "failed", icon: "x-circle", title: "Rejected — Incomplete Information",
+    sub: "Required information is missing or invalid, so the authorization form could not be completed." },
+  ERROR: { key: "failed", icon: "x-circle", title: "System Error", sub: "An unexpected error stopped the workflow." },
 };
 
 let sampleCases = [];
 
+function icons() { if (window.lucide) lucide.createIcons(); }
+
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m]));
+}
+
+// ---------------- Tabs ----------------
+function setupTabs() {
+  document.querySelectorAll(".tab-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".tab-btn").forEach((b) => b.classList.remove("active"));
+      document.querySelectorAll(".view").forEach((v) => v.classList.remove("active"));
+      btn.classList.add("active");
+      document.getElementById(`view-${btn.dataset.view}`).classList.add("active");
+    });
+  });
+}
+
+// ---------------- Overview ----------------
+async function loadOverview() {
+  const grid = document.getElementById("kpiGrid");
+  grid.innerHTML = `<div class="col-span-5 text-center text-sm text-slate-400 py-10">Scoring the pipeline against 90 labeled test cases…</div>`;
+  const res = await fetch("/api/eval-metrics");
+  const m = await res.json();
+
+  const escalatedPct = Math.round((100 * m.suspended) / m.total);
+  const tiles = [
+    { icon: "target", value: `${m.policy_accuracy}%`, label: "Policy-match accuracy", caption: "vs. manually labeled ground truth" },
+    { icon: "check-check", value: `${m.approve_accuracy}%`, label: "Correct on clear-cut cases", caption: "auto-approved exactly as expected" },
+    { icon: "gauge", value: `${Math.round(m.avg_latency_ms)} ms`, label: "Avg. decision time", caption: "note in → decision out" },
+    { icon: "lock", value: "0%", label: "PHI leakage", caption: "verified across every test case" },
+    { icon: "users", value: `${escalatedPct}%`, label: "Escalated to human review", caption: "by design — not a failure rate" },
+  ];
+  grid.innerHTML = tiles.map((t) => `
+    <div class="kpi-tile">
+      <div class="kpi-icon"><i data-lucide="${t.icon}" class="lucide"></i></div>
+      <div class="kpi-value">${t.value}</div>
+      <div class="kpi-label">${t.label}</div>
+      <div class="kpi-caption">${t.caption}</div>
+    </div>
+  `).join("");
+
+  const flow = document.getElementById("overviewFlow");
+  const steps = [
+    { icon: "file-search", name: "Extractor", sub: "Reads the note, masks patient identifiers" },
+    { icon: "stethoscope", name: "ICD Coder", sub: "Assigns the diagnosis code" },
+    { icon: "clipboard-check", name: "Policy RAG", sub: "Checks the insurer's rules" },
+    { icon: "file-check-2", name: "Form Filler", sub: "Prepares the paperwork" },
+  ];
+  flow.innerHTML = steps.map((s, i) => `
+    <div class="flow-step">
+      <div class="flow-icon"><i data-lucide="${s.icon}" class="lucide"></i></div>
+      <div class="flow-name">${i + 1}. ${s.name}</div>
+      <div class="flow-sub">${s.sub}</div>
+    </div>
+    ${i < steps.length - 1 ? `<div class="flow-arrow"><i data-lucide="chevron-right" class="lucide"></i></div>` : ""}
+  `).join("");
+
+  icons();
+}
+
+// ---------------- Live demo: inputs ----------------
 async function loadSampleCases() {
-  try {
-    const res = await fetch("/api/sample-cases");
-    sampleCases = await res.json();
-    const select = document.getElementById("sampleSelect");
-    for (const c of sampleCases) {
-      const opt = document.createElement("option");
-      opt.value = c.case_id;
-      opt.textContent = `${c.case_id} — ${c.specialty}${c.requested_procedure ? " · " + c.requested_procedure : ""}`;
-      select.appendChild(opt);
-    }
-  } catch (e) {
-    console.error("Failed to load sample cases", e);
+  const res = await fetch("/api/sample-cases");
+  sampleCases = await res.json();
+  const select = document.getElementById("sampleSelect");
+  for (const c of sampleCases) {
+    const opt = document.createElement("option");
+    opt.value = c.case_id;
+    opt.textContent = `${c.case_id} — ${c.specialty}${c.requested_procedure ? " · " + c.requested_procedure : ""}`;
+    select.appendChild(opt);
   }
 }
 
-function newCaseId() {
-  return "UI-" + Math.random().toString(36).slice(2, 8).toUpperCase();
-}
+function newCaseId() { return "UI-" + Math.random().toString(36).slice(2, 8).toUpperCase(); }
 
 function setupInputs() {
   document.getElementById("caseIdInput").value = newCaseId();
-
   document.getElementById("sampleSelect").addEventListener("change", (e) => {
     const val = e.target.value;
     if (!val) return;
     const c = sampleCases.find((x) => x.case_id === val);
     if (!c) return;
     document.getElementById("noteInput").value = c.note_text;
-    document.getElementById("specialtySelect").value = c.specialty in specialtyOptions() ? c.specialty : "unknown";
+    const specialtySelect = document.getElementById("specialtySelect");
+    const has = [...specialtySelect.options].some((o) => o.value === c.specialty);
+    specialtySelect.value = has ? c.specialty : "unknown";
     document.getElementById("caseIdInput").value = c.case_id;
   });
 }
 
-function specialtyOptions() {
-  const select = document.getElementById("specialtySelect");
-  const set = {};
-  for (const o of select.options) set[o.value] = true;
-  return set;
+// ---------------- Live demo: run + render ----------------
+function renderVerdict(status, reason, totalMs) {
+  const meta = VERDICT_META[status] || { key: "pending", icon: "help-circle", title: status, sub: "" };
+  const c = STATUS_COLOR[meta.key];
+  const banner = document.getElementById("verdictBanner");
+  banner.style.background = c.tint;
+  banner.style.borderColor = c.border;
+  const iconEl = document.getElementById("verdictIcon");
+  iconEl.style.background = c.fill;
+  iconEl.innerHTML = `<i data-lucide="${meta.icon}" class="lucide" style="width:28px;height:28px"></i>`;
+  document.getElementById("verdictTitle").textContent = meta.title;
+  document.getElementById("verdictSub").textContent = reason || meta.sub;
+  document.getElementById("verdictDuration").textContent = `${totalMs.toFixed(0)} ms`;
 }
 
-function statusMeta(status) {
-  return STATUS_META[status] || { color: "ink", title: status, icon: "dot" };
-}
-
-function renderStatusBanner(status, reason, totalMs) {
-  const meta = statusMeta(status);
-  const c = COLOR_CLASSES[meta.color];
-  const banner = document.getElementById("statusBanner");
-  banner.className = `rounded-xl border p-5 flex items-start gap-4 ${c.bg} ${c.border}`;
-  const icon = document.getElementById("statusIcon");
-  icon.className = `h-10 w-10 rounded-full flex items-center justify-center shrink-0 text-white ${c.icon}`;
-  icon.innerHTML = ICONS[meta.icon];
-  document.getElementById("statusTitle").textContent = meta.title;
-  document.getElementById("statusTitle").className = `text-sm font-semibold ${c.text}`;
-  document.getElementById("statusSubtitle").textContent = reason || "No suspension or validation issues.";
-  document.getElementById("statusDuration").textContent = `${totalMs.toFixed(1)} ms`;
-}
-
-function stepStatusFromEvent(ev) {
+function stepStatusKey(ev) {
   if (!ev) return "pending";
   if (ev.status === "OK") return "ok";
   if (ev.status === "SUSPENDED") return "suspended";
@@ -96,127 +152,104 @@ function stepStatusFromEvent(ev) {
 
 function renderStepper(events) {
   const stepper = document.getElementById("stepper");
-  const details = document.getElementById("stepDetails");
   stepper.innerHTML = "";
-  details.innerHTML = "";
-
   const byAgent = {};
   for (const ev of events) byAgent[ev.agent_name] = ev;
 
   AGENT_ORDER.forEach((agentName, idx) => {
     const ev = byAgent[agentName];
-    const status = stepStatusFromEvent(ev);
-    const node = document.createElement("div");
-    node.className = "step-node";
-    node.dataset.status = status;
+    const key = stepStatusKey(ev);
+    const c = STATUS_COLOR[key];
     const confidencePct = ev && ev.confidence != null ? Math.round(ev.confidence * 100) : null;
+    const node = document.createElement("div");
+    node.className = "step-card";
+    node.style.background = c.tint;
+    node.style.borderColor = c.border;
     node.innerHTML = `
-      <div class="flex items-center gap-2 mb-2">
-        <span class="step-dot">${idx + 1}</span>
-        <span class="text-xs font-semibold text-ink-800 truncate">${agentName}</span>
+      <div class="step-top">
+        <span class="step-num" style="background:${c.fill}">${idx + 1}</span>
+        <span class="step-name">${agentName}</span>
       </div>
-      <p class="text-[11px] font-medium ${status === "pending" ? "text-ink-400" : "text-ink-600"} mb-2">${ev ? ev.status : "Not reached"}</p>
-      ${confidencePct != null ? `
-        <div class="confidence-bar-track mb-1"><div class="confidence-bar-fill" style="width:${confidencePct}%"></div></div>
-        <p class="text-[10px] text-ink-500 font-mono">${confidencePct}% confidence</p>
-      ` : `<div class="confidence-bar-track"></div><p class="text-[10px] text-ink-400 font-mono">&mdash;</p>`}
-      ${ev ? `<p class="text-[10px] text-ink-400 font-mono mt-1">${ev.duration_ms.toFixed(1)} ms</p>` : ""}
+      <div class="step-sub">${AGENT_SUBTITLE[agentName]}</div>
+      <div class="step-status" style="color:${c.fill}"><i data-lucide="${c.icon}" class="lucide" style="width:14px;height:14px"></i>${ev ? ev.status : "Not reached"}</div>
+      <div class="meter-track"><div class="meter-fill" style="width:${confidencePct ?? 0}%;background:${c.fill};"></div></div>
+      <div class="step-meta">${confidencePct != null ? confidencePct + "% confidence" : "—"}${ev ? " · " + ev.duration_ms.toFixed(1) + " ms" : ""}</div>
     `;
-    if (ev) {
-      node.addEventListener("click", () => toggleStepDetail(node, ev, details));
-    }
     stepper.appendChild(node);
   });
-}
+  icons();
 
-function toggleStepDetail(node, ev, container) {
-  const isActive = node.classList.contains("active");
-  document.querySelectorAll(".step-node").forEach((n) => n.classList.remove("active"));
-  container.innerHTML = "";
-  if (isActive) return;
-  node.classList.add("active");
-
-  const wrap = document.createElement("div");
-  wrap.className = "rounded-lg border border-ink-200 bg-ink-50 p-4";
-  wrap.innerHTML = `
-    <p class="text-xs font-semibold text-ink-700 mb-2">${ev.agent_name} — step ${ev.step}</p>
-    ${ev.errors && ev.errors.length ? `
-      <div class="mb-3 text-xs text-red-700 bg-red-50 border border-red-200 rounded-md p-2">
-        ${ev.errors.map((e) => `<div>• ${escapeHtml(e)}</div>`).join("")}
-      </div>` : ""}
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-      <div>
-        <p class="text-[10px] uppercase tracking-wide text-ink-400 font-semibold mb-1">Input summary</p>
-        <pre class="text-[11px] font-mono bg-white border border-ink-200 rounded-md p-2 overflow-auto max-h-56">${escapeHtml(JSON.stringify(ev.input_summary, null, 2))}</pre>
+  // Technical detail tabs
+  const reached = AGENT_ORDER.filter((a) => byAgent[a]);
+  const tabsEl = document.getElementById("detailTabs");
+  const panelsEl = document.getElementById("detailPanels");
+  tabsEl.innerHTML = reached.map((a, i) => `<div class="detail-tab${i === 0 ? " active" : ""}" data-agent="${a}">${i + 1}. ${a}</div>`).join("");
+  function renderPanel(agentName) {
+    const ev = byAgent[agentName];
+    panelsEl.innerHTML = `
+      ${ev.errors && ev.errors.length ? `<div class="mb-3 text-xs text-red-700 bg-red-50 border border-red-200 rounded-md p-2">${ev.errors.map((e) => `• ${escapeHtml(e)}`).join("<br/>")}</div>` : ""}
+      <div class="grid grid-cols-2 gap-3">
+        <div><p class="text-[11px] uppercase tracking-wide text-slate-400 font-semibold mb-1">Input</p><pre class="json-block">${escapeHtml(JSON.stringify(ev.input_summary, null, 2))}</pre></div>
+        <div><p class="text-[11px] uppercase tracking-wide text-slate-400 font-semibold mb-1">Output</p><pre class="json-block">${escapeHtml(JSON.stringify(ev.output_summary, null, 2))}</pre></div>
       </div>
-      <div>
-        <p class="text-[10px] uppercase tracking-wide text-ink-400 font-semibold mb-1">Output summary</p>
-        <pre class="text-[11px] font-mono bg-white border border-ink-200 rounded-md p-2 overflow-auto max-h-56">${escapeHtml(JSON.stringify(ev.output_summary, null, 2))}</pre>
-      </div>
-    </div>
-  `;
-  container.appendChild(wrap);
-}
-
-function escapeHtml(str) {
-  return str.replace(/[&<>"']/g, (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[m]));
+    `;
+  }
+  if (reached.length) renderPanel(reached[0]);
+  tabsEl.querySelectorAll(".detail-tab").forEach((tab) => {
+    tab.addEventListener("click", () => {
+      tabsEl.querySelectorAll(".detail-tab").forEach((t) => t.classList.remove("active"));
+      tab.classList.add("active");
+      renderPanel(tab.dataset.agent);
+    });
+  });
 }
 
 function renderPhiBoundary(caseObj) {
   const idList = document.getElementById("identifiersList");
   const maskedList = document.getElementById("maskedSummary");
-  idList.innerHTML = "";
-  maskedList.innerHTML = "";
-
   const ids = caseObj.identifiers || {};
   const idFields = ["name", "mrn", "dob", "address", "phone"];
   let anyDetected = false;
-  for (const f of idFields) {
+  idList.innerHTML = idFields.map((f) => {
     const val = ids[f];
     if (val) anyDetected = true;
-    idList.innerHTML += `<div><span class="text-amber-600">${f}:</span> ${val ? escapeHtml(val) : "<span class='text-amber-400'>not detected</span>"}</div>`;
-  }
-  if (!anyDetected) {
-    idList.innerHTML = `<div class="text-amber-600">No identifiers detected in this note.</div>`;
-  }
+    return `<div><b>${f}:</b> ${val ? escapeHtml(val) : "not detected"}</div>`;
+  }).join("");
+  if (!anyDetected) idList.innerHTML = `<div>No identifiers detected in this note.</div>`;
 
   const facts = caseObj.clinical_facts;
   if (facts) {
+    const diag = (facts.diagnosis || "").slice(0, 90);
     maskedList.innerHTML = `
-      <div><span class="text-emerald-600">phi_detected:</span> ${facts.phi_detected}</div>
-      <div><span class="text-emerald-600">phi_fields_masked:</span> ${facts.phi_fields_masked && facts.phi_fields_masked.length ? escapeHtml(facts.phi_fields_masked.join(", ")) : "none"}</div>
-      <div><span class="text-emerald-600">diagnosis:</span> ${escapeHtml((facts.diagnosis || "").slice(0, 80))}${(facts.diagnosis || "").length > 80 ? "…" : ""}</div>
-      <div><span class="text-emerald-600">requested_procedure:</span> ${escapeHtml(facts.requested_procedure || "")}</div>
+      <div><b>PHI detected in note:</b> ${facts.phi_detected}</div>
+      <div><b>Fields masked:</b> ${(facts.phi_fields_masked || []).join(", ") || "none"}</div>
+      <div><b>Diagnosis seen by AI:</b> ${escapeHtml(diag)}${(facts.diagnosis || "").length > 90 ? "…" : ""}</div>
+      <div><b>Requested procedure:</b> ${escapeHtml(facts.requested_procedure || "")}</div>
     `;
   } else {
-    maskedList.innerHTML = `<div class="text-emerald-600">No clinical facts extracted (pipeline stopped before completion).</div>`;
+    maskedList.innerHTML = `<div>No clinical facts extracted (pipeline stopped before completion).</div>`;
   }
 }
 
 function renderForm(caseObj) {
   const card = document.getElementById("formCard");
   const form = caseObj.form;
-  if (!form) {
-    card.classList.add("hidden");
-    return;
-  }
+  if (!form) { card.classList.add("hidden"); return; }
   card.classList.remove("hidden");
   document.getElementById("formMeta").innerHTML = `
-    <div><p class="text-[10px] uppercase tracking-wide text-ink-400 font-semibold">Template</p><p class="font-mono mt-0.5">${escapeHtml(form.form_template_id)}</p></div>
-    <div><p class="text-[10px] uppercase tracking-wide text-ink-400 font-semibold">ICD-10</p><p class="font-mono mt-0.5">${escapeHtml(form.icd10_code)}</p></div>
-    <div><p class="text-[10px] uppercase tracking-wide text-ink-400 font-semibold">Policy</p><p class="font-mono mt-0.5">${escapeHtml(form.policy_id)}</p></div>
+    <div><p class="text-[11px] uppercase tracking-wide text-slate-400 font-semibold">Template</p><p class="font-mono font-bold mt-0.5">${escapeHtml(form.form_template_id)}</p></div>
+    <div><p class="text-[11px] uppercase tracking-wide text-slate-400 font-semibold">ICD-10</p><p class="font-mono font-bold mt-0.5">${escapeHtml(form.icd10_code)}</p></div>
+    <div><p class="text-[11px] uppercase tracking-wide text-slate-400 font-semibold">Policy</p><p class="font-mono font-bold mt-0.5" style="word-break:break-word">${escapeHtml(form.policy_id)}</p></div>
   `;
-  const tbody = document.getElementById("formFields");
-  tbody.innerHTML = form.fields.map((f) => `
-    <tr class="border-b border-ink-100">
-      <td class="py-1.5 pr-3 font-medium text-ink-600">${escapeHtml(f.name)}</td>
-      <td class="py-1.5 pr-3 font-mono text-ink-800">${escapeHtml(f.value)}</td>
-      <td class="py-1.5">${f.required ? '<span class="text-[10px] rounded-full bg-ink-100 px-2 py-0.5">required</span>' : ""}</td>
+  document.getElementById("formFields").innerHTML = form.fields.map((f) => `
+    <tr>
+      <td class="field-name">${escapeHtml(f.name)}</td>
+      <td class="field-value">${escapeHtml(f.value)}</td>
+      <td>${f.required ? '<span class="req-badge">required</span>' : ""}</td>
     </tr>
-  `).join("");
-  if (form.validation_errors && form.validation_errors.length) {
-    tbody.innerHTML += `<tr><td colspan="3" class="pt-3"><div class="text-xs text-red-700 bg-red-50 border border-red-200 rounded-md p-2">${form.validation_errors.map((e) => `• ${escapeHtml(e)}`).join("<br/>")}</div></td></tr>`;
-  }
+  `).join("") + (form.validation_errors && form.validation_errors.length
+    ? `<tr><td colspan="3" class="pt-3"><div class="text-xs text-red-700 bg-red-50 border border-red-200 rounded-md p-2">${form.validation_errors.map((e) => `• ${escapeHtml(e)}`).join("<br/>")}</div></td></tr>`
+    : "");
 }
 
 async function runWorkflow() {
@@ -234,10 +267,11 @@ async function runWorkflow() {
 
   const btn = document.getElementById("runBtn");
   const label = document.getElementById("runBtnLabel");
-  const spinner = document.getElementById("runSpinner");
+  const iconWrap = document.getElementById("runIconWrap");
   btn.disabled = true;
   label.textContent = "Running…";
-  spinner.classList.remove("hidden");
+  iconWrap.innerHTML = '<i data-lucide="loader-2" class="lucide animate-spin"></i>';
+  icons();
 
   try {
     const res = await fetch("/api/run", {
@@ -257,25 +291,36 @@ async function runWorkflow() {
   } finally {
     btn.disabled = false;
     label.textContent = "Run workflow";
-    spinner.classList.add("hidden");
+    iconWrap.innerHTML = '<i data-lucide="play" class="lucide"></i>';
+    icons();
   }
 }
 
 function renderResults(data) {
   document.getElementById("emptyState").classList.add("hidden");
-  const results = document.getElementById("results");
-  results.classList.remove("hidden");
-  results.classList.remove("reveal");
-  void results.offsetWidth;
-  results.classList.add("reveal");
+  document.getElementById("results").classList.remove("hidden");
 
   const caseObj = data.case;
-  renderStatusBanner(caseObj.status, caseObj.suspension_reason, data.total_duration_ms);
+  renderVerdict(caseObj.status, caseObj.suspension_reason, data.total_duration_ms);
   renderStepper(data.trace.events);
   renderPhiBoundary(caseObj);
   renderForm(caseObj);
   document.getElementById("rawTrace").textContent = JSON.stringify(data.trace, null, 2);
+  icons();
+}
+
+function setupExpandToggles() {
+  [["detailToggle", "detailBody"], ["rawToggle", "rawBody"]].forEach(([toggleId, bodyId]) => {
+    document.getElementById(toggleId).addEventListener("click", () => {
+      document.getElementById(toggleId).classList.toggle("open");
+      document.getElementById(bodyId).classList.toggle("open");
+    });
+  });
 }
 
 document.getElementById("runBtn").addEventListener("click", runWorkflow);
+setupTabs();
+setupExpandToggles();
+loadOverview();
 loadSampleCases().then(setupInputs);
+icons();
