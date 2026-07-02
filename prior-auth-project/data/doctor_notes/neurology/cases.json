@@ -1,0 +1,240 @@
+[
+  {
+    "case_id": "GEN-0046",
+    "specialty": "neurology",
+    "note_text": "Patient: 70F presenting with relapsing relapsing remitting.\nConservative management including bracing, beta-blockers was attempted without adequate improvement.\nImaging studies confirm findings consistent with relapsing remitting.\nReferring neurology physician requests authorization for disease-modifying therapy.",
+    "gold": {
+      "age": 70,
+      "sex": "F",
+      "diagnosis": "relapsing relapsing remitting",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "bracing",
+        "beta-blockers"
+      ],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": "findings consistent with relapsing remitting",
+      "requested_procedure": "disease-modifying therapy",
+      "icd10_code": "G35",
+      "policy_id": "POL-NEURO-MS-016",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0047",
+    "specialty": "neurology",
+    "note_text": "Patient: 70F presenting with active relapsing remitting.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with relapsing remitting.\nReferring neurology physician requests authorization for disease-modifying therapy.",
+    "gold": {
+      "age": 70,
+      "sex": "F",
+      "diagnosis": "active relapsing remitting",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 0,
+      "imaging_evidence": "findings consistent with relapsing remitting",
+      "requested_procedure": "disease-modifying therapy",
+      "icd10_code": "G35",
+      "policy_id": "POL-NEURO-MS-016",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0048",
+    "specialty": "neurology",
+    "note_text": "Patient: 76M presenting with relapsing relapsing remitting.\nConservative management including dietary and lifestyle modification, physical therapy was attempted over approximately 16 weeks without adequate improvement.\nImaging studies confirm findings consistent with relapsing remitting.\nReferring neurology physician requests authorization for disease-modifying therapy.",
+    "gold": {
+      "age": 76,
+      "sex": "M",
+      "diagnosis": "relapsing relapsing remitting",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "dietary and lifestyle modification",
+        "physical therapy"
+      ],
+      "conservative_therapy_duration_weeks": 16,
+      "imaging_evidence": "findings consistent with relapsing remitting",
+      "requested_procedure": "disease-modifying therapy",
+      "icd10_code": "G35",
+      "policy_id": "POL-NEURO-MS-016",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0049",
+    "specialty": "neurology",
+    "note_text": "Patient: 36F presenting with seizure disorder.\nConservative management including activity modification, antiarrhythmic medication was attempted over approximately 9 weeks without adequate improvement.\nImaging studies confirm findings consistent with seizure disorder.\nReferring neurology physician requests authorization for epilepsy surgery.",
+    "gold": {
+      "age": 36,
+      "sex": "F",
+      "diagnosis": "seizure disorder",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "activity modification",
+        "antiarrhythmic medication"
+      ],
+      "conservative_therapy_duration_weeks": 9,
+      "imaging_evidence": "findings consistent with seizure disorder",
+      "requested_procedure": "epilepsy surgery",
+      "icd10_code": "G40.909",
+      "policy_id": "POL-NEURO-EPI-017",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0050",
+    "specialty": "neurology",
+    "note_text": "Patient: 38F presenting with seizure disorder.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with seizure disorder.\nReferring neurology physician requests authorization for epilepsy surgery.",
+    "gold": {
+      "age": 38,
+      "sex": "F",
+      "diagnosis": "seizure disorder",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 0,
+      "imaging_evidence": "findings consistent with seizure disorder",
+      "requested_procedure": "epilepsy surgery",
+      "icd10_code": "G40.909",
+      "policy_id": "POL-NEURO-EPI-017",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0051",
+    "specialty": "neurology",
+    "note_text": "Patient: 67M presenting with seizure disorder.\nConservative management including physical therapy, corticosteroid injection was attempted over approximately 8 weeks without adequate improvement.\nImaging workup is still pending.\nReferring neurology physician requests authorization for epilepsy surgery.",
+    "gold": {
+      "age": 67,
+      "sex": "M",
+      "diagnosis": "seizure disorder",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "physical therapy",
+        "corticosteroid injection"
+      ],
+      "conservative_therapy_duration_weeks": 8,
+      "imaging_evidence": null,
+      "requested_procedure": "epilepsy surgery",
+      "icd10_code": "G40.909",
+      "policy_id": "POL-NEURO-EPI-017",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0052",
+    "specialty": "neurology",
+    "note_text": "Patient: 75M presenting with frequent headache disorder.\nConservative management including dietary and lifestyle modification, activity modification was attempted over approximately 11 weeks without adequate improvement.\nImaging workup is still pending.\nReferring neurology physician requests authorization for cgrp inhibitor.",
+    "gold": {
+      "age": 75,
+      "sex": "M",
+      "diagnosis": "frequent headache disorder",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "dietary and lifestyle modification",
+        "activity modification"
+      ],
+      "conservative_therapy_duration_weeks": 11,
+      "imaging_evidence": null,
+      "requested_procedure": "cgrp inhibitor",
+      "icd10_code": "G43.909",
+      "policy_id": "POL-NEURO-MIG-018",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0053",
+    "specialty": "neurology",
+    "note_text": "Patient: 71F presenting with disabling headache disorder.\nConservative management including bracing was attempted over approximately 1 weeks without adequate improvement.\nImaging studies confirm findings consistent with headache disorder.\nReferring neurology physician requests authorization for cgrp inhibitor.",
+    "gold": {
+      "age": 71,
+      "sex": "F",
+      "diagnosis": "disabling headache disorder",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "bracing"
+      ],
+      "conservative_therapy_duration_weeks": 1,
+      "imaging_evidence": "findings consistent with headache disorder",
+      "requested_procedure": "cgrp inhibitor",
+      "icd10_code": "G43.909",
+      "policy_id": "POL-NEURO-MIG-018",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0054",
+    "specialty": "neurology",
+    "note_text": "Patient: 68F presenting with frequent headache disorder.\nNo conservative therapy has been documented yet.\nImaging workup is still pending.\nReferring neurology physician requests authorization for cgrp inhibitor.",
+    "gold": {
+      "age": 68,
+      "sex": "F",
+      "diagnosis": "frequent headache disorder",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": null,
+      "requested_procedure": "cgrp inhibitor",
+      "icd10_code": "G43.909",
+      "policy_id": "POL-NEURO-MIG-018",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0055",
+    "specialty": "neurology",
+    "note_text": "Patient: 38F presenting with refractory parkinson's disease.\nConservative management including beta-blockers, preventive medication trial was attempted over approximately 30 weeks without adequate improvement.\nImaging studies confirm findings consistent with parkinson's disease.\nReferring neurology physician requests authorization for deep brain stimulation.",
+    "gold": {
+      "age": 38,
+      "sex": "F",
+      "diagnosis": "refractory parkinson's disease",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "beta-blockers",
+        "preventive medication trial"
+      ],
+      "conservative_therapy_duration_weeks": 30,
+      "imaging_evidence": "findings consistent with parkinson's disease",
+      "requested_procedure": "deep brain stimulation",
+      "icd10_code": "G20",
+      "policy_id": "POL-NEURO-DBS-019",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0056",
+    "specialty": "neurology",
+    "note_text": "Patient: 32M presenting with refractory parkinson's disease.\nConservative management including antiarrhythmic medication was attempted over approximately 19 weeks without adequate improvement.\nImaging studies confirm findings consistent with parkinson's disease.\nReferring neurology physician requests authorization for deep brain stimulation.",
+    "gold": {
+      "age": 32,
+      "sex": "M",
+      "diagnosis": "refractory parkinson's disease",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "antiarrhythmic medication"
+      ],
+      "conservative_therapy_duration_weeks": 19,
+      "imaging_evidence": "findings consistent with parkinson's disease",
+      "requested_procedure": "deep brain stimulation",
+      "icd10_code": "G20",
+      "policy_id": "POL-NEURO-DBS-019",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0057",
+    "specialty": "neurology",
+    "note_text": "Patient: 36M presenting with dyskinesia parkinson's disease.\nNo conservative therapy has been documented yet.\nImaging workup is still pending.\nReferring neurology physician requests authorization for deep brain stimulation.",
+    "gold": {
+      "age": 36,
+      "sex": "M",
+      "diagnosis": "dyskinesia parkinson's disease",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 24,
+      "imaging_evidence": null,
+      "requested_procedure": "deep brain stimulation",
+      "icd10_code": "G20",
+      "policy_id": "POL-NEURO-DBS-019",
+      "variant": "varied"
+    }
+  }
+]

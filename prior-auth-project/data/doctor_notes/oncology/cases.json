@@ -1,0 +1,238 @@
+[
+  {
+    "case_id": "GEN-0034",
+    "specialty": "oncology",
+    "note_text": "Patient: 50F presenting with metastatic malignant neoplasm.\nConservative management including disease-modifying medication, NSAIDs was attempted without adequate improvement.\nImaging studies confirm findings consistent with malignant neoplasm.\nReferring oncology physician requests authorization for chemotherapy.",
+    "gold": {
+      "age": 50,
+      "sex": "F",
+      "diagnosis": "metastatic malignant neoplasm",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "disease-modifying medication",
+        "NSAIDs"
+      ],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": "findings consistent with malignant neoplasm",
+      "requested_procedure": "chemotherapy",
+      "icd10_code": "C18.9",
+      "policy_id": "POL-ONC-CHEMO-012",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0035",
+    "specialty": "oncology",
+    "note_text": "Patient: 31F presenting with locally advanced right malignant neoplasm.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with malignant neoplasm.\nReferring oncology physician requests authorization for chemotherapy.",
+    "gold": {
+      "age": 31,
+      "sex": "F",
+      "diagnosis": "locally advanced right malignant neoplasm",
+      "laterality": "right",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 0,
+      "imaging_evidence": "findings consistent with malignant neoplasm",
+      "requested_procedure": "chemotherapy",
+      "icd10_code": "C50.911",
+      "policy_id": "POL-ONC-CHEMO-012",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0036",
+    "specialty": "oncology",
+    "note_text": "Patient: 79M presenting with stage malignant neoplasm.\nNo conservative therapy has been documented yet.\nImaging workup is still pending.\nReferring oncology physician requests authorization for chemotherapy.",
+    "gold": {
+      "age": 79,
+      "sex": "M",
+      "diagnosis": "stage malignant neoplasm",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 2,
+      "imaging_evidence": null,
+      "requested_procedure": "chemotherapy",
+      "icd10_code": "C34.91",
+      "policy_id": "POL-ONC-CHEMO-012",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0037",
+    "specialty": "oncology",
+    "note_text": "Patient: 39F presenting with palliative malignant neoplasm.\nConservative management including activity modification, physical therapy was attempted without adequate improvement.\nImaging studies confirm findings consistent with malignant neoplasm.\nReferring oncology physician requests authorization for radiation therapy.",
+    "gold": {
+      "age": 39,
+      "sex": "F",
+      "diagnosis": "palliative malignant neoplasm",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "activity modification",
+        "physical therapy"
+      ],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": "findings consistent with malignant neoplasm",
+      "requested_procedure": "radiation therapy",
+      "icd10_code": "C34.92",
+      "policy_id": "POL-ONC-RT-013",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0038",
+    "specialty": "oncology",
+    "note_text": "Patient: 79M presenting with curative malignant neoplasm.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with malignant neoplasm.\nReferring oncology physician requests authorization for radiation therapy.",
+    "gold": {
+      "age": 79,
+      "sex": "M",
+      "diagnosis": "curative malignant neoplasm",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 0,
+      "imaging_evidence": "findings consistent with malignant neoplasm",
+      "requested_procedure": "radiation therapy",
+      "icd10_code": "C34.92",
+      "policy_id": "POL-ONC-RT-013",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0039",
+    "specialty": "oncology",
+    "note_text": "Patient: 33M presenting with malignant neoplasm.\nConservative management including disease-modifying medication was attempted over approximately 16 weeks without adequate improvement.\nImaging studies confirm findings consistent with malignant neoplasm.\nReferring oncology physician requests authorization for radiation therapy.",
+    "gold": {
+      "age": 33,
+      "sex": "M",
+      "diagnosis": "malignant neoplasm",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "disease-modifying medication"
+      ],
+      "conservative_therapy_duration_weeks": 16,
+      "imaging_evidence": "findings consistent with malignant neoplasm",
+      "requested_procedure": "radiation therapy",
+      "icd10_code": "C71.9",
+      "policy_id": "POL-ONC-RT-013",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0040",
+    "specialty": "oncology",
+    "note_text": "Patient: 38F presenting with suspected multiple myeloma.\nConservative management including beta-blockers, bracing was attempted without adequate improvement.\nImaging workup is still pending.\nReferring oncology physician requests authorization for pet scan.",
+    "gold": {
+      "age": 38,
+      "sex": "F",
+      "diagnosis": "suspected multiple myeloma",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "beta-blockers",
+        "bracing"
+      ],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": null,
+      "requested_procedure": "pet scan",
+      "icd10_code": "C90.00",
+      "policy_id": "POL-ONC-PET-014",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0041",
+    "specialty": "oncology",
+    "note_text": "Patient: 55F presenting with suspected non-hodgkin lymphoma.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with non-hodgkin lymphoma.\nReferring oncology physician requests authorization for pet scan.",
+    "gold": {
+      "age": 55,
+      "sex": "F",
+      "diagnosis": "suspected non-hodgkin lymphoma",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 0,
+      "imaging_evidence": "findings consistent with non-hodgkin lymphoma",
+      "requested_procedure": "pet scan",
+      "icd10_code": "C82.90",
+      "policy_id": "POL-ONC-PET-014",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0042",
+    "specialty": "oncology",
+    "note_text": "Patient: 41M presenting with non-hodgkin lymphoma.\nConservative management including antiarrhythmic medication, NSAIDs was attempted without adequate improvement.\nImaging studies confirm findings consistent with non-hodgkin lymphoma.\nReferring oncology physician requests authorization for pet scan.",
+    "gold": {
+      "age": 41,
+      "sex": "M",
+      "diagnosis": "non-hodgkin lymphoma",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "antiarrhythmic medication",
+        "NSAIDs"
+      ],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": "findings consistent with non-hodgkin lymphoma",
+      "requested_procedure": "pet scan",
+      "icd10_code": "C82.90",
+      "policy_id": "POL-ONC-PET-014",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0043",
+    "specialty": "oncology",
+    "note_text": "Patient: 31M presenting with acute lymphoblastic leukemia.\nConservative management including physical therapy, dietary and lifestyle modification was attempted over approximately 6 weeks without adequate improvement.\nImaging studies confirm findings consistent with acute lymphoblastic leukemia.\nReferring oncology physician requests authorization for targeted therapy.",
+    "gold": {
+      "age": 31,
+      "sex": "M",
+      "diagnosis": "acute lymphoblastic leukemia",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "physical therapy",
+        "dietary and lifestyle modification"
+      ],
+      "conservative_therapy_duration_weeks": 6,
+      "imaging_evidence": "findings consistent with acute lymphoblastic leukemia",
+      "requested_procedure": "targeted therapy",
+      "icd10_code": "C91.00",
+      "policy_id": "POL-ONC-TARG-015",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0044",
+    "specialty": "oncology",
+    "note_text": "Patient: 71M presenting with acute lymphoblastic leukemia.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with acute lymphoblastic leukemia.\nReferring oncology physician requests authorization for targeted therapy.",
+    "gold": {
+      "age": 71,
+      "sex": "M",
+      "diagnosis": "acute lymphoblastic leukemia",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 0,
+      "imaging_evidence": "findings consistent with acute lymphoblastic leukemia",
+      "requested_procedure": "targeted therapy",
+      "icd10_code": "C91.00",
+      "policy_id": "POL-ONC-TARG-015",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0045",
+    "specialty": "oncology",
+    "note_text": "Patient: 64M presenting with acute lymphoblastic leukemia.\nConservative management including physical therapy, beta-blockers was attempted without adequate improvement.\nImaging workup is still pending.\nReferring oncology physician requests authorization for targeted therapy.",
+    "gold": {
+      "age": 64,
+      "sex": "M",
+      "diagnosis": "acute lymphoblastic leukemia",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "physical therapy",
+        "beta-blockers"
+      ],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": null,
+      "requested_procedure": "targeted therapy",
+      "icd10_code": "C91.00",
+      "policy_id": "POL-ONC-TARG-015",
+      "variant": "varied"
+    }
+  }
+]

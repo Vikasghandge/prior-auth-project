@@ -1,0 +1,384 @@
+[
+  {
+    "policy_id": "POL-ORTHO-TKR-001",
+    "title": "Total Knee Replacement Medical Necessity Policy",
+    "specialty": "orthopedics",
+    "procedure_keywords": ["total knee replacement", "tkr", "knee arthroplasty", "knee replacement"],
+    "diagnosis_keywords": ["knee osteoarthritis", "degenerative joint disease knee", "knee oa"],
+    "criteria": [
+      {"id": "severe_oa_documented", "description": "Severe osteoarthritis documented", "check": "severity_keywords", "value": ["severe", "advanced", "end-stage"]},
+      {"id": "failed_conservative_12wk", "description": "Conservative therapy failed for at least 3 months (12 weeks)", "check": "min_conservative_weeks", "value": 12},
+      {"id": "imaging_confirms_degeneration", "description": "Imaging confirms advanced joint degeneration", "check": "imaging_required", "value": true}
+    ],
+    "policy_text": "Total knee replacement is medically necessary when severe osteoarthritis is documented, conservative therapy has failed for at least 3 months, and imaging confirms advanced joint degeneration."
+  },
+  {
+    "policy_id": "POL-ORTHO-THR-002",
+    "title": "Total Hip Replacement Medical Necessity Policy",
+    "specialty": "orthopedics",
+    "procedure_keywords": ["total hip replacement", "thr", "hip arthroplasty", "hip replacement"],
+    "diagnosis_keywords": ["hip osteoarthritis", "degenerative joint disease hip"],
+    "criteria": [
+      {"id": "severe_oa_documented", "description": "Severe osteoarthritis of the hip documented", "check": "severity_keywords", "value": ["severe", "advanced", "end-stage"]},
+      {"id": "failed_conservative_12wk", "description": "Conservative therapy failed for at least 3 months (12 weeks)", "check": "min_conservative_weeks", "value": 12},
+      {"id": "imaging_confirms_degeneration", "description": "Imaging confirms advanced joint-space narrowing", "check": "imaging_required", "value": true}
+    ],
+    "policy_text": "Total hip replacement is medically necessary when severe hip osteoarthritis is documented, conservative therapy has failed for at least 3 months, and imaging confirms advanced joint-space narrowing."
+  },
+  {
+    "policy_id": "POL-ORTHO-RCR-003",
+    "title": "Rotator Cuff Repair Medical Necessity Policy",
+    "specialty": "orthopedics",
+    "procedure_keywords": ["rotator cuff repair", "shoulder arthroscopy"],
+    "diagnosis_keywords": ["rotator cuff tear"],
+    "criteria": [
+      {"id": "imaging_confirms_tear", "description": "MRI confirms full or partial-thickness rotator cuff tear", "check": "imaging_required", "value": true},
+      {"id": "failed_conservative_6wk", "description": "Conservative therapy (PT/NSAIDs) failed for at least 6 weeks", "check": "min_conservative_weeks", "value": 6}
+    ],
+    "policy_text": "Rotator cuff repair is medically necessary when imaging confirms a tear and conservative therapy has failed for at least 6 weeks."
+  },
+  {
+    "policy_id": "POL-ORTHO-LSF-004",
+    "title": "Lumbar Spinal Fusion Medical Necessity Policy",
+    "specialty": "orthopedics",
+    "procedure_keywords": ["lumbar spinal fusion", "spinal fusion"],
+    "diagnosis_keywords": ["lumbar disc displacement", "spondylosis", "radiculopathy"],
+    "criteria": [
+      {"id": "severe_symptoms", "description": "Severe or disabling low back/radicular pain documented", "check": "severity_keywords", "value": ["severe", "disabling", "advanced"]},
+      {"id": "failed_conservative_24wk", "description": "Conservative therapy failed for at least 6 months (24 weeks)", "check": "min_conservative_weeks", "value": 24},
+      {"id": "imaging_confirms_pathology", "description": "Imaging confirms structural pathology correlating with symptoms", "check": "imaging_required", "value": true}
+    ],
+    "policy_text": "Lumbar spinal fusion is medically necessary when severe radicular symptoms are documented, conservative therapy has failed for at least 6 months, and imaging confirms correlating structural pathology."
+  },
+  {
+    "policy_id": "POL-ORTHO-ACL-005",
+    "title": "ACL Reconstruction Medical Necessity Policy",
+    "specialty": "orthopedics",
+    "procedure_keywords": ["acl reconstruction", "anterior cruciate ligament reconstruction"],
+    "diagnosis_keywords": ["acl tear", "acl sprain", "anterior cruciate ligament tear"],
+    "criteria": [
+      {"id": "imaging_confirms_tear", "description": "MRI confirms ACL tear/rupture", "check": "imaging_required", "value": true},
+      {"id": "instability_documented", "description": "Functional instability or failed conservative rehab documented", "check": "min_conservative_weeks", "value": 4}
+    ],
+    "policy_text": "ACL reconstruction is medically necessary when MRI confirms tear and functional instability persists despite at least 4 weeks of rehabilitation."
+  },
+  {
+    "policy_id": "POL-ORTHO-MEN-006",
+    "title": "Meniscus Repair Medical Necessity Policy",
+    "specialty": "orthopedics",
+    "procedure_keywords": ["meniscus repair", "meniscectomy", "knee arthroscopy"],
+    "diagnosis_keywords": ["meniscus tear"],
+    "criteria": [
+      {"id": "imaging_confirms_tear", "description": "MRI confirms meniscal tear", "check": "imaging_required", "value": true},
+      {"id": "failed_conservative_4wk", "description": "Conservative therapy failed for at least 4 weeks", "check": "min_conservative_weeks", "value": 4}
+    ],
+    "policy_text": "Meniscus repair is medically necessary when MRI confirms a meniscal tear and conservative therapy has failed for at least 4 weeks."
+  },
+  {
+    "policy_id": "POL-CARD-PCI-007",
+    "title": "Percutaneous Coronary Intervention (Stent) Policy",
+    "specialty": "cardiology",
+    "procedure_keywords": ["pci", "coronary stent", "angioplasty", "percutaneous coronary intervention"],
+    "diagnosis_keywords": ["coronary artery disease", "unstable angina", "myocardial infarction"],
+    "criteria": [
+      {"id": "significant_stenosis", "description": "Angiography confirms significant coronary stenosis", "check": "imaging_required", "value": true},
+      {"id": "symptomatic", "description": "Symptomatic ischemia despite optimal medical therapy", "check": "severity_keywords", "value": ["severe", "unstable", "refractory"]}
+    ],
+    "policy_text": "PCI is medically necessary when angiography confirms significant stenosis and the patient remains symptomatic despite optimal medical therapy."
+  },
+  {
+    "policy_id": "POL-CARD-CABG-008",
+    "title": "Coronary Artery Bypass Graft Policy",
+    "specialty": "cardiology",
+    "procedure_keywords": ["cabg", "coronary artery bypass graft", "bypass surgery"],
+    "diagnosis_keywords": ["multivessel coronary artery disease"],
+    "criteria": [
+      {"id": "multivessel_disease", "description": "Angiography confirms multivessel or left main disease", "check": "imaging_required", "value": true},
+      {"id": "failed_medical_therapy", "description": "Optimal medical therapy attempted and insufficient", "check": "min_conservative_weeks", "value": 4}
+    ],
+    "policy_text": "CABG is medically necessary when angiography confirms multivessel or left main disease not amenable to PCI and medical therapy is insufficient."
+  },
+  {
+    "policy_id": "POL-CARD-PACE-009",
+    "title": "Pacemaker Implantation Policy",
+    "specialty": "cardiology",
+    "procedure_keywords": ["pacemaker implantation", "permanent pacemaker"],
+    "diagnosis_keywords": ["heart block", "bradycardia", "sick sinus syndrome"],
+    "criteria": [
+      {"id": "documented_arrhythmia", "description": "Symptomatic bradyarrhythmia documented on ECG/monitor", "check": "imaging_required", "value": true}
+    ],
+    "policy_text": "Pacemaker implantation is medically necessary when a symptomatic bradyarrhythmia is documented."
+  },
+  {
+    "policy_id": "POL-CARD-ABL-010",
+    "title": "Catheter Ablation for Atrial Fibrillation Policy",
+    "specialty": "cardiology",
+    "procedure_keywords": ["catheter ablation", "afib ablation", "cardiac ablation"],
+    "diagnosis_keywords": ["atrial fibrillation"],
+    "criteria": [
+      {"id": "symptomatic_afib", "description": "Symptomatic atrial fibrillation documented", "check": "severity_keywords", "value": ["symptomatic", "recurrent", "persistent"]},
+      {"id": "failed_antiarrhythmic_4wk", "description": "Failed at least one antiarrhythmic drug trial", "check": "min_conservative_weeks", "value": 4}
+    ],
+    "policy_text": "Catheter ablation is medically necessary for symptomatic atrial fibrillation refractory to at least one antiarrhythmic drug trial."
+  },
+  {
+    "policy_id": "POL-CARD-TAVR-011",
+    "title": "Transcatheter Aortic Valve Replacement Policy",
+    "specialty": "cardiology",
+    "procedure_keywords": ["tavr", "transcatheter aortic valve replacement"],
+    "diagnosis_keywords": ["aortic stenosis"],
+    "criteria": [
+      {"id": "severe_as_documented", "description": "Echocardiogram confirms severe aortic stenosis", "check": "imaging_required", "value": true},
+      {"id": "symptomatic", "description": "Symptomatic per NYHA class or high surgical risk", "check": "severity_keywords", "value": ["severe", "symptomatic", "high-risk"]}
+    ],
+    "policy_text": "TAVR is medically necessary when echocardiography confirms severe aortic stenosis with symptoms or high surgical risk for open valve replacement."
+  },
+  {
+    "policy_id": "POL-ONC-CHEMO-012",
+    "title": "Systemic Chemotherapy Authorization Policy",
+    "specialty": "oncology",
+    "procedure_keywords": ["chemotherapy", "systemic chemotherapy", "cytotoxic therapy"],
+    "diagnosis_keywords": ["malignant neoplasm", "cancer"],
+    "criteria": [
+      {"id": "pathology_confirmed", "description": "Pathology/biopsy confirms malignancy", "check": "imaging_required", "value": true},
+      {"id": "staging_documented", "description": "Staging workup documented", "check": "severity_keywords", "value": ["stage", "metastatic", "locally advanced"]}
+    ],
+    "policy_text": "Systemic chemotherapy is medically necessary when biopsy confirms malignancy and disease staging is documented."
+  },
+  {
+    "policy_id": "POL-ONC-RT-013",
+    "title": "Radiation Therapy Authorization Policy",
+    "specialty": "oncology",
+    "procedure_keywords": ["radiation therapy", "radiotherapy", "imrt"],
+    "diagnosis_keywords": ["malignant neoplasm", "cancer"],
+    "criteria": [
+      {"id": "pathology_confirmed", "description": "Pathology confirms malignancy in the target field", "check": "imaging_required", "value": true},
+      {"id": "tumor_board_reviewed", "description": "Case reviewed with defined treatment intent (curative/palliative)", "check": "severity_keywords", "value": ["curative", "palliative", "stage"]}
+    ],
+    "policy_text": "Radiation therapy is medically necessary when pathology confirms malignancy and a defined treatment intent is documented."
+  },
+  {
+    "policy_id": "POL-ONC-PET-014",
+    "title": "PET Scan Authorization Policy",
+    "specialty": "oncology",
+    "procedure_keywords": ["pet scan", "pet-ct"],
+    "diagnosis_keywords": ["cancer staging", "malignant neoplasm"],
+    "criteria": [
+      {"id": "diagnosis_established", "description": "Cancer diagnosis established or strongly suspected", "check": "severity_keywords", "value": ["suspected", "confirmed", "stage"]}
+    ],
+    "policy_text": "PET-CT is medically necessary for initial staging or suspected recurrence of an established or strongly suspected malignancy."
+  },
+  {
+    "policy_id": "POL-ONC-TARG-015",
+    "title": "Targeted Therapy Authorization Policy",
+    "specialty": "oncology",
+    "procedure_keywords": ["targeted therapy", "biologic oncology therapy"],
+    "diagnosis_keywords": ["malignant neoplasm with biomarker"],
+    "criteria": [
+      {"id": "biomarker_confirmed", "description": "Biomarker/mutation testing confirms target", "check": "imaging_required", "value": true},
+      {"id": "prior_line_failed", "description": "Prior standard therapy failed or is contraindicated", "check": "min_conservative_weeks", "value": 4}
+    ],
+    "policy_text": "Targeted therapy is medically necessary when biomarker testing confirms an actionable target and prior standard therapy failed or is contraindicated."
+  },
+  {
+    "policy_id": "POL-NEURO-MS-016",
+    "title": "Disease-Modifying Therapy for Multiple Sclerosis Policy",
+    "specialty": "neurology",
+    "procedure_keywords": ["disease-modifying therapy", "dmt", "ms biologic therapy"],
+    "diagnosis_keywords": ["multiple sclerosis"],
+    "criteria": [
+      {"id": "mri_confirms_lesions", "description": "MRI confirms demyelinating lesions consistent with MS", "check": "imaging_required", "value": true},
+      {"id": "relapsing_course", "description": "Relapsing or active disease course documented", "check": "severity_keywords", "value": ["relapsing", "active", "progressive"]}
+    ],
+    "policy_text": "DMT is medically necessary when MRI confirms demyelinating lesions and a relapsing or active MS course is documented."
+  },
+  {
+    "policy_id": "POL-NEURO-EPI-017",
+    "title": "Epilepsy Surgery Evaluation Policy",
+    "specialty": "neurology",
+    "procedure_keywords": ["epilepsy surgery", "temporal lobectomy"],
+    "diagnosis_keywords": ["epilepsy", "seizure disorder"],
+    "criteria": [
+      {"id": "drug_resistant", "description": "Seizures refractory to at least two anti-epileptic drugs", "check": "min_conservative_weeks", "value": 8},
+      {"id": "eeg_localization", "description": "EEG/MRI localizes seizure focus", "check": "imaging_required", "value": true}
+    ],
+    "policy_text": "Epilepsy surgery evaluation is medically necessary when seizures are drug-resistant and imaging/EEG localizes a seizure focus."
+  },
+  {
+    "policy_id": "POL-NEURO-MIG-018",
+    "title": "CGRP Inhibitor for Chronic Migraine Policy",
+    "specialty": "neurology",
+    "procedure_keywords": ["cgrp inhibitor", "migraine biologic therapy"],
+    "diagnosis_keywords": ["chronic migraine"],
+    "criteria": [
+      {"id": "chronic_frequency", "description": "At least 15 headache days per month documented", "check": "severity_keywords", "value": ["chronic", "frequent", "disabling"]},
+      {"id": "failed_two_preventives", "description": "Failed at least two preventive medication classes", "check": "min_conservative_weeks", "value": 8}
+    ],
+    "policy_text": "CGRP inhibitor therapy is medically necessary for chronic migraine after failure of at least two preventive medication classes."
+  },
+  {
+    "policy_id": "POL-NEURO-DBS-019",
+    "title": "Deep Brain Stimulation for Parkinson's Disease Policy",
+    "specialty": "neurology",
+    "procedure_keywords": ["deep brain stimulation", "dbs"],
+    "diagnosis_keywords": ["parkinson's disease"],
+    "criteria": [
+      {"id": "motor_fluctuations", "description": "Motor fluctuations/dyskinesia despite optimized medication", "check": "severity_keywords", "value": ["fluctuations", "dyskinesia", "refractory"]},
+      {"id": "failed_medical_therapy", "description": "Optimized medical therapy trialed for at least 6 months (24 weeks)", "check": "min_conservative_weeks", "value": 24}
+    ],
+    "policy_text": "DBS is medically necessary when motor fluctuations persist despite optimized medical therapy trialed for at least 6 months."
+  },
+  {
+    "policy_id": "POL-GI-BIO-020",
+    "title": "Biologic Therapy for Inflammatory Bowel Disease Policy",
+    "specialty": "gastroenterology",
+    "procedure_keywords": ["biologic therapy", "anti-tnf therapy", "infliximab", "adalimumab"],
+    "diagnosis_keywords": ["crohn's disease", "ulcerative colitis"],
+    "criteria": [
+      {"id": "endoscopy_confirms", "description": "Endoscopy/colonoscopy confirms active disease", "check": "imaging_required", "value": true},
+      {"id": "failed_conventional_8wk", "description": "Failed conventional therapy (steroids/immunomodulators) for at least 8 weeks", "check": "min_conservative_weeks", "value": 8}
+    ],
+    "policy_text": "Biologic therapy is medically necessary when endoscopy confirms active IBD and conventional therapy has failed for at least 8 weeks."
+  },
+  {
+    "policy_id": "POL-GI-BAR-021",
+    "title": "Bariatric Surgery Medical Necessity Policy",
+    "specialty": "gastroenterology",
+    "procedure_keywords": ["bariatric surgery", "gastric bypass", "sleeve gastrectomy"],
+    "diagnosis_keywords": ["morbid obesity"],
+    "criteria": [
+      {"id": "bmi_documented", "description": "BMI and comorbidity criteria documented", "check": "severity_keywords", "value": ["severe", "morbid", "comorbid"]},
+      {"id": "supervised_diet_24wk", "description": "Physician-supervised weight management for at least 6 months (24 weeks)", "check": "min_conservative_weeks", "value": 24}
+    ],
+    "policy_text": "Bariatric surgery is medically necessary when BMI/comorbidity criteria are documented and supervised weight management for at least 6 months has failed."
+  },
+  {
+    "policy_id": "POL-GI-ERCP-022",
+    "title": "ERCP Authorization Policy",
+    "specialty": "gastroenterology",
+    "procedure_keywords": ["ercp", "endoscopic retrograde cholangiopancreatography"],
+    "diagnosis_keywords": ["choledocholithiasis", "biliary obstruction"],
+    "criteria": [
+      {"id": "imaging_confirms_obstruction", "description": "Imaging confirms biliary/pancreatic duct obstruction", "check": "imaging_required", "value": true}
+    ],
+    "policy_text": "ERCP is medically necessary when imaging confirms biliary or pancreatic duct obstruction."
+  },
+  {
+    "policy_id": "POL-GI-LIVER-023",
+    "title": "Liver Transplant Evaluation Policy",
+    "specialty": "gastroenterology",
+    "procedure_keywords": ["liver transplant evaluation", "liver transplantation"],
+    "diagnosis_keywords": ["cirrhosis", "end-stage liver disease"],
+    "criteria": [
+      {"id": "decompensated_disease", "description": "Decompensated cirrhosis/end-stage liver disease documented", "check": "severity_keywords", "value": ["decompensated", "end-stage", "severe"]},
+      {"id": "imaging_confirms", "description": "Imaging/labs confirm advanced liver disease", "check": "imaging_required", "value": true}
+    ],
+    "policy_text": "Liver transplant evaluation is medically necessary for documented decompensated or end-stage liver disease confirmed by imaging/labs."
+  },
+  {
+    "policy_id": "POL-RARE-ERT-GAUCHER-024",
+    "title": "Enzyme Replacement Therapy for Gaucher Disease Policy",
+    "specialty": "rare_disease",
+    "procedure_keywords": ["enzyme replacement therapy", "imiglucerase"],
+    "diagnosis_keywords": ["gaucher disease"],
+    "criteria": [
+      {"id": "genetic_or_enzyme_confirmation", "description": "Genetic testing or enzyme assay confirms diagnosis", "check": "imaging_required", "value": true},
+      {"id": "symptomatic_disease", "description": "Symptomatic organomegaly, cytopenia, or bone disease documented", "check": "severity_keywords", "value": ["symptomatic", "confirmed"]}
+    ],
+    "policy_text": "Enzyme replacement therapy is medically necessary when enzyme assay/genetic testing confirms Gaucher disease with symptomatic manifestations."
+  },
+  {
+    "policy_id": "POL-RARE-ERT-FABRY-025",
+    "title": "Enzyme Replacement Therapy for Fabry Disease Policy",
+    "specialty": "rare_disease",
+    "procedure_keywords": ["enzyme replacement therapy", "agalsidase"],
+    "diagnosis_keywords": ["fabry disease"],
+    "criteria": [
+      {"id": "genetic_confirmation", "description": "Genetic testing confirms GLA mutation", "check": "imaging_required", "value": true},
+      {"id": "symptomatic_disease", "description": "Symptomatic renal, cardiac, or neuropathic manifestations documented", "check": "severity_keywords", "value": ["symptomatic", "confirmed"]}
+    ],
+    "policy_text": "Enzyme replacement therapy is medically necessary when genetic testing confirms Fabry disease with symptomatic organ involvement."
+  },
+  {
+    "policy_id": "POL-RARE-ERT-POMPE-026",
+    "title": "Enzyme Replacement Therapy for Pompe Disease Policy",
+    "specialty": "rare_disease",
+    "procedure_keywords": ["enzyme replacement therapy", "alglucosidase alfa"],
+    "diagnosis_keywords": ["pompe disease"],
+    "criteria": [
+      {"id": "genetic_or_enzyme_confirmation", "description": "Genetic testing or enzyme assay confirms diagnosis", "check": "imaging_required", "value": true},
+      {"id": "muscle_or_respiratory_involvement", "description": "Muscle weakness or respiratory involvement documented", "check": "severity_keywords", "value": ["weakness", "respiratory", "confirmed"]}
+    ],
+    "policy_text": "Enzyme replacement therapy is medically necessary when testing confirms Pompe disease with muscle or respiratory involvement."
+  },
+  {
+    "policy_id": "POL-RARE-ALS-DME-027",
+    "title": "Assistive Communication/Mobility Device for ALS Policy",
+    "specialty": "rare_disease",
+    "procedure_keywords": ["assistive device", "durable medical equipment", "speech generating device"],
+    "diagnosis_keywords": ["amyotrophic lateral sclerosis", "als"],
+    "criteria": [
+      {"id": "diagnosis_confirmed", "description": "Neurology confirms ALS diagnosis via EMG/clinical criteria", "check": "imaging_required", "value": true},
+      {"id": "functional_decline", "description": "Documented functional decline affecting speech or mobility", "check": "severity_keywords", "value": ["progressive", "declining", "confirmed"]}
+    ],
+    "policy_text": "Assistive devices are medically necessary when ALS diagnosis is confirmed and functional decline affecting speech or mobility is documented."
+  },
+  {
+    "policy_id": "POL-RARE-IPF-ANTIFIB-028",
+    "title": "Antifibrotic Therapy for Idiopathic Pulmonary Fibrosis Policy",
+    "specialty": "rare_disease",
+    "procedure_keywords": ["antifibrotic therapy", "pirfenidone", "nintedanib"],
+    "diagnosis_keywords": ["idiopathic pulmonary fibrosis"],
+    "criteria": [
+      {"id": "hrct_confirms_uip", "description": "High-resolution CT confirms usual interstitial pneumonia pattern", "check": "imaging_required", "value": true},
+      {"id": "other_causes_excluded", "description": "Other causes of interstitial lung disease excluded", "check": "severity_keywords", "value": ["confirmed", "excluded", "idiopathic"]}
+    ],
+    "policy_text": "Antifibrotic therapy is medically necessary when HRCT confirms a UIP pattern and other causes of ILD have been excluded."
+  },
+  {
+    "policy_id": "POL-RARE-MG-IVIG-029",
+    "title": "IVIG Therapy for Myasthenia Gravis Policy",
+    "specialty": "rare_disease",
+    "procedure_keywords": ["ivig therapy", "intravenous immunoglobulin"],
+    "diagnosis_keywords": ["myasthenia gravis"],
+    "criteria": [
+      {"id": "antibody_or_emg_confirmation", "description": "Antibody testing or EMG confirms diagnosis", "check": "imaging_required", "value": true},
+      {"id": "refractory_or_crisis", "description": "Refractory symptoms or myasthenic crisis documented", "check": "severity_keywords", "value": ["refractory", "crisis", "confirmed"]}
+    ],
+    "policy_text": "IVIG therapy is medically necessary when myasthenia gravis is confirmed by antibody/EMG testing with refractory symptoms or crisis."
+  },
+  {
+    "policy_id": "POL-RARE-WILSON-CHELATION-030",
+    "title": "Chelation Therapy for Wilson's Disease Policy",
+    "specialty": "rare_disease",
+    "procedure_keywords": ["chelation therapy", "penicillamine", "trientine"],
+    "diagnosis_keywords": ["wilson's disease"],
+    "criteria": [
+      {"id": "diagnostic_confirmation", "description": "Ceruloplasmin/24-hour urine copper or genetic testing confirms diagnosis", "check": "imaging_required", "value": true},
+      {"id": "hepatic_or_neuro_involvement", "description": "Hepatic or neurological involvement documented", "check": "severity_keywords", "value": ["confirmed", "documented", "involvement"]}
+    ],
+    "policy_text": "Chelation therapy is medically necessary when Wilson's disease is confirmed by copper studies/genetic testing with hepatic or neurologic involvement."
+  },
+  {
+    "policy_id": "POL-GEN-PT-031",
+    "title": "Extended Physical Therapy Authorization Policy",
+    "specialty": "general",
+    "procedure_keywords": ["extended physical therapy", "additional pt sessions"],
+    "diagnosis_keywords": ["musculoskeletal pain"],
+    "criteria": [
+      {"id": "functional_deficit_documented", "description": "Functional deficit documented by treating clinician", "check": "severity_keywords", "value": ["documented", "functional", "deficit"]}
+    ],
+    "policy_text": "Extended physical therapy is medically necessary when a functional deficit is documented by the treating clinician."
+  },
+  {
+    "policy_id": "POL-GEN-DME-KNEE-032",
+    "title": "Knee Brace Durable Medical Equipment Policy",
+    "specialty": "general",
+    "procedure_keywords": ["knee brace", "durable medical equipment"],
+    "diagnosis_keywords": ["knee instability", "knee osteoarthritis"],
+    "criteria": [
+      {"id": "instability_documented", "description": "Joint instability or offloading need documented", "check": "severity_keywords", "value": ["documented", "instability"]}
+    ],
+    "policy_text": "A knee brace is medically necessary when joint instability or an offloading need is documented."
+  }
+]

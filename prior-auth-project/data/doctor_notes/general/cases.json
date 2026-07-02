@@ -1,0 +1,120 @@
+[
+  {
+    "case_id": "GEN-0070",
+    "specialty": "general",
+    "note_text": "Patient: 40F presenting with deficit radiculopathy.\nConservative management including beta-blockers, corticosteroid injection was attempted without adequate improvement.\nImaging workup is still pending.\nReferring general physician requests authorization for extended physical therapy.",
+    "gold": {
+      "age": 40,
+      "sex": "F",
+      "diagnosis": "deficit radiculopathy",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "beta-blockers",
+        "corticosteroid injection"
+      ],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": null,
+      "requested_procedure": "extended physical therapy",
+      "icd10_code": "M54.16",
+      "policy_id": "POL-GEN-PT-031",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0071",
+    "specialty": "general",
+    "note_text": "Patient: 63M presenting with functional radiculopathy.\nNo conservative therapy has been documented yet.\nImaging workup is still pending.\nReferring general physician requests authorization for extended physical therapy.",
+    "gold": {
+      "age": 63,
+      "sex": "M",
+      "diagnosis": "functional radiculopathy",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 0,
+      "imaging_evidence": null,
+      "requested_procedure": "extended physical therapy",
+      "icd10_code": "M54.16",
+      "policy_id": "POL-GEN-PT-031",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0072",
+    "specialty": "general",
+    "note_text": "Patient: 55F presenting with radiculopathy.\nConservative management including immunomodulator therapy was attempted over approximately 16 weeks without adequate improvement.\nImaging studies confirm findings consistent with radiculopathy.\nReferring general physician requests authorization for extended physical therapy.",
+    "gold": {
+      "age": 55,
+      "sex": "F",
+      "diagnosis": "radiculopathy",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "immunomodulator therapy"
+      ],
+      "conservative_therapy_duration_weeks": 16,
+      "imaging_evidence": "findings consistent with radiculopathy",
+      "requested_procedure": "extended physical therapy",
+      "icd10_code": "M54.16",
+      "policy_id": "POL-GEN-PT-031",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0073",
+    "specialty": "general",
+    "note_text": "Patient: 70M presenting with instability osteoarthritis.\nConservative management including preventive medication trial, dietary and lifestyle modification was attempted without adequate improvement.\nImaging workup is still pending.\nReferring general physician requests authorization for knee brace.",
+    "gold": {
+      "age": 70,
+      "sex": "M",
+      "diagnosis": "instability osteoarthritis",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "preventive medication trial",
+        "dietary and lifestyle modification"
+      ],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": null,
+      "requested_procedure": "knee brace",
+      "icd10_code": "M17.10",
+      "policy_id": "POL-GEN-DME-KNEE-032",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0074",
+    "specialty": "general",
+    "note_text": "Patient: 80M presenting with instability osteoarthritis.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with osteoarthritis.\nReferring general physician requests authorization for knee brace.",
+    "gold": {
+      "age": 80,
+      "sex": "M",
+      "diagnosis": "instability osteoarthritis",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 0,
+      "imaging_evidence": "findings consistent with osteoarthritis",
+      "requested_procedure": "knee brace",
+      "icd10_code": "M17.10",
+      "policy_id": "POL-GEN-DME-KNEE-032",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0075",
+    "specialty": "general",
+    "note_text": "Patient: 37M presenting with osteoarthritis.\nConservative management including dietary and lifestyle modification was attempted over approximately 2 weeks without adequate improvement.\nImaging studies confirm findings consistent with osteoarthritis.\nReferring general physician requests authorization for knee brace.",
+    "gold": {
+      "age": 37,
+      "sex": "M",
+      "diagnosis": "osteoarthritis",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "dietary and lifestyle modification"
+      ],
+      "conservative_therapy_duration_weeks": 2,
+      "imaging_evidence": "findings consistent with osteoarthritis",
+      "requested_procedure": "knee brace",
+      "icd10_code": "M17.10",
+      "policy_id": "POL-GEN-DME-KNEE-032",
+      "variant": "varied"
+    }
+  }
+]

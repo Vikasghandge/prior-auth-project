@@ -1,0 +1,300 @@
+[
+  {
+    "case_id": "GEN-0019",
+    "specialty": "cardiology",
+    "note_text": "Patient: 68M presenting with refractory coronary artery disease.\nConservative management including beta-blockers, dietary and lifestyle modification was attempted without adequate improvement.\nImaging studies confirm findings consistent with coronary artery disease.\nReferring cardiology physician requests authorization for pci.",
+    "gold": {
+      "age": 68,
+      "sex": "M",
+      "diagnosis": "refractory coronary artery disease",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "beta-blockers",
+        "dietary and lifestyle modification"
+      ],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": "findings consistent with coronary artery disease",
+      "requested_procedure": "pci",
+      "icd10_code": "I25.10",
+      "policy_id": "POL-CARD-PCI-007",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0020",
+    "specialty": "cardiology",
+    "note_text": "Patient: 52F presenting with refractory coronary artery disease.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with coronary artery disease.\nReferring cardiology physician requests authorization for pci.",
+    "gold": {
+      "age": 52,
+      "sex": "F",
+      "diagnosis": "refractory coronary artery disease",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 0,
+      "imaging_evidence": "findings consistent with coronary artery disease",
+      "requested_procedure": "pci",
+      "icd10_code": "I25.10",
+      "policy_id": "POL-CARD-PCI-007",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0021",
+    "specialty": "cardiology",
+    "note_text": "Patient: 61F presenting with unstable angina.\nConservative management including physical therapy, preventive medication trial was attempted without adequate improvement.\nImaging workup is still pending.\nReferring cardiology physician requests authorization for pci.",
+    "gold": {
+      "age": 61,
+      "sex": "F",
+      "diagnosis": "unstable angina",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "physical therapy",
+        "preventive medication trial"
+      ],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": null,
+      "requested_procedure": "pci",
+      "icd10_code": "I20.0",
+      "policy_id": "POL-CARD-PCI-007",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0022",
+    "specialty": "cardiology",
+    "note_text": "Patient: 46F presenting with coronary artery disease.\nConservative management including disease-modifying medication, NSAIDs was attempted over approximately 6 weeks without adequate improvement.\nImaging studies confirm findings consistent with coronary artery disease.\nReferring cardiology physician requests authorization for cabg.",
+    "gold": {
+      "age": 46,
+      "sex": "F",
+      "diagnosis": "coronary artery disease",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "disease-modifying medication",
+        "NSAIDs"
+      ],
+      "conservative_therapy_duration_weeks": 6,
+      "imaging_evidence": "findings consistent with coronary artery disease",
+      "requested_procedure": "cabg",
+      "icd10_code": "I25.10",
+      "policy_id": "POL-CARD-CABG-008",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0023",
+    "specialty": "cardiology",
+    "note_text": "Patient: 60M presenting with coronary artery disease.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with coronary artery disease.\nReferring cardiology physician requests authorization for cabg.",
+    "gold": {
+      "age": 60,
+      "sex": "M",
+      "diagnosis": "coronary artery disease",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 0,
+      "imaging_evidence": "findings consistent with coronary artery disease",
+      "requested_procedure": "cabg",
+      "icd10_code": "I25.10",
+      "policy_id": "POL-CARD-CABG-008",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0024",
+    "specialty": "cardiology",
+    "note_text": "Patient: 81M presenting with coronary artery disease.\nConservative management including corticosteroid injection was attempted over approximately 2 weeks without adequate improvement.\nImaging studies confirm findings consistent with coronary artery disease.\nReferring cardiology physician requests authorization for cabg.",
+    "gold": {
+      "age": 81,
+      "sex": "M",
+      "diagnosis": "coronary artery disease",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "corticosteroid injection"
+      ],
+      "conservative_therapy_duration_weeks": 2,
+      "imaging_evidence": "findings consistent with coronary artery disease",
+      "requested_procedure": "cabg",
+      "icd10_code": "I25.10",
+      "policy_id": "POL-CARD-CABG-008",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0025",
+    "specialty": "cardiology",
+    "note_text": "Patient: 29M presenting with irregular heartbeat.\nConservative management including antiarrhythmic medication, bracing was attempted without adequate improvement.\nImaging studies confirm findings consistent with irregular heartbeat.\nReferring cardiology physician requests authorization for pacemaker implantation.",
+    "gold": {
+      "age": 29,
+      "sex": "M",
+      "diagnosis": "irregular heartbeat",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "antiarrhythmic medication",
+        "bracing"
+      ],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": "findings consistent with irregular heartbeat",
+      "requested_procedure": "pacemaker implantation",
+      "icd10_code": "I49.9",
+      "policy_id": "POL-CARD-PACE-009",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0026",
+    "specialty": "cardiology",
+    "note_text": "Patient: 31M presenting with irregular heartbeat.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with irregular heartbeat.\nReferring cardiology physician requests authorization for pacemaker implantation.",
+    "gold": {
+      "age": 31,
+      "sex": "M",
+      "diagnosis": "irregular heartbeat",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 0,
+      "imaging_evidence": "findings consistent with irregular heartbeat",
+      "requested_procedure": "pacemaker implantation",
+      "icd10_code": "I49.9",
+      "policy_id": "POL-CARD-PACE-009",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0027",
+    "specialty": "cardiology",
+    "note_text": "Patient: 33F presenting with irregular heartbeat.\nConservative management including corticosteroid injection, immunomodulator therapy was attempted without adequate improvement.\nImaging workup is still pending.\nReferring cardiology physician requests authorization for pacemaker implantation.",
+    "gold": {
+      "age": 33,
+      "sex": "F",
+      "diagnosis": "irregular heartbeat",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "corticosteroid injection",
+        "immunomodulator therapy"
+      ],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": null,
+      "requested_procedure": "pacemaker implantation",
+      "icd10_code": "I49.9",
+      "policy_id": "POL-CARD-PACE-009",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0028",
+    "specialty": "cardiology",
+    "note_text": "Patient: 61F presenting with symptomatic atrial fibrillation.\nConservative management including activity modification, bracing was attempted over approximately 9 weeks without adequate improvement.\nImaging workup is still pending.\nReferring cardiology physician requests authorization for catheter ablation.",
+    "gold": {
+      "age": 61,
+      "sex": "F",
+      "diagnosis": "symptomatic atrial fibrillation",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "activity modification",
+        "bracing"
+      ],
+      "conservative_therapy_duration_weeks": 9,
+      "imaging_evidence": null,
+      "requested_procedure": "catheter ablation",
+      "icd10_code": "I48.91",
+      "policy_id": "POL-CARD-ABL-010",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0029",
+    "specialty": "cardiology",
+    "note_text": "Patient: 56F presenting with symptomatic atrial fibrillation.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with atrial fibrillation.\nReferring cardiology physician requests authorization for catheter ablation.",
+    "gold": {
+      "age": 56,
+      "sex": "F",
+      "diagnosis": "symptomatic atrial fibrillation",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 0,
+      "imaging_evidence": "findings consistent with atrial fibrillation",
+      "requested_procedure": "catheter ablation",
+      "icd10_code": "I48.91",
+      "policy_id": "POL-CARD-ABL-010",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0030",
+    "specialty": "cardiology",
+    "note_text": "Patient: 49M presenting with persistent atrial fibrillation.\nConservative management including activity modification, NSAIDs was attempted over approximately 2 weeks without adequate improvement.\nImaging studies confirm findings consistent with atrial fibrillation.\nReferring cardiology physician requests authorization for catheter ablation.",
+    "gold": {
+      "age": 49,
+      "sex": "M",
+      "diagnosis": "persistent atrial fibrillation",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "activity modification",
+        "NSAIDs"
+      ],
+      "conservative_therapy_duration_weeks": 2,
+      "imaging_evidence": "findings consistent with atrial fibrillation",
+      "requested_procedure": "catheter ablation",
+      "icd10_code": "I48.91",
+      "policy_id": "POL-CARD-ABL-010",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0031",
+    "specialty": "cardiology",
+    "note_text": "Patient: 32M presenting with symptomatic aortic stenosis.\nConservative management including physical therapy, preventive medication trial was attempted without adequate improvement.\nImaging studies confirm findings consistent with aortic stenosis.\nReferring cardiology physician requests authorization for tavr.",
+    "gold": {
+      "age": 32,
+      "sex": "M",
+      "diagnosis": "symptomatic aortic stenosis",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "physical therapy",
+        "preventive medication trial"
+      ],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": "findings consistent with aortic stenosis",
+      "requested_procedure": "tavr",
+      "icd10_code": "I35.0",
+      "policy_id": "POL-CARD-TAVR-011",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0032",
+    "specialty": "cardiology",
+    "note_text": "Patient: 45F presenting with severe aortic stenosis.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with aortic stenosis.\nReferring cardiology physician requests authorization for tavr.",
+    "gold": {
+      "age": 45,
+      "sex": "F",
+      "diagnosis": "severe aortic stenosis",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 0,
+      "imaging_evidence": "findings consistent with aortic stenosis",
+      "requested_procedure": "tavr",
+      "icd10_code": "I35.0",
+      "policy_id": "POL-CARD-TAVR-011",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0033",
+    "specialty": "cardiology",
+    "note_text": "Patient: 74F presenting with severe aortic stenosis.\nConservative management including activity modification was attempted over approximately 16 weeks without adequate improvement.\nImaging studies confirm findings consistent with aortic stenosis.\nReferring cardiology physician requests authorization for tavr.",
+    "gold": {
+      "age": 74,
+      "sex": "F",
+      "diagnosis": "severe aortic stenosis",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "activity modification"
+      ],
+      "conservative_therapy_duration_weeks": 16,
+      "imaging_evidence": "findings consistent with aortic stenosis",
+      "requested_procedure": "tavr",
+      "icd10_code": "I35.0",
+      "policy_id": "POL-CARD-TAVR-011",
+      "variant": "varied"
+    }
+  }
+]

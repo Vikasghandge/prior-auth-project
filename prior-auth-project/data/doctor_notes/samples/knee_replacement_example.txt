@@ -1,0 +1,3 @@
+Patient: 64F with severe right knee pain for 18 months.
+X-ray shows advanced osteoarthritis. Failed NSAIDs, physiotherapy, and intra-articular steroid injection.
+Orthopedic surgeon recommends total knee replacement.

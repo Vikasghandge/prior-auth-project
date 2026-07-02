@@ -1,0 +1,246 @@
+[
+  {
+    "case_id": "GEN-0058",
+    "specialty": "gastroenterology",
+    "note_text": "Patient: 70M presenting with inflammatory bowel disease.\nConservative management including preventive medication trial, beta-blockers was attempted over approximately 11 weeks without adequate improvement.\nImaging studies confirm findings consistent with inflammatory bowel disease.\nReferring gastroenterology physician requests authorization for biologic therapy.",
+    "gold": {
+      "age": 70,
+      "sex": "M",
+      "diagnosis": "inflammatory bowel disease",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "preventive medication trial",
+        "beta-blockers"
+      ],
+      "conservative_therapy_duration_weeks": 11,
+      "imaging_evidence": "findings consistent with inflammatory bowel disease",
+      "requested_procedure": "biologic therapy",
+      "icd10_code": "K50.90",
+      "policy_id": "POL-GI-BIO-020",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0059",
+    "specialty": "gastroenterology",
+    "note_text": "Patient: 43M presenting with inflammatory bowel disease.\nConservative management including beta-blockers was attempted over approximately 3 weeks without adequate improvement.\nImaging studies confirm findings consistent with inflammatory bowel disease.\nReferring gastroenterology physician requests authorization for biologic therapy.",
+    "gold": {
+      "age": 43,
+      "sex": "M",
+      "diagnosis": "inflammatory bowel disease",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "beta-blockers"
+      ],
+      "conservative_therapy_duration_weeks": 3,
+      "imaging_evidence": "findings consistent with inflammatory bowel disease",
+      "requested_procedure": "biologic therapy",
+      "icd10_code": "K50.90",
+      "policy_id": "POL-GI-BIO-020",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0060",
+    "specialty": "gastroenterology",
+    "note_text": "Patient: 39F presenting with inflammatory bowel disease.\nConservative management including activity modification, bracing was attempted over approximately 18 weeks without adequate improvement.\nImaging studies confirm findings consistent with inflammatory bowel disease.\nReferring gastroenterology physician requests authorization for biologic therapy.",
+    "gold": {
+      "age": 39,
+      "sex": "F",
+      "diagnosis": "inflammatory bowel disease",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "activity modification",
+        "bracing"
+      ],
+      "conservative_therapy_duration_weeks": 18,
+      "imaging_evidence": "findings consistent with inflammatory bowel disease",
+      "requested_procedure": "biologic therapy",
+      "icd10_code": "K50.90",
+      "policy_id": "POL-GI-BIO-020",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0061",
+    "specialty": "gastroenterology",
+    "note_text": "Patient: 30F presenting with severe hepatic steatosis.\nConservative management including disease-modifying medication, antiarrhythmic medication was attempted over approximately 26 weeks without adequate improvement.\nImaging workup is still pending.\nReferring gastroenterology physician requests authorization for bariatric surgery.",
+    "gold": {
+      "age": 30,
+      "sex": "F",
+      "diagnosis": "severe hepatic steatosis",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "disease-modifying medication",
+        "antiarrhythmic medication"
+      ],
+      "conservative_therapy_duration_weeks": 26,
+      "imaging_evidence": null,
+      "requested_procedure": "bariatric surgery",
+      "icd10_code": "K76.0",
+      "policy_id": "POL-GI-BAR-021",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0062",
+    "specialty": "gastroenterology",
+    "note_text": "Patient: 42M presenting with comorbid hepatic steatosis.\nConservative management including beta-blockers was attempted over approximately 14 weeks without adequate improvement.\nImaging workup is still pending.\nReferring gastroenterology physician requests authorization for bariatric surgery.",
+    "gold": {
+      "age": 42,
+      "sex": "M",
+      "diagnosis": "comorbid hepatic steatosis",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "beta-blockers"
+      ],
+      "conservative_therapy_duration_weeks": 14,
+      "imaging_evidence": null,
+      "requested_procedure": "bariatric surgery",
+      "icd10_code": "K76.0",
+      "policy_id": "POL-GI-BAR-021",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0063",
+    "specialty": "gastroenterology",
+    "note_text": "Patient: 32F presenting with morbid hepatic steatosis.\nConservative management including preventive medication trial, antiarrhythmic medication was attempted over approximately 34 weeks without adequate improvement.\nImaging studies confirm findings consistent with hepatic steatosis.\nReferring gastroenterology physician requests authorization for bariatric surgery.",
+    "gold": {
+      "age": 32,
+      "sex": "F",
+      "diagnosis": "morbid hepatic steatosis",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "preventive medication trial",
+        "antiarrhythmic medication"
+      ],
+      "conservative_therapy_duration_weeks": 34,
+      "imaging_evidence": "findings consistent with hepatic steatosis",
+      "requested_procedure": "bariatric surgery",
+      "icd10_code": "K76.0",
+      "policy_id": "POL-GI-BAR-021",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0064",
+    "specialty": "gastroenterology",
+    "note_text": "Patient: 39F presenting with cholelithiasis.\nConservative management including NSAIDs, physical therapy was attempted without adequate improvement.\nImaging studies confirm findings consistent with cholelithiasis.\nReferring gastroenterology physician requests authorization for ercp.",
+    "gold": {
+      "age": 39,
+      "sex": "F",
+      "diagnosis": "cholelithiasis",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "NSAIDs",
+        "physical therapy"
+      ],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": "findings consistent with cholelithiasis",
+      "requested_procedure": "ercp",
+      "icd10_code": "K80.20",
+      "policy_id": "POL-GI-ERCP-022",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0065",
+    "specialty": "gastroenterology",
+    "note_text": "Patient: 50F presenting with cholelithiasis.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with cholelithiasis.\nReferring gastroenterology physician requests authorization for ercp.",
+    "gold": {
+      "age": 50,
+      "sex": "F",
+      "diagnosis": "cholelithiasis",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 0,
+      "imaging_evidence": "findings consistent with cholelithiasis",
+      "requested_procedure": "ercp",
+      "icd10_code": "K80.20",
+      "policy_id": "POL-GI-ERCP-022",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0066",
+    "specialty": "gastroenterology",
+    "note_text": "Patient: 66M presenting with cholelithiasis.\nConservative management including activity modification, bracing was attempted over approximately 16 weeks without adequate improvement.\nImaging studies confirm findings consistent with cholelithiasis.\nReferring gastroenterology physician requests authorization for ercp.",
+    "gold": {
+      "age": 66,
+      "sex": "M",
+      "diagnosis": "cholelithiasis",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "activity modification",
+        "bracing"
+      ],
+      "conservative_therapy_duration_weeks": 16,
+      "imaging_evidence": "findings consistent with cholelithiasis",
+      "requested_procedure": "ercp",
+      "icd10_code": "K80.20",
+      "policy_id": "POL-GI-ERCP-022",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0067",
+    "specialty": "gastroenterology",
+    "note_text": "Patient: 61M presenting with end-stage chronic liver disease.\nConservative management including beta-blockers, physical therapy was attempted without adequate improvement.\nImaging studies confirm findings consistent with chronic liver disease.\nReferring gastroenterology physician requests authorization for liver transplant evaluation.",
+    "gold": {
+      "age": 61,
+      "sex": "M",
+      "diagnosis": "end-stage chronic liver disease",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "beta-blockers",
+        "physical therapy"
+      ],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": "findings consistent with chronic liver disease",
+      "requested_procedure": "liver transplant evaluation",
+      "icd10_code": "K74.60",
+      "policy_id": "POL-GI-LIVER-023",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0068",
+    "specialty": "gastroenterology",
+    "note_text": "Patient: 67F presenting with severe chronic liver disease.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with chronic liver disease.\nReferring gastroenterology physician requests authorization for liver transplant evaluation.",
+    "gold": {
+      "age": 67,
+      "sex": "F",
+      "diagnosis": "severe chronic liver disease",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 0,
+      "imaging_evidence": "findings consistent with chronic liver disease",
+      "requested_procedure": "liver transplant evaluation",
+      "icd10_code": "K74.60",
+      "policy_id": "POL-GI-LIVER-023",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0069",
+    "specialty": "gastroenterology",
+    "note_text": "Patient: 74F presenting with chronic liver disease.\nConservative management including beta-blockers, antiarrhythmic medication was attempted over approximately 6 weeks without adequate improvement.\nImaging workup is still pending.\nReferring gastroenterology physician requests authorization for liver transplant evaluation.",
+    "gold": {
+      "age": 74,
+      "sex": "F",
+      "diagnosis": "chronic liver disease",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "beta-blockers",
+        "antiarrhythmic medication"
+      ],
+      "conservative_therapy_duration_weeks": 6,
+      "imaging_evidence": null,
+      "requested_procedure": "liver transplant evaluation",
+      "icd10_code": "K74.60",
+      "policy_id": "POL-GI-LIVER-023",
+      "variant": "varied"
+    }
+  }
+]

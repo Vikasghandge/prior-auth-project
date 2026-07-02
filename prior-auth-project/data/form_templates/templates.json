@@ -1,0 +1,56 @@
+[
+  {
+    "template_id": "FORM-TKR-01",
+    "title": "Total Knee Replacement Prior Authorization Form",
+    "procedure_keywords": ["total knee replacement", "knee arthroplasty", "knee replacement"],
+    "required_fields": ["patient_age", "patient_sex", "laterality", "diagnosis_code", "procedure_code", "failed_treatments", "imaging_evidence", "policy_id"]
+  },
+  {
+    "template_id": "FORM-THR-02",
+    "title": "Total Hip Replacement Prior Authorization Form",
+    "procedure_keywords": ["total hip replacement", "hip arthroplasty", "hip replacement"],
+    "required_fields": ["patient_age", "patient_sex", "laterality", "diagnosis_code", "procedure_code", "failed_treatments", "imaging_evidence", "policy_id"]
+  },
+  {
+    "template_id": "FORM-ORTHO-GEN-03",
+    "title": "General Orthopedic Procedure Prior Authorization Form",
+    "procedure_keywords": ["rotator cuff repair", "acl reconstruction", "meniscus repair", "lumbar spinal fusion"],
+    "required_fields": ["patient_age", "patient_sex", "laterality", "diagnosis_code", "procedure_code", "failed_treatments", "imaging_evidence", "policy_id"]
+  },
+  {
+    "template_id": "FORM-CARD-04",
+    "title": "Cardiac Procedure Prior Authorization Form",
+    "procedure_keywords": ["pci", "cabg", "pacemaker implantation", "catheter ablation", "tavr"],
+    "required_fields": ["patient_age", "patient_sex", "diagnosis_code", "procedure_code", "imaging_evidence", "policy_id"]
+  },
+  {
+    "template_id": "FORM-ONC-05",
+    "title": "Oncology Treatment Prior Authorization Form",
+    "procedure_keywords": ["chemotherapy", "radiation therapy", "pet scan", "targeted therapy"],
+    "required_fields": ["patient_age", "patient_sex", "diagnosis_code", "procedure_code", "imaging_evidence", "policy_id"]
+  },
+  {
+    "template_id": "FORM-NEURO-06",
+    "title": "Neurology Treatment Prior Authorization Form",
+    "procedure_keywords": ["disease-modifying therapy", "epilepsy surgery", "cgrp inhibitor", "deep brain stimulation"],
+    "required_fields": ["patient_age", "patient_sex", "diagnosis_code", "procedure_code", "failed_treatments", "imaging_evidence", "policy_id"]
+  },
+  {
+    "template_id": "FORM-GI-07",
+    "title": "Gastroenterology Procedure Prior Authorization Form",
+    "procedure_keywords": ["biologic therapy", "bariatric surgery", "ercp", "liver transplant evaluation"],
+    "required_fields": ["patient_age", "patient_sex", "diagnosis_code", "procedure_code", "failed_treatments", "imaging_evidence", "policy_id"]
+  },
+  {
+    "template_id": "FORM-RARE-08",
+    "title": "Rare Disease Specialty Therapy Prior Authorization Form",
+    "procedure_keywords": ["enzyme replacement therapy", "ivig therapy", "chelation therapy", "antifibrotic therapy", "assistive device"],
+    "required_fields": ["patient_age", "patient_sex", "diagnosis_code", "procedure_code", "imaging_evidence", "policy_id", "human_review_flag"]
+  },
+  {
+    "template_id": "FORM-GEN-09",
+    "title": "General DME / Ancillary Services Prior Authorization Form",
+    "procedure_keywords": ["knee brace", "durable medical equipment", "extended physical therapy"],
+    "required_fields": ["patient_age", "patient_sex", "diagnosis_code", "procedure_code", "policy_id"]
+  }
+]

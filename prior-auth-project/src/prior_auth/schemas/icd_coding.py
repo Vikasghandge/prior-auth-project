@@ -1,0 +1,30 @@
+"""Schemas for Agent 2 (ICD Coder) output."""
+from __future__ import annotations
+
+from pydantic import BaseModel, Field
+
+from prior_auth.schemas.common import Laterality
+
+
+class ICDCandidate(BaseModel):
+    code: str
+    description: str
+    score: float = Field(ge=0.0, le=1.0)
+
+
+class ICDCodingResult(BaseModel):
+    case_id: str
+    diagnosis_text: str
+    icd10_code: str
+    code_description: str
+    laterality: Laterality = Laterality.NOT_APPLICABLE
+    laterality_match: bool = True
+    is_rare_disease: bool = False
+    confidence: float = Field(ge=0.0, le=1.0)
+    alternative_codes: list[ICDCandidate] = Field(default_factory=list)
+    rationale: str = ""
+
+    @property
+    def below_rare_disease_threshold(self) -> bool:
+        """Special rule: rare-disease codes with confidence < 0.90 must suspend for human review."""
+        return self.is_rare_disease and self.confidence < 0.90

@@ -1,0 +1,359 @@
+[
+  {
+    "case_id": "GEN-0001",
+    "specialty": "orthopedics",
+    "note_text": "Patient: 35M presenting with end-stage osteoarthritis.\nConservative management including activity modification, immunomodulator therapy was attempted over approximately 15 weeks without adequate improvement.\nImaging studies confirm findings consistent with osteoarthritis.\nReferring orthopedics physician requests authorization for total knee replacement.",
+    "gold": {
+      "age": 35,
+      "sex": "M",
+      "diagnosis": "end-stage osteoarthritis",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "activity modification",
+        "immunomodulator therapy"
+      ],
+      "conservative_therapy_duration_weeks": 15,
+      "imaging_evidence": "findings consistent with osteoarthritis",
+      "requested_procedure": "total knee replacement",
+      "icd10_code": "M17.10",
+      "policy_id": "POL-ORTHO-TKR-001",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0002",
+    "specialty": "orthopedics",
+    "note_text": "Patient: 75M presenting with end-stage right degenerative joint disease.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with degenerative joint disease.\nReferring orthopedics physician requests authorization for total knee replacement.",
+    "gold": {
+      "age": 75,
+      "sex": "M",
+      "diagnosis": "end-stage right degenerative joint disease",
+      "laterality": "right",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 0,
+      "imaging_evidence": "findings consistent with degenerative joint disease",
+      "requested_procedure": "total knee replacement",
+      "icd10_code": "M17.11",
+      "policy_id": "POL-ORTHO-TKR-001",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0003",
+    "specialty": "orthopedics",
+    "note_text": "Patient: 65F presenting with severe right degenerative joint disease.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with degenerative joint disease.\nReferring orthopedics physician requests authorization for total knee replacement.",
+    "gold": {
+      "age": 65,
+      "sex": "F",
+      "diagnosis": "severe right degenerative joint disease",
+      "laterality": "right",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": "findings consistent with degenerative joint disease",
+      "requested_procedure": "total knee replacement",
+      "icd10_code": "M17.11",
+      "policy_id": "POL-ORTHO-TKR-001",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0004",
+    "specialty": "orthopedics",
+    "note_text": "Patient: 63M presenting with end-stage right degenerative joint disease.\nConservative management including preventive medication trial, beta-blockers was attempted over approximately 18 weeks without adequate improvement.\nImaging studies confirm findings consistent with degenerative joint disease.\nReferring orthopedics physician requests authorization for total hip replacement.",
+    "gold": {
+      "age": 63,
+      "sex": "M",
+      "diagnosis": "end-stage right degenerative joint disease",
+      "laterality": "right",
+      "failed_treatments": [
+        "preventive medication trial",
+        "beta-blockers"
+      ],
+      "conservative_therapy_duration_weeks": 18,
+      "imaging_evidence": "findings consistent with degenerative joint disease",
+      "requested_procedure": "total hip replacement",
+      "icd10_code": "M16.11",
+      "policy_id": "POL-ORTHO-THR-002",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0005",
+    "specialty": "orthopedics",
+    "note_text": "Patient: 56F presenting with severe right degenerative joint disease.\nConservative management including beta-blockers was attempted over approximately 6 weeks without adequate improvement.\nImaging studies confirm findings consistent with degenerative joint disease.\nReferring orthopedics physician requests authorization for total hip replacement.",
+    "gold": {
+      "age": 56,
+      "sex": "F",
+      "diagnosis": "severe right degenerative joint disease",
+      "laterality": "right",
+      "failed_treatments": [
+        "beta-blockers"
+      ],
+      "conservative_therapy_duration_weeks": 6,
+      "imaging_evidence": "findings consistent with degenerative joint disease",
+      "requested_procedure": "total hip replacement",
+      "icd10_code": "M16.11",
+      "policy_id": "POL-ORTHO-THR-002",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0006",
+    "specialty": "orthopedics",
+    "note_text": "Patient: 45M presenting with left degenerative joint disease.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with degenerative joint disease.\nReferring orthopedics physician requests authorization for total hip replacement.",
+    "gold": {
+      "age": 45,
+      "sex": "M",
+      "diagnosis": "left degenerative joint disease",
+      "laterality": "left",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 12,
+      "imaging_evidence": "findings consistent with degenerative joint disease",
+      "requested_procedure": "total hip replacement",
+      "icd10_code": "M16.12",
+      "policy_id": "POL-ORTHO-THR-002",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0007",
+    "specialty": "orthopedics",
+    "note_text": "Patient: 50F presenting with right rotator cuff.\nConservative management including bracing, NSAIDs was attempted over approximately 11 weeks without adequate improvement.\nImaging studies confirm findings consistent with rotator cuff.\nReferring orthopedics physician requests authorization for rotator cuff repair.",
+    "gold": {
+      "age": 50,
+      "sex": "F",
+      "diagnosis": "right rotator cuff",
+      "laterality": "right",
+      "failed_treatments": [
+        "bracing",
+        "NSAIDs"
+      ],
+      "conservative_therapy_duration_weeks": 11,
+      "imaging_evidence": "findings consistent with rotator cuff",
+      "requested_procedure": "rotator cuff repair",
+      "icd10_code": "M75.101",
+      "policy_id": "POL-ORTHO-RCR-003",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0008",
+    "specialty": "orthopedics",
+    "note_text": "Patient: 62M presenting with left rotator cuff.\nConservative management including physical therapy was attempted over approximately 1 weeks without adequate improvement.\nImaging studies confirm findings consistent with rotator cuff.\nReferring orthopedics physician requests authorization for rotator cuff repair.",
+    "gold": {
+      "age": 62,
+      "sex": "M",
+      "diagnosis": "left rotator cuff",
+      "laterality": "left",
+      "failed_treatments": [
+        "physical therapy"
+      ],
+      "conservative_therapy_duration_weeks": 1,
+      "imaging_evidence": "findings consistent with rotator cuff",
+      "requested_procedure": "rotator cuff repair",
+      "icd10_code": "M75.102",
+      "policy_id": "POL-ORTHO-RCR-003",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0009",
+    "specialty": "orthopedics",
+    "note_text": "Patient: 81F presenting with left rotator cuff.\nConservative management including physical therapy, NSAIDs was attempted over approximately 2 weeks without adequate improvement.\nImaging studies confirm findings consistent with rotator cuff.\nReferring orthopedics physician requests authorization for rotator cuff repair.",
+    "gold": {
+      "age": 81,
+      "sex": "F",
+      "diagnosis": "left rotator cuff",
+      "laterality": "left",
+      "failed_treatments": [
+        "physical therapy",
+        "NSAIDs"
+      ],
+      "conservative_therapy_duration_weeks": 2,
+      "imaging_evidence": "findings consistent with rotator cuff",
+      "requested_procedure": "rotator cuff repair",
+      "icd10_code": "M75.102",
+      "policy_id": "POL-ORTHO-RCR-003",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0010",
+    "specialty": "orthopedics",
+    "note_text": "Patient: 82M presenting with severe disc displacement.\nConservative management including bracing, disease-modifying medication was attempted over approximately 28 weeks without adequate improvement.\nImaging studies confirm findings consistent with disc displacement.\nReferring orthopedics physician requests authorization for lumbar spinal fusion.",
+    "gold": {
+      "age": 82,
+      "sex": "M",
+      "diagnosis": "severe disc displacement",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "bracing",
+        "disease-modifying medication"
+      ],
+      "conservative_therapy_duration_weeks": 28,
+      "imaging_evidence": "findings consistent with disc displacement",
+      "requested_procedure": "lumbar spinal fusion",
+      "icd10_code": "M51.26",
+      "policy_id": "POL-ORTHO-LSF-004",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0011",
+    "specialty": "orthopedics",
+    "note_text": "Patient: 38F presenting with disabling radiculopathy.\nConservative management including immunomodulator therapy was attempted over approximately 14 weeks without adequate improvement.\nImaging studies confirm findings consistent with radiculopathy.\nReferring orthopedics physician requests authorization for lumbar spinal fusion.",
+    "gold": {
+      "age": 38,
+      "sex": "F",
+      "diagnosis": "disabling radiculopathy",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "immunomodulator therapy"
+      ],
+      "conservative_therapy_duration_weeks": 14,
+      "imaging_evidence": "findings consistent with radiculopathy",
+      "requested_procedure": "lumbar spinal fusion",
+      "icd10_code": "M54.16",
+      "policy_id": "POL-ORTHO-LSF-004",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0012",
+    "specialty": "orthopedics",
+    "note_text": "Patient: 72M presenting with radiculopathy.\nConservative management including activity modification, corticosteroid injection was attempted over approximately 2 weeks without adequate improvement.\nImaging workup is still pending.\nReferring orthopedics physician requests authorization for lumbar spinal fusion.",
+    "gold": {
+      "age": 72,
+      "sex": "M",
+      "diagnosis": "radiculopathy",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "activity modification",
+        "corticosteroid injection"
+      ],
+      "conservative_therapy_duration_weeks": 2,
+      "imaging_evidence": null,
+      "requested_procedure": "lumbar spinal fusion",
+      "icd10_code": "M54.16",
+      "policy_id": "POL-ORTHO-LSF-004",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0013",
+    "specialty": "orthopedics",
+    "note_text": "Patient: 68M presenting with left anterior cruciate ligament.\nConservative management including antiarrhythmic medication, NSAIDs was attempted over approximately 10 weeks without adequate improvement.\nImaging studies confirm findings consistent with anterior cruciate ligament.\nReferring orthopedics physician requests authorization for acl reconstruction.",
+    "gold": {
+      "age": 68,
+      "sex": "M",
+      "diagnosis": "left anterior cruciate ligament",
+      "laterality": "left",
+      "failed_treatments": [
+        "antiarrhythmic medication",
+        "NSAIDs"
+      ],
+      "conservative_therapy_duration_weeks": 10,
+      "imaging_evidence": "findings consistent with anterior cruciate ligament",
+      "requested_procedure": "acl reconstruction",
+      "icd10_code": "S83.512A",
+      "policy_id": "POL-ORTHO-ACL-005",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0014",
+    "specialty": "orthopedics",
+    "note_text": "Patient: 80M presenting with right anterior cruciate ligament.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with anterior cruciate ligament.\nReferring orthopedics physician requests authorization for acl reconstruction.",
+    "gold": {
+      "age": 80,
+      "sex": "M",
+      "diagnosis": "right anterior cruciate ligament",
+      "laterality": "right",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 0,
+      "imaging_evidence": "findings consistent with anterior cruciate ligament",
+      "requested_procedure": "acl reconstruction",
+      "icd10_code": "S83.511A",
+      "policy_id": "POL-ORTHO-ACL-005",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0015",
+    "specialty": "orthopedics",
+    "note_text": "Patient: 45M presenting with left anterior cruciate ligament.\nConservative management including antiarrhythmic medication, activity modification was attempted over approximately 2 weeks without adequate improvement.\nImaging workup is still pending.\nReferring orthopedics physician requests authorization for acl reconstruction.",
+    "gold": {
+      "age": 45,
+      "sex": "M",
+      "diagnosis": "left anterior cruciate ligament",
+      "laterality": "left",
+      "failed_treatments": [
+        "antiarrhythmic medication",
+        "activity modification"
+      ],
+      "conservative_therapy_duration_weeks": 2,
+      "imaging_evidence": null,
+      "requested_procedure": "acl reconstruction",
+      "icd10_code": "S83.512A",
+      "policy_id": "POL-ORTHO-ACL-005",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0016",
+    "specialty": "orthopedics",
+    "note_text": "Patient: 37F presenting with left meniscus tear.\nConservative management including activity modification, preventive medication trial was attempted over approximately 6 weeks without adequate improvement.\nImaging studies confirm findings consistent with meniscus tear.\nReferring orthopedics physician requests authorization for meniscus repair.",
+    "gold": {
+      "age": 37,
+      "sex": "F",
+      "diagnosis": "left meniscus tear",
+      "laterality": "left",
+      "failed_treatments": [
+        "activity modification",
+        "preventive medication trial"
+      ],
+      "conservative_therapy_duration_weeks": 6,
+      "imaging_evidence": "findings consistent with meniscus tear",
+      "requested_procedure": "meniscus repair",
+      "icd10_code": "S83.242A",
+      "policy_id": "POL-ORTHO-MEN-006",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0017",
+    "specialty": "orthopedics",
+    "note_text": "Patient: 75F presenting with left meniscus tear.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with meniscus tear.\nReferring orthopedics physician requests authorization for meniscus repair.",
+    "gold": {
+      "age": 75,
+      "sex": "F",
+      "diagnosis": "left meniscus tear",
+      "laterality": "left",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 0,
+      "imaging_evidence": "findings consistent with meniscus tear",
+      "requested_procedure": "meniscus repair",
+      "icd10_code": "S83.242A",
+      "policy_id": "POL-ORTHO-MEN-006",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0018",
+    "specialty": "orthopedics",
+    "note_text": "Patient: 42M presenting with left meniscus tear.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with meniscus tear.\nReferring orthopedics physician requests authorization for meniscus repair.",
+    "gold": {
+      "age": 42,
+      "sex": "M",
+      "diagnosis": "left meniscus tear",
+      "laterality": "left",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 14,
+      "imaging_evidence": "findings consistent with meniscus tear",
+      "requested_procedure": "meniscus repair",
+      "icd10_code": "S83.242A",
+      "policy_id": "POL-ORTHO-MEN-006",
+      "variant": "varied"
+    }
+  }
+]

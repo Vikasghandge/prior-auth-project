@@ -1,0 +1,230 @@
+[
+  {
+    "case_id": "RARE-0001",
+    "specialty": "rare_disease",
+    "note_text": "Patient: 34M with hepatic dysfunction and mild tremor. Wilson's disease confirmed by low serum ceruloplasmin, elevated 24-hour urinary copper, and Kayser-Fleischer rings on slit-lamp exam. Hepatology recommends chelation therapy.",
+    "gold": {
+      "age": 34, "sex": "M",
+      "diagnosis": "Wilson's disease with hepatic dysfunction",
+      "icd10_code": "E83.01", "is_rare_disease": true,
+      "requested_procedure": "chelation therapy",
+      "imaging_evidence": "confirmatory copper studies and Kayser-Fleischer rings",
+      "conservative_therapy_duration_weeks": null,
+      "expected_icd_confidence_min": 0.90,
+      "expected_suspend": false,
+      "policy_id": "POL-RARE-WILSON-CHELATION-030"
+    }
+  },
+  {
+    "case_id": "RARE-0002",
+    "specialty": "rare_disease",
+    "note_text": "Patient: 41F with progressive limb weakness, fasciculations, and hyperreflexia. Amyotrophic lateral sclerosis confirmed by EMG showing widespread denervation. Symptoms are progressively declining, affecting speech and mobility. Neurology requests a speech generating assistive device.",
+    "gold": {
+      "age": 41, "sex": "F",
+      "diagnosis": "Amyotrophic lateral sclerosis confirmed by EMG",
+      "icd10_code": "G12.21", "is_rare_disease": true,
+      "requested_procedure": "assistive device",
+      "imaging_evidence": "EMG showing widespread denervation",
+      "conservative_therapy_duration_weeks": null,
+      "expected_icd_confidence_min": 0.90,
+      "expected_suspend": false,
+      "policy_id": "POL-RARE-ALS-DME-027"
+    }
+  },
+  {
+    "case_id": "RARE-0003",
+    "specialty": "rare_disease",
+    "note_text": "Patient: 27M with hepatosplenomegaly, thrombocytopenia, and bone pain. Gaucher disease confirmed by enzyme assay showing glucocerebrosidase deficiency. Symptomatic organomegaly and bone involvement documented. Requesting enzyme replacement therapy.",
+    "gold": {
+      "age": 27, "sex": "M",
+      "diagnosis": "Gaucher disease confirmed by enzyme assay",
+      "icd10_code": "E75.22", "is_rare_disease": true,
+      "requested_procedure": "enzyme replacement therapy",
+      "imaging_evidence": "enzyme assay showing glucocerebrosidase deficiency",
+      "conservative_therapy_duration_weeks": null,
+      "expected_icd_confidence_min": 0.90,
+      "expected_suspend": false,
+      "policy_id": "POL-RARE-ERT-GAUCHER-024"
+    }
+  },
+  {
+    "case_id": "RARE-0004",
+    "specialty": "rare_disease",
+    "note_text": "Patient: 29F with recurrent abdominal pain, angiokeratomas, and neuropathic pain in extremities. Suspected alpha-galactosidase deficiency with lysosomal storage findings; renal and cardiac involvement pending confirmatory genetic testing. Requesting enzyme replacement therapy pending confirmation.",
+    "gold": {
+      "age": 29, "sex": "F",
+      "diagnosis": "Suspected alpha-galactosidase deficiency with lysosomal storage findings",
+      "icd10_code": "E75.21", "is_rare_disease": true,
+      "requested_procedure": "enzyme replacement therapy",
+      "imaging_evidence": null,
+      "conservative_therapy_duration_weeks": null,
+      "expected_icd_confidence_max": 0.90,
+      "expected_suspend": true
+    }
+  },
+  {
+    "case_id": "RARE-0005",
+    "specialty": "rare_disease",
+    "note_text": "Patient: 8M with progressive proximal weakness and calf pseudohypertrophy. Elevated CK noted. Progressive proximal muscular dystrophy pattern with elevated CK; possible Duchenne-type dystrophinopathy pending genetic confirmation. Requesting physical therapy evaluation.",
+    "gold": {
+      "age": 8, "sex": "M",
+      "diagnosis": "Progressive proximal muscular dystrophy pattern with elevated CK",
+      "icd10_code": "G71.01", "is_rare_disease": true,
+      "requested_procedure": "physical therapy evaluation",
+      "imaging_evidence": null,
+      "conservative_therapy_duration_weeks": null,
+      "expected_icd_confidence_max": 0.90,
+      "expected_suspend": true
+    }
+  },
+  {
+    "case_id": "RARE-0006",
+    "specialty": "rare_disease",
+    "note_text": "Patient: 22F with generalized joint hypermobility with skin hyperextensibility. Connective tissue disorder suspected, possible Ehlers-Danlos pending Beighton scoring and genetic testing. Requesting genetics consultation.",
+    "gold": {
+      "age": 22, "sex": "F",
+      "diagnosis": "Generalized joint hypermobility with skin hyperextensibility, connective tissue disorder suspected",
+      "icd10_code": "Q79.6", "is_rare_disease": true,
+      "requested_procedure": "genetics consultation",
+      "imaging_evidence": null,
+      "conservative_therapy_duration_weeks": null,
+      "expected_icd_confidence_max": 0.90,
+      "expected_suspend": true
+    }
+  },
+  {
+    "case_id": "RARE-0007",
+    "specialty": "rare_disease",
+    "note_text": "Patient: 45M with progressive proximal weakness and respiratory involvement. Acid maltase deficiency suspected, glycogen storage disease pending enzyme assay confirmation. Requesting enzyme replacement therapy pending confirmation.",
+    "gold": {
+      "age": 45, "sex": "M",
+      "diagnosis": "Progressive proximal weakness with respiratory involvement, acid maltase deficiency suspected",
+      "icd10_code": "E74.02", "is_rare_disease": true,
+      "requested_procedure": "enzyme replacement therapy",
+      "imaging_evidence": null,
+      "conservative_therapy_duration_weeks": null,
+      "expected_icd_confidence_max": 0.90,
+      "expected_suspend": true
+    }
+  },
+  {
+    "case_id": "RARE-0008",
+    "specialty": "rare_disease",
+    "note_text": "Patient: 52F with progressive chorea and behavioral disturbance. Possible CAG repeat expansion disorder pending genetic confirmation. Family history of a similar movement disorder in her father. Requesting genetics consultation.",
+    "gold": {
+      "age": 52, "sex": "F",
+      "diagnosis": "Progressive chorea with cognitive decline, possible CAG repeat expansion disorder",
+      "icd10_code": "G10", "is_rare_disease": true,
+      "requested_procedure": "genetics consultation",
+      "imaging_evidence": null,
+      "conservative_therapy_duration_weeks": null,
+      "expected_icd_confidence_max": 0.90,
+      "expected_suspend": true
+    }
+  },
+  {
+    "case_id": "RARE-0009",
+    "specialty": "rare_disease",
+    "note_text": "Patient: 38F with pruritus and jaundice. MRCP shows progressive cholestasis with beaded appearance of bile ducts. Primary sclerosing process suspected pending confirmatory biopsy. Requesting hepatology evaluation.",
+    "gold": {
+      "age": 38, "sex": "F",
+      "diagnosis": "Progressive cholestasis with beaded appearance of bile ducts, primary sclerosing process suspected",
+      "icd10_code": "K83.01", "is_rare_disease": true,
+      "requested_procedure": "hepatology evaluation",
+      "imaging_evidence": "MRCP showing beaded bile duct appearance",
+      "conservative_therapy_duration_weeks": null,
+      "expected_icd_confidence_max": 0.90,
+      "expected_suspend": true
+    }
+  },
+  {
+    "case_id": "RARE-0010",
+    "specialty": "rare_disease",
+    "note_text": "Patient: 61M with nephrotic-range proteinuria and cardiac wall thickening on echocardiogram. Amyloid deposition suspected pending confirmatory biopsy. Requesting cardiology and renal evaluation.",
+    "gold": {
+      "age": 61, "sex": "M",
+      "diagnosis": "Nephrotic-range proteinuria with cardiac wall thickening, amyloid deposition suspected",
+      "icd10_code": "E85.4", "is_rare_disease": true,
+      "requested_procedure": "cardiology and renal evaluation",
+      "imaging_evidence": "echocardiogram showing cardiac wall thickening",
+      "conservative_therapy_duration_weeks": null,
+      "expected_icd_confidence_max": 0.90,
+      "expected_suspend": true
+    }
+  },
+  {
+    "case_id": "RARE-0011",
+    "specialty": "rare_disease",
+    "note_text": "Patient: 67M with progressive dyspnea, bibasilar crackles, and HRCT UIP pattern. Idiopathic lung fibrosis suspected pending pulmonology confirmation. Requesting antifibrotic therapy.",
+    "gold": {
+      "age": 67, "sex": "M",
+      "diagnosis": "Progressive dyspnea with HRCT UIP pattern, idiopathic lung fibrosis suspected",
+      "icd10_code": "J84.112", "is_rare_disease": true,
+      "requested_procedure": "antifibrotic therapy",
+      "imaging_evidence": "HRCT showing UIP pattern",
+      "conservative_therapy_duration_weeks": null,
+      "expected_icd_confidence_max": 0.90,
+      "expected_suspend": true
+    }
+  },
+  {
+    "case_id": "RARE-0012",
+    "specialty": "rare_disease",
+    "note_text": "Patient: 33F with fluctuating ptosis and fatigable muscle weakness worsening through the day. Neuromuscular junction disorder suspected, possible myasthenic process pending antibody confirmation. Requesting ivig therapy.",
+    "gold": {
+      "age": 33, "sex": "F",
+      "diagnosis": "Fluctuating ptosis with fatigable muscle weakness, myasthenic process suspected",
+      "icd10_code": "G70.00", "is_rare_disease": true,
+      "requested_procedure": "ivig therapy",
+      "imaging_evidence": null,
+      "conservative_therapy_duration_weeks": null,
+      "expected_icd_confidence_max": 0.90,
+      "expected_suspend": true
+    }
+  },
+  {
+    "case_id": "RARE-0013",
+    "specialty": "rare_disease",
+    "note_text": "Patient: 48F with diffuse skin thickening, Raynaud phenomenon, and esophageal dysmotility. Systemic sclerosis-spectrum disorder suspected pending autoantibody confirmation. Requesting rheumatology evaluation.",
+    "gold": {
+      "age": 48, "sex": "F",
+      "diagnosis": "Diffuse skin thickening with Raynaud phenomenon, systemic sclerosis-spectrum disorder suspected",
+      "icd10_code": "M34.9", "is_rare_disease": true,
+      "requested_procedure": "rheumatology evaluation",
+      "imaging_evidence": null,
+      "conservative_therapy_duration_weeks": null,
+      "expected_icd_confidence_max": 0.90,
+      "expected_suspend": true
+    }
+  },
+  {
+    "case_id": "RARE-0014",
+    "specialty": "rare_disease",
+    "note_text": "Patient: 4F with disproportionate short stature and rhizomelic limb shortening. Skeletal dysplasia suspected pending genetic confirmation. Requesting genetics consultation.",
+    "gold": {
+      "age": 4, "sex": "F",
+      "diagnosis": "Disproportionate short stature with rhizomelic limb shortening, skeletal dysplasia suspected",
+      "icd10_code": "Q77.4", "is_rare_disease": true,
+      "requested_procedure": "genetics consultation",
+      "imaging_evidence": null,
+      "conservative_therapy_duration_weeks": null,
+      "expected_icd_confidence_max": 0.90,
+      "expected_suspend": true
+    }
+  },
+  {
+    "case_id": "RARE-0015",
+    "specialty": "rare_disease",
+    "note_text": "Patient: 19M with recurrent sinopulmonary infections and pancreatic insufficiency. CFTR mutation suspected pending sweat chloride confirmation. Requesting pulmonology evaluation.",
+    "gold": {
+      "age": 19, "sex": "M",
+      "diagnosis": "Recurrent sinopulmonary infections with pancreatic insufficiency, CFTR-related process suspected",
+      "icd10_code": "E84.9", "is_rare_disease": true,
+      "requested_procedure": "pulmonology evaluation",
+      "imaging_evidence": null,
+      "conservative_therapy_duration_weeks": null,
+      "expected_icd_confidence_max": 0.90,
+      "expected_suspend": true
+    }
+  }
+]
