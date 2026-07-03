@@ -59,7 +59,7 @@ class PolicyRAG:
             self.policies: list[dict] = json.load(f)
 
     def retrieve(self, facts: ExtractedClinicalFacts, top_k: int = 3) -> list[tuple[dict, float]]:
-        query = f"{facts.diagnosis} {facts.requested_procedure}"
+        query = f"{facts.narrative_text} {facts.requested_procedure}"
         query_tokens = _tokenize(query)
         query_lower = query.lower()
 
@@ -80,7 +80,7 @@ class PolicyRAG:
         missing: list[str] = []
 
         haystack = " ".join(
-            filter(None, [facts.diagnosis, facts.imaging_evidence, facts.requested_procedure])
+            filter(None, [facts.narrative_text, facts.imaging_evidence, facts.requested_procedure])
         ).lower()
 
         for criterion in policy["criteria"]:

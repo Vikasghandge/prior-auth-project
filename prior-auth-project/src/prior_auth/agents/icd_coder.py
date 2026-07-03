@@ -27,11 +27,14 @@ class ICDCoderAgent:
 
     def run(self, facts: ExtractedClinicalFacts, timestamp: datetime) -> Handoff[ICDCodingResult]:
         graph = get_graph()
-        # The requested procedure often carries the only body-part-specific detail (e.g. "total
-        # knee replacement" vs "total hip replacement") when the diagnosis narrative itself is
-        # generic ("degenerative joint disease") — feed it into the match query too, not just the
-        # diagnosis text, or the coder is guessing blind on exactly the cases that matter most.
-        match_query = f"{facts.diagnosis} {facts.requested_procedure}".strip()
+        # The match query combines two complementary signals:
+        # - the full diagnosis narrative (not the normalized primary `diagnosis`), so disease
+        #   names appearing later in the note — e.g. rare-disease "... confirmed by ..."
+        #   sentences — still reach the keyword/fuzzy matcher;
+        # - the requested procedure, which often carries the only body-part-specific detail
+        #   (e.g. "total knee replacement" vs "total hip replacement") when the narrative itself
+        #   is generic ("degenerative joint disease").
+        match_query = f"{facts.narrative_text} {facts.requested_procedure}".strip()
         candidates = graph.match(match_query, facts.symptoms, laterality=facts.laterality.value, top_k=5)
 
         if not candidates:

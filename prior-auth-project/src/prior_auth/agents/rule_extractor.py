@@ -245,3 +245,215 @@ def regex_extract(masked_text: str) -> dict:
     fields["extraction_confidence"] = round(min(0.99, 0.5 + 0.1 * found + optional_bonus), 4)
 
     return fields
+
+
+# ---------------------------------------------------------------------------
+# Structured-output enrichment
+#
+# Runs after the base extraction (regex OR LLM) so both paths emit the same normalized,
+# structured shape. It never *removes* signal: the full narrative extracted into `diagnosis`
+# is preserved in `diagnosis_narrative` (which the downstream matchers read), and the free-text
+# `imaging_evidence` is kept alongside the structured `imaging` object. Only additive/normalizing.
+# ---------------------------------------------------------------------------
+
+# Ordered so the most specific/severe qualifier wins when several co-occur.
+_SEVERITY_TERMS = [
+    "severe", "advanced", "end-stage", "moderate", "mild", "acute", "chronic",
+    "metastatic", "locally advanced", "refractory", "progressive",
+]
+
+# Words pulled OUT of the primary diagnosis (they live in clinical_modifiers instead).
+_DX_MODIFIER = re.compile(
+    r"\b(?:a|an|the|mild|moderate|severe|advanced|chronic|acute|end[- ]stage|metastatic|"
+    r"refractory|progressive|locally[- ]advanced|left|right|bilateral)\b",
+    re.IGNORECASE,
+)
+
+_DURATION = re.compile(r"(\d{1,3})\s*[- ]?(week|month|year)s?", re.IGNORECASE)
+
+# Whole-word procedure abbreviations preserved in their canonical casing.
+_PROC_ABBREV = {
+    "tavr": "TAVR", "tavi": "TAVI", "pci": "PCI", "cabg": "CABG", "tka": "TKA",
+    "tkr": "TKR", "thr": "THR", "tha": "THA", "acl": "ACL", "mri": "MRI",
+    "ct": "CT", "emg": "EMG", "dmt": "DMT", "dbs": "DBS",
+}
+
+# (search-keyword, canonical modality label) — first hit wins.
+_MODALITY_MAP = [
+    ("x-ray", "X-ray"), ("x ray", "X-ray"), ("hrct", "HRCT"), ("mrcp", "MRCP"),
+    ("mri", "MRI"), ("ct", "CT"), ("echocardiogram", "Echocardiogram"),
+    ("angiography", "Angiography"), ("colonoscopy", "Colonoscopy"), ("emg", "EMG"),
+    ("biopsy", "Biopsy"), ("ultrasound", "Ultrasound"), ("slit-lamp", "Slit-lamp exam"),
+    ("enzyme assay", "Enzyme assay"), ("sweat chloride", "Sweat chloride test"),
+    ("ceruloplasmin", "Serum copper studies"), ("genetic", "Genetic testing"),
+    ("antibody", "Antibody panel"), ("autoantibody", "Antibody panel"),
+]
+
+# Note-level department / physician signals -> canonical specialty.
+_DEPARTMENT_SPECIALTY = [
+    ("cardiology", "Cardiology"), ("cardiac", "Cardiology"),
+    ("orthopedics", "Orthopedics"), ("orthopaedics", "Orthopedics"), ("orthopedic", "Orthopedics"),
+    ("neurology", "Neurology"), ("neurologist", "Neurology"),
+    ("gastroenterology", "Gastroenterology"), ("gastroenterologist", "Gastroenterology"),
+    ("hepatology", "Gastroenterology"),
+    ("oncology", "Oncology"), ("oncologist", "Oncology"),
+]
+
+# Fallback: infer from diagnosis / procedure vocabulary when no department is named.
+_SPECIALTY_KEYWORDS = [
+    ("Cardiology", ["coronary", "aortic", "cardiac", "tavr", "pci", "myocard", "angina",
+                    "echocardiogram", "valve"]),
+    ("Oncology", ["neoplasm", "malignan", "cancer", "tumor", "carcinoma", "chemotherap",
+                  "metasta", "lymphoma", "leukemia"]),
+    ("Gastroenterology", ["bowel", "colitis", "crohn", "colonoscopy", "hepatic", "liver",
+                          "wilson", "mrcp", "biliary", "pancrea", "biologic"]),
+    ("Neurology", ["sclerosis", "amyotrophic", "seizure", "epilep", "radiculopathy", "tremor",
+                   "parkinson", "migraine", "neuropath", "demyelinat", "disease-modifying"]),
+    ("Orthopedics", ["osteoarthritis", "arthroplasty", "joint", "knee", "hip", "spine",
+                     "replacement", "degenerative", "physical therapy"]),
+]
+
+
+def _strip_dx_modifiers(text: str) -> str:
+    return re.sub(r"\s{2,}", " ", _DX_MODIFIER.sub(" ", text)).strip(" ,.-")
+
+
+def _normalize_diagnosis(narrative: str, full_text: str) -> str | None:
+    """Reduce the diagnosis narrative to the primary disease name, dropping severity/laterality
+    qualifiers and surrounding framing. Best-effort and display-only (matchers use the narrative),
+    so an imperfect reduction never affects the workflow."""
+    cand: str | None = None
+
+    m = re.search(r"presenting with\s+(.+?)(?:[.\n;,]| who\b| and was\b|$)", full_text, re.IGNORECASE)
+    if m:
+        cand = m.group(1)
+
+    if not cand:
+        # Rare-disease phrasing puts the disease before "confirmed by ..." (often a later sentence).
+        for sentence in re.split(r"(?<=[.\n])\s+", narrative):
+            cm = re.search(r"([A-Za-z][A-Za-z0-9'\- ]+?)\s+confirmed\b", sentence)
+            if cm:
+                cand = cm.group(1)
+                break
+
+    if not cand:
+        cand = re.split(r"(?<=[.\n])\s+", narrative.strip(), maxsplit=1)[0]
+
+    cand = _strip_dx_modifiers(cand)
+    if not cand or len(cand) < 3:
+        return None
+    return cand[0].upper() + cand[1:]
+
+
+def _extract_severity(text: str) -> str | None:
+    low = text.lower()
+    for term in _SEVERITY_TERMS:
+        # Treat internal spaces/hyphens interchangeably ("end-stage" == "end stage") in one pass,
+        # avoiding a nested character class.
+        pattern = r"\b" + re.sub(r"[ -]+", "[ -]", term) + r"\b"
+        if re.search(pattern, low):
+            return term
+    return None
+
+
+def _extract_duration_weeks(text: str) -> int | None:
+    m = _DURATION.search(text)
+    if not m:
+        return None
+    value, unit = int(m.group(1)), m.group(2).lower()
+    return value if unit == "week" else value * 4 if unit == "month" else value * 52
+
+
+def _titlecase_token(token: str) -> str:
+    key = re.sub(r"[^a-z0-9]", "", token.lower())
+    if key in _PROC_ABBREV:
+        return _PROC_ABBREV[key]
+    # A token already written in all caps (e.g. an abbreviation we don't know, like "IVIG")
+    # is deliberate clinical shorthand — preserve it rather than mangling it to "Ivig".
+    if len(token) >= 2 and token.isupper():
+        return token
+    return token[:1].upper() + token[1:].lower() if token else token
+
+
+def _normalize_procedure(raw: str) -> str:
+    """Canonical casing only (uppercase known abbreviations, title-case the rest). No tokens are
+    dropped, so the downstream case-insensitive template/policy matching is unchanged."""
+    raw = re.sub(r"\s{2,}", " ", raw.strip().rstrip("."))
+    if not raw:
+        return raw
+    return " ".join(_titlecase_token(w) for w in raw.split(" "))
+
+
+def _imaging_finding(text: str) -> str | None:
+    m = re.search(r"consistent with\s+(.+)$", text, re.IGNORECASE)
+    if m:
+        return "Findings consistent with " + m.group(1).strip(" .")
+    return text.strip(" .")[:200] or None
+
+
+def _structure_imaging(imaging_evidence: str | None) -> dict:
+    if not imaging_evidence:
+        return {"modality": None, "finding": None}
+    low = imaging_evidence.lower()
+    modality = "Imaging"
+    for keyword, label in _MODALITY_MAP:
+        if re.search(r"\b" + re.escape(keyword) + r"\b", low):
+            modality = label
+            break
+    return {"modality": modality, "finding": _imaging_finding(imaging_evidence)}
+
+
+def _infer_specialty(text: str, diagnosis: str = "", procedure: str = "", hint: str | None = None) -> str:
+    low_text = text.lower()
+    for keyword, specialty in _DEPARTMENT_SPECIALTY:
+        if re.search(r"\b" + keyword + r"\b", low_text):
+            return specialty
+
+    blob = f"{text} {diagnosis} {procedure}".lower()
+    for specialty, keywords in _SPECIALTY_KEYWORDS:
+        if any(kw in blob for kw in keywords):
+            return specialty
+
+    if hint:
+        hint_low = hint.lower()
+        for keyword, specialty in _DEPARTMENT_SPECIALTY:
+            if keyword in hint_low:
+                return specialty
+    return "Unknown"
+
+
+def enrich_structured_fields(data: dict, masked_text: str, specialty_hint: str | None = None) -> dict:
+    """Add the normalized/structured fields expected by downstream agents, in place.
+
+    Preserves the full narrative (as `diagnosis_narrative`) and the free-text `imaging_evidence`
+    so no downstream matcher loses signal; only normalizes `diagnosis`/`requested_procedure` and
+    layers on `specialty`, `clinical_modifiers`, and structured `imaging`.
+    """
+    narrative = data.get("diagnosis") or ""
+    data["diagnosis_narrative"] = narrative
+
+    primary = _normalize_diagnosis(narrative, masked_text)
+    if primary:
+        data["diagnosis"] = primary
+
+    laterality = data.get("laterality", "not_applicable")
+    if laterality not in ("left", "right", "bilateral"):
+        laterality = "not_applicable"
+    data["clinical_modifiers"] = {
+        "severity": _extract_severity(narrative),
+        "laterality": laterality,
+        "duration_weeks": _extract_duration_weeks(masked_text),
+    }
+
+    data["imaging"] = _structure_imaging(data.get("imaging_evidence"))
+
+    if data.get("requested_procedure"):
+        data["requested_procedure"] = _normalize_procedure(data["requested_procedure"])
+
+    data["specialty"] = _infer_specialty(
+        masked_text,
+        diagnosis=narrative,
+        procedure=data.get("requested_procedure", ""),
+        hint=specialty_hint,
+    )
+    return data

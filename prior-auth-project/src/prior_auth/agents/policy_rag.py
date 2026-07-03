@@ -17,7 +17,7 @@ class PolicyRAGAgent:
     def run(self, facts: ExtractedClinicalFacts, timestamp: datetime) -> Handoff[PolicyCheckResult]:
         # Re-assert the PHI boundary at this agent too: it must never receive raw identifiers,
         # even if an upstream bug let one slip through.
-        if contains_phi(facts.diagnosis) or contains_phi(facts.requested_procedure):
+        if contains_phi(facts.narrative_text) or contains_phi(facts.requested_procedure):
             return Handoff.failed(
                 self.name, facts.case_id,
                 ["PHI boundary violation: raw identifiers detected in Policy RAG input"],
