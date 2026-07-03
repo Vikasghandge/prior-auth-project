@@ -1,0 +1,9 @@
+{
+  "patient_id": "",
+  "diagnosis": "",
+  "icd10_code": "",
+  "requested_procedure": "",
+  "medical_necessity": "",
+  "physician_name": "",
+  "policy_decision": ""
+}

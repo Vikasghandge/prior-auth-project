@@ -1,0 +1,14 @@
+[
+  {
+    "id": "imaging_confirms",
+    "description": "Appropriate imaging/angiography confirms significant CAD",
+    "check": "imaging_required",
+    "value": true
+  },
+  {
+    "id": "failed_medical_therapy",
+    "description": "Failure of optimal medical therapy",
+    "check": "min_conservative_weeks",
+    "value": 4
+  }
+]

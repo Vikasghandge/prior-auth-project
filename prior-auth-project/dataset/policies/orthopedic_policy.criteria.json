@@ -1,0 +1,20 @@
+[
+  {
+    "id": "severe_oa_documented",
+    "description": "Severe osteoarthritis documented",
+    "check": "severity_keywords",
+    "value": ["severe", "advanced"]
+  },
+  {
+    "id": "failed_conservative_12wk",
+    "description": "Conservative therapy has failed for >=3 months",
+    "check": "min_conservative_weeks",
+    "value": 12
+  },
+  {
+    "id": "imaging_confirms_degeneration",
+    "description": "Imaging confirms advanced degeneration",
+    "check": "imaging_required",
+    "value": true
+  }
+]

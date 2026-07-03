@@ -12,8 +12,9 @@ from __future__ import annotations
 import json
 import random
 from pathlib import Path
+from prior_auth.utils.paths import LEGACY_DATA_ROOT, LOGS_ROOT, PROJECT_ROOT
 
-DATA_ROOT = Path(__file__).resolve().parents[3] / "data"
+DATA_ROOT = LEGACY_DATA_ROOT
 POLICIES_PATH = DATA_ROOT / "insurer_policies" / "policies.json"
 ICD_CODES_PATH = DATA_ROOT / "icd10_kg" / "icd10_codes.json"
 NOTES_ROOT = DATA_ROOT / "doctor_notes"

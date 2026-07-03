@@ -1,0 +1,14 @@
+[
+  {
+    "id": "disabling_symptoms",
+    "description": "Persistent disabling symptoms",
+    "check": "severity_keywords",
+    "value": ["disabling", "persistent", "refractory"]
+  },
+  {
+    "id": "failed_medical_therapy",
+    "description": "Despite medical therapy",
+    "check": "min_conservative_weeks",
+    "value": 24
+  }
+]

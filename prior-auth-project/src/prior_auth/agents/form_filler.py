@@ -10,6 +10,7 @@ import re
 from datetime import datetime
 from difflib import SequenceMatcher
 from pathlib import Path
+from prior_auth.utils.paths import LEGACY_DATA_ROOT, LOGS_ROOT, PROJECT_ROOT
 
 from prior_auth.schemas.common import Laterality
 from prior_auth.schemas.extraction import ExtractedClinicalFacts
@@ -18,7 +19,7 @@ from prior_auth.schemas.handoff import Handoff
 from prior_auth.schemas.icd_coding import ICDCodingResult
 from prior_auth.schemas.policy_check import PolicyCheckResult
 
-_TEMPLATES_PATH = Path(__file__).resolve().parents[3] / "data" / "form_templates" / "templates.json"
+_TEMPLATES_PATH = LEGACY_DATA_ROOT / "form_templates" / "templates.json"
 _MIN_TEMPLATE_SCORE = 0.3
 
 # Fields that must always carry a real value — an empty result here means extraction/coding

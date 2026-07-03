@@ -1,0 +1,9 @@
+diagnosis,icd10_code,rare_disease
+Primary osteoarthritis right knee,M17.11,No
+Primary osteoarthritis left knee,M17.12,No
+Coronary artery disease,I25.10,No
+Parkinson disease,G20,No
+Breast cancer,C50.919,No
+Crohn disease,K50.90,No
+Fabry disease,E75.21,Yes
+Gaucher disease,E75.22,Yes

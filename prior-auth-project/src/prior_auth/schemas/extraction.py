@@ -36,6 +36,7 @@ class ExtractedClinicalFacts(BaseModel):
     laterality: Laterality = Laterality.NOT_APPLICABLE
     requested_procedure_laterality: Laterality = Laterality.NOT_APPLICABLE
     symptoms: list[str] = Field(default_factory=list)
+    symptom_duration: Optional[str] = None
     failed_treatments: list[str] = Field(default_factory=list)
     conservative_therapy_duration_weeks: Optional[int] = Field(default=None, ge=0)
     imaging_evidence: Optional[str] = None

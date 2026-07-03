@@ -1,0 +1,14 @@
+[
+  {
+    "id": "pathology_confirmed",
+    "description": "Pathology/biopsy confirmed malignancy",
+    "check": "imaging_required",
+    "value": true
+  },
+  {
+    "id": "staging_documented",
+    "description": "Staging documented",
+    "check": "severity_keywords",
+    "value": ["stage", "metastatic", "advanced"]
+  }
+]

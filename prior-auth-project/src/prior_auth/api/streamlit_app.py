@@ -12,12 +12,13 @@ import glob
 import json
 import time
 from pathlib import Path
+from prior_auth.utils.paths import LEGACY_DATA_ROOT, LOGS_ROOT, PROJECT_ROOT
 
 import streamlit as st
 
 from prior_auth.orchestration.graph import PriorAuthWorkflow
 
-_DATA_DIR = Path(__file__).resolve().parents[3] / "data"
+_DATA_DIR = LEGACY_DATA_ROOT
 AGENT_ORDER = ["Extractor", "ICD Coder", "Policy RAG", "Form Filler"]
 AGENT_SUBTITLE = {
     "Extractor": "Reads the clinical note",

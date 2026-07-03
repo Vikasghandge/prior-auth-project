@@ -11,10 +11,11 @@ import re
 from dataclasses import dataclass
 from difflib import SequenceMatcher
 from pathlib import Path
+from prior_auth.utils.paths import LEGACY_DATA_ROOT, LOGS_ROOT, PROJECT_ROOT
 
 from prior_auth.schemas.extraction import ExtractedClinicalFacts
 
-_DEFAULT_DATA_PATH = Path(__file__).resolve().parents[3] / "data" / "insurer_policies" / "policies.json"
+_DEFAULT_DATA_PATH = LEGACY_DATA_ROOT / "insurer_policies" / "policies.json"
 
 
 def _tokenize(text: str) -> set[str]:

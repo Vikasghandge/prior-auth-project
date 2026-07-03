@@ -11,6 +11,7 @@ import glob
 import json
 import time
 from pathlib import Path
+from prior_auth.utils.paths import LEGACY_DATA_ROOT, LOGS_ROOT, PROJECT_ROOT
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -21,7 +22,7 @@ from pydantic import BaseModel
 from prior_auth.orchestration.graph import PriorAuthWorkflow
 
 _STATIC_DIR = Path(__file__).resolve().parent / "static"
-_DATA_DIR = Path(__file__).resolve().parents[3] / "data"
+_DATA_DIR = LEGACY_DATA_ROOT
 
 app = FastAPI(title="Prior Auth Workflow Demo API")
 app.add_middleware(

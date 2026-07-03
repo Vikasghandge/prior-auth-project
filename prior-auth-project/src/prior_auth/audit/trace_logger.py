@@ -8,6 +8,7 @@ from __future__ import annotations
 import json
 from datetime import datetime
 from pathlib import Path
+from prior_auth.utils.paths import LEGACY_DATA_ROOT, LOGS_ROOT, PROJECT_ROOT
 from typing import Any
 
 from pydantic import BaseModel
@@ -15,7 +16,7 @@ from pydantic import BaseModel
 from prior_auth.schemas.audit import AuditEvent, AuditTrace
 from prior_auth.schemas.handoff import Handoff
 
-_DEFAULT_TRACE_DIR = Path(__file__).resolve().parents[3] / "logs" / "audit_traces"
+_DEFAULT_TRACE_DIR = LOGS_ROOT / "audit_traces"
 
 
 def _summarize(payload: BaseModel | None) -> dict[str, Any]:

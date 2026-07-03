@@ -1,0 +1,14 @@
+[
+  {
+    "id": "documented_disease",
+    "description": "Documented Crohn disease",
+    "check": "severity_keywords",
+    "value": ["crohn", "documented", "active"]
+  },
+  {
+    "id": "failed_conventional",
+    "description": "Inadequate response to conventional therapy",
+    "check": "min_conservative_weeks",
+    "value": 8
+  }
+]

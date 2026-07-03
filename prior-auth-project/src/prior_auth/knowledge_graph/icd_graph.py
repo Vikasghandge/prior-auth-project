@@ -11,10 +11,11 @@ from collections import Counter
 from dataclasses import dataclass
 from difflib import SequenceMatcher
 from pathlib import Path
+from prior_auth.utils.paths import LEGACY_DATA_ROOT, LOGS_ROOT, PROJECT_ROOT
 
 import networkx as nx
 
-_DEFAULT_DATA_PATH = Path(__file__).resolve().parents[3] / "data" / "icd10_kg" / "icd10_codes.json"
+_DEFAULT_DATA_PATH = LEGACY_DATA_ROOT / "icd10_kg" / "icd10_codes.json"
 
 _STOPWORDS = {
     "a", "an", "the", "of", "with", "for", "and", "or", "in", "on", "to", "is", "are",

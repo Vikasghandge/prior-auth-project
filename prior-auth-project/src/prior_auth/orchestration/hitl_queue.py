@@ -10,8 +10,9 @@ from __future__ import annotations
 import json
 from datetime import datetime
 from pathlib import Path
+from prior_auth.utils.paths import LEGACY_DATA_ROOT, LOGS_ROOT, PROJECT_ROOT
 
-_DEFAULT_QUEUE_DIR = Path(__file__).resolve().parents[3] / "logs" / "hitl_queue"
+_DEFAULT_QUEUE_DIR = LOGS_ROOT / "hitl_queue"
 
 
 class HITLQueue:

@@ -12,6 +12,7 @@ dependencies = [
     "networkx>=3.0",
     "openai>=1.0",
     "python-dotenv>=1.0",
+    "openpyxl>=3.0.0",
 ]
 
 [project.optional-dependencies]
@@ -21,3 +22,4 @@ streamlit-ui = ["streamlit>=1.38"]
 
 [tool.setuptools.packages.find]
 where = ["src"]
+

@@ -7,6 +7,10 @@ from __future__ import annotations
 import re
 
 _AGE_SEX_INLINE = re.compile(r"Patient:\s*(\d{1,4})\s*([A-Za-z])\b")
+# Bare "64F"/"67M" at the very start of a note, with no "Patient:" label — the new dataset's
+# notes are written this way (e.g. "64F severe right knee pain..."). Anchored to the start so
+# it can't false-match an unrelated number+letter later in the note.
+_AGE_SEX_BARE = re.compile(r"^\s*(\d{1,3})\s*([MF])\b", re.IGNORECASE)
 _AGE_YEARS_OLD = re.compile(r"(\d{1,4})\s*[- ]?years?[- ]?old", re.IGNORECASE)
 
 _TREATMENT_SENTENCE = re.compile(
@@ -30,7 +34,17 @@ _NO_IMAGING = re.compile(
 )
 
 _PROCEDURE_SENTENCE = re.compile(
-    r"(?:requests?(?: authorization for)?|recommends?|requesting)\s+(.*?)(?:[.\n]|$)",
+    r"(?:requests?(?: authorization for)?|recommends?|requesting|requiring)\s+(.*?)(?:[.\n]|$)",
+    re.IGNORECASE,
+)
+# Fallback for the reverse phrasing the leading-trigger pattern above can't catch: "<procedure>
+# recommended."/"<procedure> requested." with the trigger word AFTER the procedure name, not
+# before it (e.g. "Angioplasty recommended.", "DBS evaluation requested."). The character class
+# excludes '.', so a candidate match can't cross a sentence boundary and swallow unrelated
+# earlier text — the leftmost successful match is always anchored to the start of the sentence
+# actually containing the trigger word.
+_PROCEDURE_TRAILING = re.compile(
+    r"([A-Za-z][A-Za-z0-9 /,'-]{1,80}?)\s+(?:is\s+)?(?:requested|recommended)\b\.?",
     re.IGNORECASE,
 )
 
@@ -49,6 +63,9 @@ _REDACTION_TOKEN = re.compile(r"\[REDACTED_\w+\],?\s*")
 
 def _find_age_sex(text: str) -> tuple[int | None, str | None]:
     m = _AGE_SEX_INLINE.search(text)
+    if m:
+        return int(m.group(1)), m.group(2).upper()
+    m = _AGE_SEX_BARE.search(text)
     if m:
         return int(m.group(1)), m.group(2).upper()
 
@@ -142,6 +159,21 @@ def _clean_diagnosis_section(diagnosis_section: str) -> str | None:
     return cleaned or None
 
 
+
+def _find_symptoms(text: str) -> list[str]:
+    m = re.search(r"(?:presents with|complains of|experiencing|symptoms include|with)\s+(.*?)(?:for |[.\n]|$)", text, re.IGNORECASE)
+    if not m:
+        return []
+    raw = m.group(1)
+    parts = re.split(r",\s*(?:and\s+)?|\s+and\s+", raw)
+    return [p.strip().rstrip(".") for p in parts if p.strip()]
+
+def _find_symptom_duration(diagnosis_section: str) -> str | None:
+    m = re.search(r"\bfor\s+(\d+\s+(?:months?|weeks?|days?|years?))\b", diagnosis_section, re.IGNORECASE)
+    if m:
+        return m.group(1)
+    return None
+
 def regex_extract(masked_text: str) -> dict:
     """Best-effort structured extraction from de-identified note text.
 
@@ -164,14 +196,29 @@ def regex_extract(masked_text: str) -> dict:
         diagnosis_section = masked_text[: procedure_match.start()]
         procedure_text = procedure_match.group(1)
     else:
-        diagnosis_section = masked_text
-        procedure_text = ""
+        trailing_matches = list(_PROCEDURE_TRAILING.finditer(masked_text))
+        if trailing_matches:
+            trailing_match = trailing_matches[-1]
+            diagnosis_section = masked_text[: trailing_match.start()]
+            procedure_text = trailing_match.group(1)
+        else:
+            diagnosis_section = masked_text
+            procedure_text = ""
 
     diagnosis = _clean_diagnosis_section(diagnosis_section)
     if diagnosis:
         fields["diagnosis"] = diagnosis
 
     fields["laterality"] = _find_laterality(diagnosis_section)
+    
+    symptoms = _find_symptoms(diagnosis_section)
+    if symptoms:
+        fields["symptoms"] = symptoms
+        
+    symptom_duration = _find_symptom_duration(diagnosis_section)
+    if symptom_duration:
+        fields["symptom_duration"] = symptom_duration
+
     fields["requested_procedure_laterality"] = (
         _find_laterality(procedure_text) if procedure_text else "not_applicable"
     )
