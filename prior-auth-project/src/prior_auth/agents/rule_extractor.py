@@ -76,23 +76,46 @@ def _find_laterality(text: str) -> str:
     return "not_applicable"
 
 
-def _find_conservative_weeks(text: str) -> int | None:
-    m = _WEEKS.search(text)
-    if m:
-        return int(m.group(1))
-    m = _MONTHS.search(text)
-    if m:
-        return int(m.group(1)) * 4
+def _find_conservative_weeks(text: str, treatment_sentence: str | None) -> int | None:
+    """Duration is read ONLY from the treatment-failure sentence itself, never the whole note —
+    otherwise an unrelated duration elsewhere (e.g. "pain for 18 months", describing how long the
+    patient has had symptoms, not how long conservative therapy was tried) gets misread as the
+    conservative-therapy duration. That's not a harmless mixup: a fabricated 72-week therapy
+    duration can make a policy's minimum-conservative-therapy criterion look satisfied when the
+    note never actually said so."""
+    if treatment_sentence:
+        m = _WEEKS.search(treatment_sentence)
+        if m:
+            return int(m.group(1))
+        m = _MONTHS.search(treatment_sentence)
+        if m:
+            return int(m.group(1)) * 4
     if re.search(r"no conservative therapy|not been (?:tried|attempted|prescribed)|has not tried", text, re.IGNORECASE):
         return 0
     return None
 
 
-def _find_treatments(text: str) -> list[str]:
-    m = _TREATMENT_SENTENCE.search(text)
-    if not m:
+def _treatment_sentence_match(text: str) -> re.Match | None:
+    return _TREATMENT_SENTENCE.search(text)
+
+
+def _treatment_sentence_span(text: str, match: re.Match) -> str:
+    """The full sentence the treatment-failure clause sits in (not just the captured group),
+    so a trailing duration like "...was attempted over 15 weeks without improvement." is still
+    in scope even though it comes after the captured treatment-list group ends. Scoped to the
+    next period only, not the next newline — notes in this dataset wrap a single sentence across
+    multiple lines with no period at the line break, so treating '\\n' as a sentence end would
+    cut the duration off if it happens to land on the next line."""
+    end = match.end()
+    stop = text.find(".", end)
+    sentence_end = stop if stop != -1 else len(text)
+    return text[match.start():sentence_end]
+
+
+def _find_treatments(match: re.Match | None) -> list[str]:
+    if not match:
         return []
-    raw = m.group(1)
+    raw = match.group(1)
     parts = re.split(r",\s*(?:and\s+)?|\s+and\s+", raw)
     return [p.strip().rstrip(".") for p in parts if p.strip()]
 
@@ -153,10 +176,12 @@ def regex_extract(masked_text: str) -> dict:
         _find_laterality(procedure_text) if procedure_text else "not_applicable"
     )
 
-    treatments = _find_treatments(masked_text)
+    treatment_match = _treatment_sentence_match(masked_text)
+    treatments = _find_treatments(treatment_match)
     fields["failed_treatments"] = treatments
 
-    weeks = _find_conservative_weeks(masked_text)
+    treatment_sentence = _treatment_sentence_span(masked_text, treatment_match) if treatment_match else None
+    weeks = _find_conservative_weeks(masked_text, treatment_sentence)
     if weeks is not None:
         fields["conservative_therapy_duration_weeks"] = weeks
 
