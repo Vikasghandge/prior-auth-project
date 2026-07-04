@@ -1,4 +1,5 @@
-"""The orchestrator: Extractor -> ICD Coder -> [confidence gate] -> Policy RAG -> Form Filler.
+"""The orchestrator: Extractor -> ICD Coder -> [confidence gate] -> Policy RAG -> Form Filler
+-> Critique (read-only QA verifier; audits the completed package, never alters the decision).
 
 A lightweight, dependency-free state machine rather than LangGraph/CrewAI/Foundry — chosen
 so the whole workflow runs and is unit-testable without any external service, while each
@@ -10,9 +11,11 @@ from __future__ import annotations
 import time
 from datetime import datetime, timezone
 
+from prior_auth.agents.critique import CritiqueAgent
 from prior_auth.agents.extractor import ExtractorAgent
 from prior_auth.agents.form_filler import FormFillerAgent
 from prior_auth.agents.icd_coder import ICDCoderAgent
+from prior_auth.agents.insurance import InsuranceCompanyAgent
 from prior_auth.agents.policy_rag import PolicyRAGAgent
 from prior_auth.audit.trace_logger import make_event, save_trace
 from prior_auth.orchestration.hitl_queue import HITLQueue
@@ -40,6 +43,8 @@ class PriorAuthWorkflow:
         self.icd_coder = ICDCoderAgent()
         self.policy_rag = PolicyRAGAgent()
         self.form_filler = FormFillerAgent()
+        self.critique = CritiqueAgent()
+        self.insurance = InsuranceCompanyAgent()
         self.hitl_queue = HITLQueue()
 
     def run(self, case_id: str, raw_note_text: str, specialty: str = "unknown",
@@ -115,14 +120,45 @@ class PriorAuthWorkflow:
 
         case.form = handoff.payload
 
+        # The decision is computed exactly as before — the Critique Agent observes it but can
+        # never change it.
         if not case.form.is_valid:
-            return self._finalize(case, trace, WorkflowStatus.FAILED_VALIDATION, case.form.validation_errors, persist_trace)
-        if not case.policy_result.policy_match:
+            decision, decision_errors = WorkflowStatus.FAILED_VALIDATION, case.form.validation_errors
+        elif not case.policy_result.policy_match:
             reason = f"Policy {case.policy_result.policy_id} criteria not fully met: missing {case.policy_result.missing_items}"
-            self.hitl_queue.enqueue(case_id, reason, WorkflowStatus.SUSPENDED_POLICY_MISMATCH.value, _now())
-            return self._finalize(case, trace, WorkflowStatus.SUSPENDED_POLICY_MISMATCH, [reason], persist_trace)
+            decision, decision_errors = WorkflowStatus.SUSPENDED_POLICY_MISMATCH, [reason]
+        else:
+            decision, decision_errors = WorkflowStatus.COMPLETED, []
 
-        return self._finalize(case, trace, WorkflowStatus.COMPLETED, [], persist_trace)
+        # --- Step 5: Critique (read-only QA verifier — audits the package, never alters it) ---
+        step += 1
+        t0 = time.perf_counter()
+        handoff = self.critique.run(facts, case.icd_result, case.policy_result, case.form, decision, _now())
+        trace.add(make_event(step, handoff, (time.perf_counter() - t0) * 1000,
+                              {"decision": decision.value, "form_template_id": case.form.form_template_id,
+                               "icd10_code": case.icd_result.icd10_code,
+                               "policy_id": case.policy_result.policy_id}))
+        critique_report = handoff.payload
+
+        # --- Step 6: Insurance Company (payer-side administrative review) ---
+        # Provider side ends above; the payer independently validates the submitted package
+        # and issues the FINAL authorization decision (APPROVED / DENIED / PENDING_REVIEW).
+        # The provider-side WorkflowStatus is preserved unchanged — the payer verdict lives
+        # in this trace event and drives the UI's final banner.
+        step += 1
+        t0 = time.perf_counter()
+        handoff = self.insurance.run(
+            facts, case.icd_result, case.policy_result, case.form, critique_report, decision, _now()
+        )
+        trace.add(make_event(step, handoff, (time.perf_counter() - t0) * 1000,
+                              {"provider_decision": decision.value,
+                               "critique_status": critique_report.status.value,
+                               "policy_id": case.policy_result.policy_id,
+                               "procedure": facts.requested_procedure}))
+
+        if decision == WorkflowStatus.SUSPENDED_POLICY_MISMATCH:
+            self.hitl_queue.enqueue(case_id, decision_errors[0], decision.value, _now())
+        return self._finalize(case, trace, decision, decision_errors, persist_trace)
 
     def _finalize(self, case: PriorAuthCase, trace: AuditTrace, status: WorkflowStatus,
                   errors: list[str], persist_trace: bool) -> tuple[PriorAuthCase, AuditTrace]:

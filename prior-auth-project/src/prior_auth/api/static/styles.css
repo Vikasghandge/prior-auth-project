@@ -264,7 +264,7 @@ main { padding: 36px 0 64px; }
 
 /* --------------------------------------------------------- overview flow -- */
 .flow {
-  display: grid; grid-template-columns: 1fr 28px 1fr 28px 1fr 28px 1fr;
+  display: grid; grid-template-columns: 1fr 22px 1fr 22px 1fr 22px 1fr 22px 1fr 22px 1fr;
   gap: 10px; align-items: stretch;
 }
 .flow-step {
@@ -426,27 +426,29 @@ select.field-input { appearance: none; background-image: url("data:image/svg+xml
 .decision-stat .v { font: 700 19px/1.2 var(--font-mono); letter-spacing: -.02em; margin-top: 3px; font-variant-numeric: tabular-nums; }
 
 /* -------------------------------------------------------------- pipeline -- */
-.pipeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 26px; position: relative; }
+.pipeline { display: grid; grid-template-columns: repeat(6, 1fr); gap: 18px; position: relative; }
 .agent-card {
-  position: relative; background: var(--card);
+  position: relative; background: var(--card); min-width: 0; /* allow 6-up grid to shrink */
   border: 1px solid var(--border); border-radius: var(--r-md);
-  padding: 18px; transition: transform .22s, box-shadow .22s, border-color .22s;
+  padding: 15px; transition: transform .22s, box-shadow .22s, border-color .22s;
   animation: fadeUp .4s ease both;
 }
 .agent-card:nth-child(2) { animation-delay: .06s; }
 .agent-card:nth-child(3) { animation-delay: .12s; }
 .agent-card:nth-child(4) { animation-delay: .18s; }
+.agent-card:nth-child(5) { animation-delay: .24s; }
+.agent-card:nth-child(6) { animation-delay: .30s; }
 .agent-card:hover { transform: translateY(-3px); box-shadow: 0 4px 10px rgba(15,23,42,.05), 0 14px 34px rgba(79,70,229,.13); }
 .agent-card.s-ok:hover        { box-shadow: 0 4px 10px rgba(15,23,42,.05), 0 14px 34px rgba(34,197,94,.16); }
 .agent-card.s-suspended:hover { box-shadow: 0 4px 10px rgba(15,23,42,.05), 0 14px 34px rgba(245,158,11,.16); }
 .agent-card.s-failed:hover    { box-shadow: 0 4px 10px rgba(15,23,42,.05), 0 14px 34px rgba(239,68,68,.16); }
 .agent-card::after { /* connector */
-  content: ""; position: absolute; top: 50%; right: -26px; width: 26px; height: 2px;
+  content: ""; position: absolute; top: 50%; right: -18px; width: 18px; height: 2px;
   background: linear-gradient(90deg, #D9DDEA, #C9CEDF);
 }
 .agent-card:last-child::after { display: none; }
 .agent-card .conn-dot {
-  position: absolute; top: calc(50% - 3px); right: -17px;
+  position: absolute; top: calc(50% - 3px); right: -13px;
   width: 7px; height: 7px; border-radius: 50%; background: #C2C8DA;
 }
 .agent-card:last-child .conn-dot { display: none; }

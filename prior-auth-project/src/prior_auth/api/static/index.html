@@ -45,7 +45,7 @@
     <div class="hero">
       <span class="hero-kicker"><i data-lucide="sparkles" style="width:13px;height:13px"></i>ENTERPRISE AI PLATFORM</span>
       <h1>Prior authorization, decided in milliseconds &mdash; not days.</h1>
-      <p class="lede">Four cooperating AI agents read the doctor's note, assign the diagnosis code, check the insurer's policy criteria, and prepare the paperwork &mdash; escalating anything uncertain to a human reviewer.</p>
+      <p class="lede">Six cooperating AI agents read the doctor's note, assign the diagnosis code, check the insurer's policy criteria, prepare the paperwork, independently verify the completed package, and issue the payer's final authorization decision &mdash; escalating anything uncertain to a human reviewer.</p>
       <div class="hero-badges">
         <span class="hero-badge"><i data-lucide="flask-conical"></i>Measured on 90 labeled clinical cases</span>
         <span class="hero-badge"><i data-lucide="server"></i>Real pipeline &middot; nothing simulated</span>
@@ -149,7 +149,7 @@
 
         <div id="emptyState" class="empty-state">
           <div class="empty-orb"><i data-lucide="mouse-pointer-click" style="width:24px;height:24px"></i></div>
-          <p>Pick a sample case (or write your own note) on the left, then press <b>Run workflow</b> to watch the four agents decide it live.</p>
+          <p>Pick a sample case (or write your own note) on the left, then press <b>Run workflow</b> to watch the six agents decide it live.</p>
         </div>
 
         <div id="results" class="hidden stack-md">
@@ -178,7 +178,7 @@
           <div>
             <div class="section-head">
               <p class="section-title"><i data-lucide="git-commit-horizontal"></i>Agent pipeline</p>
-              <p class="section-sub">How this case moved through the four agents.</p>
+              <p class="section-sub">How this case moved through the six agents &mdash; the provider-side pipeline plus the payer's final review.</p>
             </div>
             <div id="pipeline" class="pipeline"></div>
           </div>
@@ -279,7 +279,7 @@
       <div class="info-card">
         <div class="info-icon" style="background:#FFF7ED;color:#C2410C;"><i data-lucide="file-clock"></i></div>
         <h4>Full audit trail</h4>
-        <p>Every case produces a timestamped record of what each of the four agents did, what confidence it had, and why &mdash; so any decision (or non-decision) can be explained and reviewed after the fact.</p>
+        <p>Every case produces a timestamped record of what each of the six agents did, what confidence it had, and why &mdash; so any decision (or non-decision) can be explained and reviewed after the fact.</p>
       </div>
       <div class="info-card">
         <div class="info-icon" style="background:var(--good-tint);color:var(--good-text);"><i data-lucide="flask-conical"></i></div>

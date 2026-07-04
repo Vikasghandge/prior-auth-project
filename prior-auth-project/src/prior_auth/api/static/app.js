@@ -3,18 +3,41 @@
    (GET /api/eval-metrics, GET /api/sample-cases, POST /api/run) and the same
    request/response contracts. Only the rendering layer is redesigned. */
 
-const AGENT_ORDER = ["Extractor", "ICD Coder", "Policy RAG", "Form Filler"];
+const AGENT_ORDER = ["Extractor", "ICD Coder", "Policy RAG", "Form Filler", "Critique Agent", "Insurance Company"];
 const AGENT_SUBTITLE = {
   "Extractor": "Reads the clinical note",
   "ICD Coder": "Assigns the diagnosis code",
   "Policy RAG": "Checks the insurer's rules",
   "Form Filler": "Prepares the paperwork",
+  "Critique Agent": "Independent QA verification",
+  "Insurance Company": "Payer-side final review",
 };
 const AGENT_ICON = {
   "Extractor": "file-search",
   "ICD Coder": "stethoscope",
   "Policy RAG": "clipboard-check",
   "Form Filler": "file-check-2",
+  "Critique Agent": "shield-check",
+  "Insurance Company": "landmark",
+};
+
+/* Critique report verdict -> visual status family (icon + label, never color alone). */
+const CRITIQUE_STATUS_KEY = {
+  PASS: "ok",
+  PASS_WITH_WARNINGS: "suspended",
+  FAIL: "failed",
+};
+
+/* Payer decision -> visual status family + final banner content. Only the Insurance
+   Company agent may issue the FINAL authorization decision. */
+const PAYER_STATUS_KEY = { APPROVED: "ok", DENIED: "failed", PENDING_REVIEW: "suspended" };
+const PAYER_META = {
+  APPROVED: { key: "ok", icon: "badge-check", badge: "Payer approved", title: "Approved by Insurance Company",
+    sub: "The authorization request has successfully passed all payer validation checks." },
+  DENIED: { key: "failed", icon: "ban", badge: "Payer denied", title: "Authorization Denied",
+    sub: "Coverage or policy requirements were not satisfied." },
+  PENDING_REVIEW: { key: "suspended", icon: "user-check", badge: "Payer review", title: "Manual Review Required",
+    sub: "Additional payer review is required before authorization." },
 };
 
 const STATUS_META = {
@@ -205,13 +228,25 @@ function setupInputs() {
 
 /* ---------------- Decision hero ---------------- */
 function renderVerdict(status, reason, totalMs, events) {
-  const meta = VERDICT_META[status] || { key: "suspended", icon: "help-circle", badge: status, title: status, sub: "" };
+  // The payer's decision is the system's FINAL decision: when the case reached the
+  // Insurance Company agent, its verdict drives the banner. Cases that stopped on the
+  // provider side (suspended/failed before submission) keep the provider-side banner.
+  const payerEv = (events || []).find((e) => e.agent_name === "Insurance Company");
+  const payerDecision = payerEv?.output_summary?.final_decision;
+  let meta, subText;
+  if (payerDecision && PAYER_META[payerDecision]) {
+    meta = PAYER_META[payerDecision];
+    subText = payerEv.output_summary.reason || meta.sub;
+  } else {
+    meta = VERDICT_META[status] || { key: "suspended", icon: "help-circle", badge: status, title: status, sub: "" };
+    subText = reason || meta.sub;
+  }
   const hero = document.getElementById("decisionHero");
   hero.className = `decision-hero is-${meta.key}`;
   document.getElementById("decisionIcon").innerHTML = `<i data-lucide="${meta.icon}"></i>`;
   document.getElementById("decisionBadge").innerHTML = `<i data-lucide="${meta.icon}"></i>${escapeHtml(meta.badge)}`;
   document.getElementById("decisionTitle").textContent = meta.title;
-  document.getElementById("decisionSub").textContent = reason || meta.sub;
+  document.getElementById("decisionSub").textContent = subText;
   document.getElementById("decisionDuration").textContent = `${totalMs.toFixed(0)} ms`;
 
   const confs = (events || []).map((e) => e.confidence).filter((c) => c != null);
@@ -234,11 +269,37 @@ function renderPipeline(events) {
   const pipeline = document.getElementById("pipeline");
   pipeline.innerHTML = AGENT_ORDER.map((agentName, idx) => {
     const ev = byAgent[agentName];
-    const key = stepStatusKey(ev);
-    const s = STATUS_META[key];
+    let key = stepStatusKey(ev);
+    let statusLabel = ev ? ev.status : null;
+    let confLabel = "Confidence";
+    let confText = null;
+    let hoverTitle = "";
+
     const confidencePct = ev && ev.confidence != null ? Math.round(ev.confidence * 100) : null;
+    if (confidencePct != null) confText = confidencePct + "%";
+
+    // The Critique card reports its QA verdict and quality score, not a raw handoff status.
+    const report = agentName === "Critique Agent" ? ev?.output_summary : null;
+    if (report && report.status) {
+      key = CRITIQUE_STATUS_KEY[report.status] || key;
+      statusLabel = report.status.replace(/_/g, " ");
+      confLabel = "Quality score";
+      confText = `${report.quality_score}/100`;
+      hoverTitle = ` title="${escapeHtml(report.summary || "")}"`;
+    }
+
+    // The Insurance Company card reports the FINAL payer decision.
+    const payer = agentName === "Insurance Company" ? ev?.output_summary : null;
+    if (payer && payer.final_decision) {
+      key = PAYER_STATUS_KEY[payer.final_decision] || key;
+      statusLabel = payer.final_decision.replace(/_/g, " ");
+      confLabel = "Decision confidence";
+      hoverTitle = ` title="${escapeHtml(payer.reason || "")}"`;
+    }
+
+    const s = STATUS_META[key];
     return `
-      <div class="agent-card ${s.cls}">
+      <div class="agent-card ${s.cls}"${hoverTitle}>
         <span class="conn-dot"></span>
         <div class="agent-top">
           <span class="agent-num">${idx + 1}</span>
@@ -246,10 +307,10 @@ function renderPipeline(events) {
           <span class="agent-icon"><i data-lucide="${AGENT_ICON[agentName]}"></i></span>
         </div>
         <div class="agent-sub">${AGENT_SUBTITLE[agentName]}</div>
-        <span class="agent-status"><i data-lucide="${s.icon}"></i>${ev ? escapeHtml(ev.status) : s.label}</span>
+        <span class="agent-status"><i data-lucide="${s.icon}"></i>${statusLabel ? escapeHtml(statusLabel) : s.label}</span>
         <div class="conf-row">
-          <span class="conf-label">Confidence</span>
-          <span class="conf-value">${confidencePct != null ? confidencePct + "%" : "—"}</span>
+          <span class="conf-label">${confLabel}</span>
+          <span class="conf-value">${confText ?? "—"}</span>
         </div>
         <div class="conf-track"><div class="conf-fill" data-w="${confidencePct ?? 0}"></div></div>
         <div class="agent-time"><i data-lucide="timer"></i>${ev ? ev.duration_ms.toFixed(1) + " ms" : "not executed"}</div>
@@ -411,7 +472,18 @@ function renderTimeline(trace) {
   const finalKey = (VERDICT_META[trace.final_status] || { key: "suspended" }).key;
 
   const stepsHtml = trace.events.map((ev, i) => {
-    const key = stepStatusKey(ev);
+    let key = stepStatusKey(ev);
+    let statusLabel = ev.status;
+    // Critique event: surface the QA verdict, not the (always-OK) handoff status.
+    if (ev.agent_name === "Critique Agent" && ev.output_summary?.status) {
+      key = CRITIQUE_STATUS_KEY[ev.output_summary.status] || key;
+      statusLabel = ev.output_summary.status.replace(/_/g, " ");
+    }
+    // Payer event: surface the final authorization decision.
+    if (ev.agent_name === "Insurance Company" && ev.output_summary?.final_decision) {
+      key = PAYER_STATUS_KEY[ev.output_summary.final_decision] || key;
+      statusLabel = ev.output_summary.final_decision.replace(/_/g, " ");
+    }
     const s = STATUS_META[key];
     const confidencePct = ev.confidence != null ? Math.round(ev.confidence * 100) : null;
     return `
@@ -419,7 +491,7 @@ function renderTimeline(trace) {
         <span class="tl-node ${key}"><i data-lucide="${AGENT_ICON[ev.agent_name] || "circle"}"></i></span>
         <div class="tl-row" role="button" tabindex="0">
           <span class="tl-name">${escapeHtml(ev.agent_name)}</span>
-          <span class="tl-status ${key}"><i data-lucide="${s.icon}"></i>${escapeHtml(ev.status)}</span>
+          <span class="tl-status ${key}"><i data-lucide="${s.icon}"></i>${escapeHtml(statusLabel)}</span>
           <span class="tl-meta">
             <span><i data-lucide="clock"></i>${fmtTime(ev.timestamp)}</span>
             <span><i data-lucide="timer"></i>${ev.duration_ms.toFixed(1)} ms</span>

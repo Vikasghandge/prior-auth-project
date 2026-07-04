@@ -1,0 +1,68 @@
+{
+  "_comment": "Synthetic payer-side directory for the Insurance Company Agent. Entirely local/deterministic — no external API. Defaults simulate a member in good standing; case_id-keyed overrides make every failure path demoable without disturbing the 90 labeled sample cases.",
+
+  "default_member": {
+    "member_status": "ACTIVE",
+    "plan_id": "PLAN-GOLD-PPO",
+    "coverage_start": "2024-01-01",
+    "coverage_end": "2027-12-31"
+  },
+
+  "plans": {
+    "PLAN-GOLD-PPO": {
+      "status": "ACTIVE",
+      "name": "Gold PPO — comprehensive",
+      "requires_prior_authorization": true,
+      "requires_referral": true,
+      "requires_precertification": false,
+      "non_covered_procedures": ["cosmetic surgery", "experimental gene therapy"]
+    },
+    "PLAN-EXPIRED-01": {
+      "status": "EXPIRED",
+      "name": "Legacy plan — lapsed 2025",
+      "requires_prior_authorization": true,
+      "requires_referral": true,
+      "requires_precertification": false,
+      "non_covered_procedures": []
+    },
+    "PLAN-SUSPENDED-01": {
+      "status": "SUSPENDED",
+      "name": "Suspended for non-payment",
+      "requires_prior_authorization": true,
+      "requires_referral": true,
+      "requires_precertification": false,
+      "non_covered_procedures": []
+    }
+  },
+
+  "provider_network": {
+    "default_status": "IN_NETWORK",
+    "specialties": {
+      "Cardiology": "IN_NETWORK",
+      "Orthopedics": "IN_NETWORK",
+      "Oncology": "IN_NETWORK",
+      "Neurology": "IN_NETWORK",
+      "Gastroenterology": "IN_NETWORK",
+      "Unknown": "IN_NETWORK"
+    }
+  },
+
+  "recent_authorizations": [
+    {
+      "authorization_id": "AUTH-2026-58811",
+      "case_id": "PRIOR-CASE-0007",
+      "fingerprint": "demo-duplicate-fingerprint",
+      "submitted": "2026-06-28"
+    }
+  ],
+
+  "case_overrides": {
+    "_comment": "Force specific payer scenarios by case id (for demos/tests). Any case id not listed here gets the healthy defaults above.",
+    "DEMO-EXPIRED": { "plan_id": "PLAN-EXPIRED-01" },
+    "DEMO-SUSPENDED": { "plan_id": "PLAN-SUSPENDED-01" },
+    "DEMO-INACTIVE-MEMBER": { "member_status": "INACTIVE" },
+    "DEMO-OON": { "provider_status": "OUT_OF_NETWORK" },
+    "DEMO-NOTCOVERED": { "force_not_covered": true },
+    "DEMO-DUP": { "force_duplicate": true }
+  }
+}
