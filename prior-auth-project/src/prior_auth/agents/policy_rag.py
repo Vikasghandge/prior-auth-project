@@ -42,8 +42,10 @@ class PolicyRAGAgent:
             missing_items=evaluation.missing_items,
             confidence=confidence,
             rationale=(
-                f"Retrieved policy {policy['policy_id']} (retrieval_score={retrieval_score:.2f}); "
-                f"{len(evaluation.matched_criteria)}/{len(policy['criteria'])} criteria met."
+                f"Retrieved policy {policy['policy_id']} via {rag.last_retrieval['mode']} retrieval "
+                f"(retrieval_score={retrieval_score:.2f}"
+                + (f"; best-matching chunk: {rag.last_retrieval['best_chunk']!r}" if rag.last_retrieval.get("best_chunk") else "")
+                + f"); {len(evaluation.matched_criteria)}/{len(policy['criteria'])} criteria met."
             ),
         )
         return Handoff.ok(self.name, facts.case_id, result, confidence, timestamp)

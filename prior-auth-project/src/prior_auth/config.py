@@ -19,10 +19,22 @@ RARE_DISEASE_CONFIDENCE_THRESHOLD = 0.90
 # from silently producing a confident-looking wrong code instead of asking for a human.
 GENERAL_ICD_CONFIDENCE_THRESHOLD = 0.70
 
+# Below this, the Critique Agent (Agent 5, read-only QA) adds an advisory warning about an
+# upstream agent's confidence to its report. Warn-only by design: the critique never rejects
+# or re-routes a case on low confidence — the ICD gates above already own that behavior.
+CRITIQUE_CONFIDENCE_WARN_THRESHOLD = 0.75
+
 # Extraction defaults to the deterministic offline path (see agents/rule_extractor.py) so the
 # workflow is always runnable/testable without live credentials or API cost. Set
 # PRIOR_AUTH_USE_LLM_EXTRACTION=true to route the Extractor through Azure OpenAI instead.
 USE_LLM_EXTRACTION = os.getenv("PRIOR_AUTH_USE_LLM_EXTRACTION", "false").strip().lower() == "true"
+
+
+# Policy retrieval upgrades to hybrid chunk-embedding + keyword search whenever an Azure
+# embedding deployment is configured (set to "false" to force the pure keyword path). The
+# deterministic criteria checks are unaffected either way — embeddings only influence WHICH
+# policy is pulled off the shelf, never whether its rules are met.
+USE_EMBEDDING_RETRIEVAL = os.getenv("PRIOR_AUTH_USE_EMBEDDING_RETRIEVAL", "true").strip().lower() == "true"
 
 
 @dataclass(frozen=True)
@@ -31,10 +43,19 @@ class AzureOpenAIConfig:
     api_key: str | None = os.getenv("AZURE_OPENAI_API_KEY")
     api_version: str | None = os.getenv("AZURE_OPENAI_API_VERSION")
     deployment: str | None = os.getenv("AZURE_OPENAI_DEPLOYMENT_NAME") or os.getenv("AZURE_OPENAI_DEPLOYMENT")
+    # Both spellings accepted: AZURE_OPENA_... (a common typo) kept as a fallback.
+    embedding_deployment: str | None = (
+        os.getenv("AZURE_OPENAI_EMBEDDING_DEPLOYMENT_NAME")
+        or os.getenv("AZURE_OPENA_EMBEDDING_DEPLOYMENT_NAME")
+    )
 
     @property
     def is_configured(self) -> bool:
         return bool(self.endpoint and self.api_key and self.deployment)
+
+    @property
+    def embeddings_configured(self) -> bool:
+        return bool(self.endpoint and self.api_key and self.embedding_deployment)
 
 
 def get_azure_config() -> AzureOpenAIConfig:
