@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Policy RAG Agent — Architecture Document</title>
+<style>
+  @page { size: A4; margin: 16mm 15mm; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: "Segoe UI", Arial, sans-serif; color: #1a2233; font-size: 10.5pt; line-height: 1.6; }
+  .cover { text-align: center; padding: 80px 40px 40px; page-break-after: always; }
+  .cover .logo { width: 64px; height: 64px; border-radius: 18px; margin: 0 auto 24px;
+    background: linear-gradient(135deg, #6366F1, #4F46E5); color: #fff;
+    display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 800; }
+  .cover h1 { font-size: 27pt; letter-spacing: -0.5pt; color: #1e1b4b; line-height: 1.15; }
+  .cover .subtitle { font-size: 13pt; color: #4F46E5; margin-top: 12px; font-weight: 600; }
+  .cover .meta { margin-top: 26px; color: #8a93a8; font-size: 9.5pt; }
+  .cover table { margin: 46px auto 0; font-size: 9.5pt; border-collapse: collapse; }
+  .cover td { padding: 5px 14px; border-bottom: 1px solid #E5E7EB; text-align: left; }
+  .cover td:first-child { color: #64748B; font-weight: 600; }
+  h2 { font-size: 15pt; color: #1e1b4b; margin: 26px 0 8px; border-bottom: 3px solid #EEF2FF;
+       padding-bottom: 5px; page-break-after: avoid; }
+  h3 { font-size: 11.5pt; color: #4338CA; margin: 16px 0 6px; page-break-after: avoid; }
+  p { margin: 6px 0; }
+  .tag { display: inline-block; background: #EEF2FF; color: #4338CA; font-weight: 700; font-size: 8.5pt;
+    border-radius: 999px; padding: 2px 11px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+  code, .mono { font-family: Consolas, "JetBrains Mono", monospace; font-size: 9pt;
+    background: #F1F3F9; border-radius: 4px; padding: 1px 5px; }
+  .diagram { font-family: Consolas, monospace; font-size: 8.2pt; line-height: 1.42; white-space: pre;
+    background: #0B1220; color: #C9D6EE; border-radius: 10px; padding: 14px 16px; margin: 12px 0;
+    page-break-inside: avoid; overflow: hidden; }
+  .diagram .hl { color: #93C5FD; font-weight: bold; }
+  .diagram .g { color: #86EFAC; }
+  .diagram .y { color: #FCD34D; }
+  .diagram .d { color: #64748B; }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 9.5pt; page-break-inside: avoid; }
+  th { text-align: left; background: #1e1b4b; color: #fff; padding: 7px 10px; font-size: 8.5pt;
+       text-transform: uppercase; letter-spacing: 0.5px; }
+  td { padding: 7px 10px; border-bottom: 1px solid #E5E7EB; vertical-align: top; }
+  tr:nth-child(even) td { background: #FAFBFE; }
+  .box { background: #F7F8FC; border: 1px solid #E5E7EB; border-left: 4px solid #4F46E5;
+    border-radius: 8px; padding: 10px 14px; margin: 10px 0; page-break-inside: avoid; }
+  .box.green { border-left-color: #16A34A; background: #F0FDF4; border-color: #BBF7D0; }
+  .box.amber { border-left-color: #D97706; background: #FFFBEB; border-color: #FDE68A; }
+  .box b.title { display: block; margin-bottom: 3px; color: #1e1b4b; }
+  .formula { text-align: center; font-family: Consolas, monospace; font-size: 10.5pt; font-weight: 700;
+    background: #EEF2FF; border: 1px solid #C7D2FE; color: #3730A3; border-radius: 8px;
+    padding: 10px; margin: 10px 0; page-break-inside: avoid; }
+  .footer-note { margin-top: 26px; color: #8a93a8; font-size: 8.5pt; border-top: 1px solid #E5E7EB; padding-top: 8px; }
+  ul { margin: 6px 0 6px 22px; }
+  li { margin: 3px 0; }
+</style>
+</head>
+<body>
+
+<!-- ================================ COVER ================================ -->
+<div class="cover">
+  <div class="logo">⬡</div>
+  <h1>Policy RAG Agent</h1>
+  <div class="subtitle">Architecture Document — Hybrid Retrieval Design (Current)</div>
+  <p style="max-width:520px;margin:26px auto 0;color:#475069;font-size:11pt;">
+    The complete technical architecture of Agent&nbsp;3 in the Prior&nbsp;Authorization pipeline:
+    chunked policy knowledge base, Azure OpenAI embedding retrieval with keyword hybrid scoring,
+    deterministic criteria evaluation, and graceful offline degradation.
+  </p>
+  <table>
+    <tr><td>System</td><td>Prior Authorization AI — multi-agent workflow</td></tr>
+    <tr><td>Component</td><td>Agent 3 · Policy RAG (<span class="mono">agents/policy_rag.py</span>)</td></tr>
+    <tr><td>Retrieval mode</td><td>Hybrid — chunk embeddings + keyword/fuzzy, automatic fallback</td></tr>
+    <tr><td>Embedding model</td><td>Azure OpenAI <span class="mono">text-embedding-3-small</span> (1536 dims)</td></tr>
+    <tr><td>Knowledge base</td><td>32 insurer policies → ~150 semantic chunks</td></tr>
+    <tr><td>Verified</td><td>90/90 labeled cases · 51/51 policy accuracy · zero regressions</td></tr>
+    <tr><td>Document date</td><td>July 2026</td></tr>
+  </table>
+</div>
+
+<!-- ================================ 1. OVERVIEW ================================ -->
+<span class="tag">1 · Overview</span>
+<h2>Where the agent sits, and what it owns</h2>
+<p>
+  The Policy RAG agent is the third of five agents. It receives de-identified, schema-validated
+  clinical facts and answers exactly one question: <b>“Which insurer policy governs this request,
+  and does the documented evidence satisfy that policy's criteria?”</b>
+</p>
+<div class="diagram">
+Extractor ──► ICD Coder ──► <span class="hl">POLICY RAG</span> ──► Form Filler ──► Critique
+                                 ▲
+                    ExtractedClinicalFacts (Pydantic-typed, PHI already masked)
+                                 ▼
+                    PolicyCheckResult (policy_id · match · matched/missing criteria
+                                       · confidence · explainable rationale)</div>
+<p>Two design invariants define the whole architecture:</p>
+<div class="box">
+  <b class="title">Invariant 1 — Probabilistic retrieval, deterministic judgment</b>
+  Embeddings and fuzzy matching may influence <i>which policy document is fetched</i> (where
+  tolerance to phrasing helps). Whether that policy's rules are met is decided by fixed rule
+  logic only (where fuzziness would be unsafe). No LLM ever approves or rejects anything.
+</div>
+<div class="box">
+  <b class="title">Invariant 2 — Degrade, never fail</b>
+  Every external dependency (Azure credentials, network, cache file) has a per-call fallback
+  to the fully offline keyword path. A dead API can slow one case; it can never error one.
+</div>
+
+<!-- ================================ 2. LAYERED VIEW ================================ -->
+<span class="tag">2 · Layered architecture</span>
+<h2>The two layers inside the agent</h2>
+<div class="diagram">
+┌────────────────────────────────────────────────────────────────────────────┐
+│ POLICY RAG AGENT                                   agents/policy_rag.py    │
+│                                                                            │
+│  0 · PHI GUARD    contains_phi() re-checks input; ERROR handoff on hit     │
+│                                                                            │
+│ ┌── LAYER 1 · RETRIEVAL (probabilistic) ──────────── rag/retriever.py ──┐  │
+│ │                                                                       │  │
+│ │   query = diagnosis_narrative + requested_procedure                   │  │
+│ │              │                                                        │  │
+│ │      ┌───────┴────────────┐                                           │  │
+│ │      ▼                    ▼                                           │  │
+│ │  <span class="hl">KEYWORD PATH</span>        <span class="hl">SEMANTIC PATH</span>                                   │  │
+│ │  token overlap        32 policies → ~150 chunks                       │  │
+│ │  + fuzzy contain      • procedure-coverage chunk                      │  │
+│ │  (difflib, offline)   • diagnosis-applicability chunk                 │  │
+│ │      │                • one chunk PER criterion                       │  │
+│ │      │                       │                                        │  │
+│ │      │                Azure text-embedding-3-small                    │  │
+│ │      │                + sha256 disk cache (embed once, reuse forever) │  │
+│ │      │                       │                                        │  │
+│ │      │                cosine similarity → best chunk per policy       │  │
+│ │      ▼                       ▼                                        │  │
+│ │   score_kw ∈ 0..1      score_sem (cosine rescaled 0.15–0.70 → 0..1)   │  │
+│ │      └────► <span class="g">HYBRID = 0.55·score_kw + 0.45·score_sem</span> ◄────┘          │  │
+│ │                        │                                              │  │
+│ │        top-1 policy + winning chunk (quoted in rationale)             │  │
+│ │        <span class="y">FALLBACK: missing keys / API error → keyword-only</span>             │  │
+│ └───────────────────────────────────────────────────────────────────────┘  │
+│                          │                                                 │
+│ ┌── LAYER 2 · EVALUATION (deterministic) ─────────────────────────────┐    │
+│ │   for each criterion of the retrieved policy:                       │    │
+│ │     severity_keywords       "severe/end-stage/…" present in facts?  │    │
+│ │     min_conservative_weeks  documented weeks ≥ policy threshold?    │    │
+│ │     imaging_required        imaging evidence documented?            │    │
+│ │   → matched_criteria[] / missing_items[]   (no LLM, no embeddings)  │    │
+│ └──────────────────────────────────────────────────────────────────────┘   │
+│                          │                                                 │
+│   confidence = 0.3 · retrieval_score + 0.7 · criteria_ratio                │
+│   OUTPUT: PolicyCheckResult (Pydantic-validated before leaving the agent)  │
+└────────────────────────────────────────────────────────────────────────────┘
+          │
+          ├── all criteria met ──► Form Filler (auto-approval path)
+          └── anything missing ──► SUSPENDED_POLICY_MISMATCH ──► human review</div>
+
+<!-- ================================ 3. COMPONENTS ================================ -->
+<span class="tag">3 · Component inventory</span>
+<h2>Every moving part, file by file</h2>
+<table>
+  <tr><th>Component</th><th>Location</th><th>Responsibility</th></tr>
+  <tr><td><b>Agent shell</b></td><td class="mono">agents/policy_rag.py</td>
+      <td>PHI boundary re-check · orchestrates retrieve → evaluate · blends confidence · emits typed <span class="mono">Handoff[PolicyCheckResult]</span></td></tr>
+  <tr><td><b>Retriever + chunker</b></td><td class="mono">rag/retriever.py</td>
+      <td><span class="mono">_build_chunks()</span> (policy → chunks) · <span class="mono">_semantic_scores()</span> (cosine per chunk, max per policy) · hybrid <span class="mono">retrieve()</span> · deterministic <span class="mono">evaluate_criteria()</span></td></tr>
+  <tr><td><b>Embedding client</b></td><td class="mono">rag/embeddings.py</td>
+      <td>Azure OpenAI embeddings call · sha256-keyed persistent cache · cosine helper · api-version retry · fail-open to keyword</td></tr>
+  <tr><td><b>Policy knowledge base</b></td><td class="mono">dataset/legacy_full/insurer_policies/policies.json</td>
+      <td>32 structured policies: <span class="mono">procedure_keywords</span>, <span class="mono">diagnosis_keywords</span>, criteria checklist</td></tr>
+  <tr><td><b>Vector store (lightweight)</b></td><td class="mono">logs/embedding_cache.json</td>
+      <td>Persisted vectors keyed by (deployment, sha256 of text) — corpus embedded once; identical queries never re-billed; makes hybrid scoring reproducible run-to-run</td></tr>
+  <tr><td><b>Configuration</b></td><td class="mono">config.py + .env</td>
+      <td><span class="mono">AZURE_OPENAI_*</span> credentials · <span class="mono">AZURE_OPENAI_EMBEDDING_DEPLOYMENT_NAME</span> · kill-switch <span class="mono">PRIOR_AUTH_USE_EMBEDDING_RETRIEVAL=false</span></td></tr>
+  <tr><td><b>Output contract</b></td><td class="mono">schemas/policy_check.py</td>
+      <td><span class="mono">PolicyCheckResult</span> — Pydantic-validated; downstream agents and the Critique verifier consume it as-is</td></tr>
+</table>
+
+<!-- ================================ 4. DATA FLOW ================================ -->
+<span class="tag">4 · Runtime sequence</span>
+<h2>What happens on every case, in order</h2>
+<table>
+  <tr><th>#</th><th>Step</th><th>Detail</th><th>Cost</th></tr>
+  <tr><td>1</td><td>PHI guard</td><td><span class="mono">contains_phi()</span> over diagnosis narrative + procedure; ERROR handoff (workflow halt) on any hit</td><td>free</td></tr>
+  <tr><td>2</td><td>Build query</td><td>full diagnosis narrative + requested procedure (narrative keeps late-sentence disease names in scope)</td><td>free</td></tr>
+  <tr><td>3</td><td>Keyword scores</td><td>token overlap + fuzzy containment vs. every policy's keyword sets</td><td>free</td></tr>
+  <tr><td>4</td><td>Semantic scores</td><td>embed query (1 API call, then cached) · corpus chunks already cached · cosine vs. ~150 chunks · best chunk per policy</td><td>~1 embedding call/case, $0 on repeats</td></tr>
+  <tr><td>5</td><td>Hybrid ranking</td><td><span class="mono">0.55·kw + 0.45·sem</span> per policy; top-1 wins; winning chunk recorded</td><td>free</td></tr>
+  <tr><td>6</td><td>Criteria evaluation</td><td>three deterministic check types against the facts; produces matched / missing lists</td><td>free</td></tr>
+  <tr><td>7</td><td>Confidence + handoff</td><td><span class="mono">0.3·retrieval + 0.7·criteria_ratio</span>; Pydantic-validated result; rationale quotes mode, score and winning chunk</td><td>free</td></tr>
+</table>
+
+<h3>Scoring formulas (all deterministic given cached vectors)</h3>
+<div class="formula">retrieval_score = 0.55 × keyword_score &nbsp;+&nbsp; 0.45 × rescale(best_chunk_cosine, 0.15→0.70)</div>
+<div class="formula">agent_confidence = 0.3 × retrieval_score &nbsp;+&nbsp; 0.7 × (criteria_met ÷ criteria_total)</div>
+<p>
+  Keyword keeps the majority retrieval share deliberately: it is exact, word-traceable evidence.
+  The semantic term is the tie-breaker that absorbs paraphrase (“knee arthroplasty” ≈ “knee
+  replacement”, “unresponsive to non-operative measures” ≈ “failed conservative therapy”).
+</p>
+
+<!-- ================================ 5. CHUNKING ================================ -->
+<span class="tag">5 · Chunking scheme</span>
+<h2>How a policy becomes searchable chunks</h2>
+<p>Chunk granularity mirrors the document's own structure, so a semantic hit is always attributable to a specific part of the policy:</p>
+<div class="diagram"><span class="d">// POL-ORTHO-TKR-001 "Total Knee Replacement Medical Necessity Policy" becomes:</span>
+chunk 1  "…Policy. <span class="g">Procedure covered:</span> total knee replacement, knee arthroplasty, TKR…"
+chunk 2  "…Policy. <span class="g">Applicable diagnosis:</span> osteoarthritis, degenerative joint disease…"
+chunk 3  "…Policy. <span class="g">Requirement:</span> Severe osteoarthritis documented"
+chunk 4  "…Policy. <span class="g">Requirement:</span> Conservative therapy failed for at least 12 weeks"
+chunk 5  "…Policy. <span class="g">Requirement:</span> Imaging confirms joint degeneration"</div>
+<ul>
+  <li><b>Policy score</b> = max cosine over its chunks → one strongly-matching requirement is enough to surface a policy.</li>
+  <li><b>Explainability</b> — the winning chunk is quoted verbatim in the output rationale, e.g. <i>“best-matching chunk: 'TAVR Policy. Requirement: Echocardiogram confirms severe aortic stenosis'”</i>.</li>
+  <li>The title is prefixed to every chunk so short requirement texts still carry their parent-policy context into the embedding.</li>
+</ul>
+
+<!-- ================================ 6. FAILURE MATRIX ================================ -->
+<span class="tag">6 · Failure &amp; fallback matrix</span>
+<h2>Degradation behaviour</h2>
+<table>
+  <tr><th>Condition</th><th>Behaviour</th><th>Case impact</th></tr>
+  <tr><td>No embedding deployment configured</td><td>Semantic path never attempted; pure keyword retrieval</td><td>None — offline mode</td></tr>
+  <tr><td><span class="mono">PRIOR_AUTH_USE_EMBEDDING_RETRIEVAL=false</span></td><td>Semantic path disabled by operator</td><td>None</td></tr>
+  <tr><td>Wrong/typo'd <span class="mono">AZURE_OPENAI_API_VERSION</span></td><td>One automatic retry on GA version <span class="mono">2024-02-01</span>; working client kept</td><td>None</td></tr>
+  <tr><td>API error / network down mid-run</td><td>That call returns keyword-only; client disabled for the process (no per-case timeout tax)</td><td>Retrieval mode noted as “keyword” in rationale</td></tr>
+  <tr><td>Cache file corrupt / unwritable</td><td>Rebuilt in memory; persistence skipped silently</td><td>Slightly more API calls; zero errors</td></tr>
+  <tr><td>PHI detected in input</td><td>ERROR handoff → workflow suspends as PHI violation</td><td>Case halted <i>by design</i>, before any external call</td></tr>
+</table>
+
+<!-- ================================ 7. SECURITY ================================ -->
+<span class="tag">7 · Security &amp; auditability</span>
+<h2>Trust properties</h2>
+<ul>
+  <li><b>PHI:</b> masked upstream by the Extractor; re-verified at this agent's entry; only masked text is ever sent to the embedding API.</li>
+  <li><b>Secrets:</b> credentials live in <span class="mono">.env</span> (git-ignored); code reads them via <span class="mono">config.py</span> only.</li>
+  <li><b>Reproducibility:</b> cached vectors make hybrid scores identical run-to-run; criteria verdicts are rule-based; the audit trace records score, mode and rationale per case.</li>
+  <li><b>Independent verification:</b> Agent 5 (Critique) re-checks that the form's <span class="mono">policy_id</span> matches this agent's selection and that the decision is consistent with the criteria outcome.</li>
+</ul>
+
+<h3>Measured results (90 labeled cases)</h3>
+<table>
+  <tr><th>Metric</th><th>Keyword-only</th><th>Hybrid (current)</th></tr>
+  <tr><td>Policy selection accuracy</td><td>51 / 51 checked</td><td><b>51 / 51 checked</b></td></tr>
+  <tr><td>Workflow status changes vs. baseline</td><td>—</td><td><b>0 of 90</b></td></tr>
+  <tr><td>Paraphrase robustness (“arthroplasty” test)</td><td>correct, low margin</td><td><b>correct, higher score &amp; margin</b></td></tr>
+  <tr><td>Cost per repeated case</td><td>$0</td><td><b>$0</b> (cache hit)</td></tr>
+</table>
+<div class="box green">
+  <b class="title">Bottom line</b>
+  The hybrid upgrade added semantic robustness for future, less-templated notes at zero measured
+  regression on the current corpus — while preserving the offline path, deterministic criteria
+  gates, and full auditability the workflow was built on.
+</div>
+
+<p class="footer-note">
+  Prior Authorization AI · Policy RAG Agent architecture · July 2026 ·
+  Companion documents: <b>Policy-RAG-Agent-Explained.pdf</b> (plain-English) · <b>Policy-RAG-Flow.pptx</b> (slides)
+</p>
+</body>
+</html>

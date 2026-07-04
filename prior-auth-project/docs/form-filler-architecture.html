@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Form Filler Agent — Architecture Document</title>
+<style>
+  @page { size: A4; margin: 16mm 15mm; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: "Segoe UI", Arial, sans-serif; color: #1a2233; font-size: 10.5pt; line-height: 1.6; }
+  .cover { text-align: center; padding: 80px 40px 40px; page-break-after: always; }
+  .cover .logo { width: 64px; height: 64px; border-radius: 18px; margin: 0 auto 24px;
+    background: linear-gradient(135deg, #6366F1, #4F46E5); color: #fff;
+    display: flex; align-items: center; justify-content: center; font-size: 30px; font-weight: 800; }
+  .cover h1 { font-size: 27pt; letter-spacing: -0.5pt; color: #1e1b4b; line-height: 1.15; }
+  .cover .subtitle { font-size: 13pt; color: #4F46E5; margin-top: 12px; font-weight: 600; }
+  .cover .meta { margin-top: 26px; color: #8a93a8; font-size: 9.5pt; }
+  .cover table { margin: 46px auto 0; font-size: 9.5pt; border-collapse: collapse; }
+  .cover td { padding: 5px 14px; border-bottom: 1px solid #E5E7EB; text-align: left; }
+  .cover td:first-child { color: #64748B; font-weight: 600; }
+  h2 { font-size: 15pt; color: #1e1b4b; margin: 26px 0 8px; border-bottom: 3px solid #EEF2FF;
+       padding-bottom: 5px; page-break-after: avoid; }
+  h3 { font-size: 11.5pt; color: #4338CA; margin: 16px 0 6px; page-break-after: avoid; }
+  p { margin: 6px 0; }
+  .tag { display: inline-block; background: #EEF2FF; color: #4338CA; font-weight: 700; font-size: 8.5pt;
+    border-radius: 999px; padding: 2px 11px; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+  code, .mono { font-family: Consolas, "JetBrains Mono", monospace; font-size: 9pt;
+    background: #F1F3F9; border-radius: 4px; padding: 1px 5px; }
+  .diagram { font-family: Consolas, monospace; font-size: 8.2pt; line-height: 1.42; white-space: pre;
+    background: #0B1220; color: #C9D6EE; border-radius: 10px; padding: 14px 16px; margin: 12px 0;
+    page-break-inside: avoid; overflow: hidden; }
+  .diagram .hl { color: #93C5FD; font-weight: bold; }
+  .diagram .g { color: #86EFAC; }
+  .diagram .y { color: #FCD34D; }
+  .diagram .r { color: #FCA5A5; }
+  .diagram .d { color: #64748B; }
+  table { width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 9.5pt; page-break-inside: avoid; }
+  th { text-align: left; background: #1e1b4b; color: #fff; padding: 7px 10px; font-size: 8.5pt;
+       text-transform: uppercase; letter-spacing: 0.5px; }
+  td { padding: 7px 10px; border-bottom: 1px solid #E5E7EB; vertical-align: top; }
+  tr:nth-child(even) td { background: #FAFBFE; }
+  .box { background: #F7F8FC; border: 1px solid #E5E7EB; border-left: 4px solid #4F46E5;
+    border-radius: 8px; padding: 10px 14px; margin: 10px 0; page-break-inside: avoid; }
+  .box.green { border-left-color: #16A34A; background: #F0FDF4; border-color: #BBF7D0; }
+  .box.amber { border-left-color: #D97706; background: #FFFBEB; border-color: #FDE68A; }
+  .box b.title { display: block; margin-bottom: 3px; color: #1e1b4b; }
+  .formula { text-align: center; font-family: Consolas, monospace; font-size: 10.5pt; font-weight: 700;
+    background: #EEF2FF; border: 1px solid #C7D2FE; color: #3730A3; border-radius: 8px;
+    padding: 10px; margin: 10px 0; page-break-inside: avoid; }
+  .footer-note { margin-top: 26px; color: #8a93a8; font-size: 8.5pt; border-top: 1px solid #E5E7EB; padding-top: 8px; }
+  ul { margin: 6px 0 6px 22px; }
+  li { margin: 3px 0; }
+</style>
+</head>
+<body>
+
+<!-- ================================ COVER ================================ -->
+<div class="cover">
+  <div class="logo">▤</div>
+  <h1>Form Filler Agent</h1>
+  <div class="subtitle">Architecture Document — Template-Driven Form Assembly (Current)</div>
+  <p style="max-width:530px;margin:26px auto 0;color:#475069;font-size:11pt;">
+    The complete technical architecture of Agent&nbsp;4 in the Prior&nbsp;Authorization pipeline:
+    fuzzy template selection, declarative field builders, dual-layer validation
+    (completeness&nbsp;+ cross-agent consistency), and a fully deterministic, LLM-free design.
+  </p>
+  <table>
+    <tr><td>System</td><td>Prior Authorization AI — multi-agent workflow</td></tr>
+    <tr><td>Component</td><td>Agent 4 · Form Filler (<span class="mono">agents/form_filler.py</span>)</td></tr>
+    <tr><td>Approach</td><td>Deterministic template assembly — no LLM, no external API</td></tr>
+    <tr><td>Template library</td><td>9 insurer form templates · 9 field types (union)</td></tr>
+    <tr><td>Inputs</td><td>Outputs of Extractor + ICD Coder + Policy RAG (all Pydantic-typed)</td></tr>
+    <tr><td>Output</td><td><span class="mono">PriorAuthForm</span> — validated, audit-ready, verified downstream by the Critique Agent</td></tr>
+    <tr><td>Document date</td><td>July 2026</td></tr>
+  </table>
+</div>
+
+<!-- ================================ 1. OVERVIEW ================================ -->
+<span class="tag">1 · Overview</span>
+<h2>Where the agent sits, and what it owns</h2>
+<p>
+  The Form Filler is the fourth of five agents — the <b>assembler</b>. Everything before it
+  produces evidence (facts, diagnosis code, policy verdict); the Form Filler converts that
+  evidence into the artifact an insurer actually receives: a completed, validated prior
+  authorization form. It is the only agent that consumes <i>all three</i> upstream outputs at once.
+</p>
+<div class="diagram">
+Extractor ─────────────┐
+  ExtractedClinicalFacts│
+ICD Coder ─────────────┤──► <span class="hl">FORM FILLER</span> ──► Critique (independent QA)
+  ICDCodingResult       │        │
+Policy RAG ────────────┘        ▼
+  PolicyCheckResult      PriorAuthForm (template id · fields[] · icd10_code
+                                        · procedure_code · policy_id
+                                        · validation_errors[])</div>
+<p>Its design invariants:</p>
+<div class="box">
+  <b class="title">Invariant 1 — Assemble, never invent</b>
+  Every field value is copied or mechanically derived from an upstream agent's typed output.
+  The Form Filler contains no AI and no free-text generation: a value it cannot source is
+  reported as a validation error — never fabricated.
+</div>
+<div class="box">
+  <b class="title">Invariant 2 — Validation is the product</b>
+  The form carries its own defect list (<span class="mono">validation_errors[]</span>). A structurally complete form
+  with unresolved conflicts still flows onward — but the orchestrator reads
+  <span class="mono">form.is_valid</span> and routes the case to <span class="mono">FAILED_VALIDATION</span> instead of approval.
+</div>
+
+<!-- ================================ 2. INTERNAL PIPELINE ================================ -->
+<span class="tag">2 · Internal pipeline</span>
+<h2>The four stages inside the agent</h2>
+<div class="diagram">
+┌────────────────────────────────────────────────────────────────────────────┐
+│ FORM FILLER AGENT                                 agents/form_filler.py    │
+│                                                                            │
+│ ┌─ STAGE 1 · TEMPLATE SELECTION ────────────────────────────────────────┐  │
+│ │  requested_procedure vs. each template's procedure_keywords           │  │
+│ │  score = 1.0 on substring containment, else difflib ratio             │  │
+│ │  <span class="y">floor: best score &lt; 0.30 → VALIDATION_FAILED handoff (no template)</span>  │  │
+│ │  9 templates: TKR · THR · ortho-general · cardiac · oncology · …      │  │
+│ └────────────────────────────────────────────────────────────────────────┘ │
+│                              │  winning template (required_fields[])       │
+│ ┌─ STAGE 2 · FIELD ASSEMBLY (declarative builders) ─────────────────────┐  │
+│ │  patient_age / patient_sex / laterality   ◄── ExtractedClinicalFacts  │  │
+│ │  diagnosis_code                           ◄── ICDCodingResult         │  │
+│ │  policy_id                                ◄── PolicyCheckResult       │  │
+│ │  procedure_code = "PROC-" + policy_id suffix   <span class="d">(derived, checkable)</span>   │  │
+│ │  failed_treatments → "None documented" when legitimately empty        │  │
+│ │  imaging_evidence  → "Not provided"     when legitimately absent      │  │
+│ │  unsourceable value → literal "UNSPECIFIED" <span class="d">(never silently blank)</span>   │  │
+│ └────────────────────────────────────────────────────────────────────────┘ │
+│                              │  fields[] (name · value · required flag)    │
+│ ┌─ STAGE 3 · VALIDATION (two independent nets) ─────────────────────────┐  │
+│ │  <span class="hl">Completeness:</span> hard-required fields must carry real values           │  │
+│ │    {patient_age, patient_sex, diagnosis_code, procedure_code,         │  │
+│ │     policy_id}  → error per unfilled hard-required field              │  │
+│ │    laterality == "unknown" → error (ambiguity is never submitted)     │  │
+│ │  <span class="hl">Cross-agent consistency:</span>                                             │  │
+│ │    <span class="r">✗</span> note laterality ≠ requested-procedure laterality               │  │
+│ │    <span class="r">✗</span> ICD-10 code laterality ≠ documented diagnosis laterality        │  │
+│ └────────────────────────────────────────────────────────────────────────┘ │
+│                              │  validation_errors[]                        │
+│ ┌─ STAGE 4 · TYPED OUTPUT ──────────────────────────────────────────────┐  │
+│ │  PriorAuthForm (Pydantic-validated)                                   │  │
+│ │  confidence = 1.0 if clean, else 1.0 − 0.15 × error_count (floor 0)   │  │
+│ └────────────────────────────────────────────────────────────────────────┘ │
+└────────────────────────────────────────────────────────────────────────────┘
+          │
+          ├─ form.is_valid & policy met ──► COMPLETED (auto-approval)
+          ├─ form.is_valid, policy unmet ─► SUSPENDED_POLICY_MISMATCH → human
+          └─ validation errors ──────────► FAILED_VALIDATION
+                              (then Agent 5 · Critique re-verifies everything)</div>
+
+<!-- ================================ 3. COMPONENTS ================================ -->
+<span class="tag">3 · Component inventory</span>
+<h2>Every moving part, file by file</h2>
+<table>
+  <tr><th>Component</th><th>Location</th><th>Responsibility</th></tr>
+  <tr><td><b>Agent shell</b></td><td class="mono">agents/form_filler.py</td>
+      <td>Template selection · field assembly · dual validation · confidence · typed <span class="mono">Handoff[PriorAuthForm]</span></td></tr>
+  <tr><td><b>Template library</b></td><td class="mono">dataset/legacy_full/form_templates/templates.json</td>
+      <td>9 insurer form templates: <span class="mono">template_id</span>, <span class="mono">procedure_keywords</span>, <span class="mono">required_fields</span> (8 each, from a 9-field vocabulary)</td></tr>
+  <tr><td><b>Field builders</b></td><td class="mono">_field_builders()</td>
+      <td>Declarative map <span class="mono">field_name → lambda</span> pulling from the right upstream payload — adding a new form field is one dictionary entry</td></tr>
+  <tr><td><b>Fuzzy matcher</b></td><td class="mono">difflib.SequenceMatcher</td>
+      <td>Template scoring: containment = 1.0, otherwise string-similarity ratio; <span class="mono">_MIN_TEMPLATE_SCORE = 0.3</span> floor</td></tr>
+  <tr><td><b>Hard-required set</b></td><td class="mono">_HARD_REQUIRED_FIELDS</td>
+      <td>The five fields a form cannot be submitted without; informational fields (treatments, imaging) may be legitimately "empty"</td></tr>
+  <tr><td><b>Output contract</b></td><td class="mono">schemas/form_output.py</td>
+      <td><span class="mono">PriorAuthForm</span> + <span class="mono">FormField</span>; <span class="mono">is_valid</span> property = <span class="mono">len(validation_errors) == 0</span></td></tr>
+  <tr><td><b>Downstream verifier</b></td><td class="mono">agents/critique.py</td>
+      <td>Independently re-checks every form value against upstream agents (age, sex, ICD, policy, procedure-code derivation) after assembly</td></tr>
+</table>
+
+<h3>The nine field types and their sources</h3>
+<table>
+  <tr><th>Field</th><th>Source of truth</th><th>Empty-value policy</th></tr>
+  <tr><td class="mono">patient_age</td><td>Extractor · <span class="mono">facts.age</span></td><td>hard-required → error if missing</td></tr>
+  <tr><td class="mono">patient_sex</td><td>Extractor · <span class="mono">facts.sex</span></td><td>hard-required → error if missing</td></tr>
+  <tr><td class="mono">laterality</td><td>Extractor · <span class="mono">facts.laterality</span></td><td>"unknown" → validation error (ambiguity blocks)</td></tr>
+  <tr><td class="mono">diagnosis_code</td><td>ICD Coder · <span class="mono">icd10_code</span></td><td>hard-required → error if missing</td></tr>
+  <tr><td class="mono">procedure_code</td><td>Derived: <span class="mono">"PROC-" + policy_id suffix</span></td><td>hard-required; derivation re-verified by Critique</td></tr>
+  <tr><td class="mono">policy_id</td><td>Policy RAG · <span class="mono">policy_id</span></td><td>hard-required → error if missing</td></tr>
+  <tr><td class="mono">failed_treatments</td><td>Extractor · joined list</td><td>informational → "None documented" (a legitimate signal)</td></tr>
+  <tr><td class="mono">imaging_evidence</td><td>Extractor · free text</td><td>informational → "Not provided" (a legitimate signal)</td></tr>
+  <tr><td class="mono">human_review_flag</td><td>Constant <span class="mono">"false"</span></td><td>flipped by humans downstream, never by the AI</td></tr>
+</table>
+
+<!-- ================================ 4. RUNTIME ================================ -->
+<span class="tag">4 · Runtime sequence</span>
+<h2>What happens on every case, in order</h2>
+<table>
+  <tr><th>#</th><th>Step</th><th>Detail</th><th>Failure behaviour</th></tr>
+  <tr><td>1</td><td>Select template</td><td>Score all 9 templates against <span class="mono">requested_procedure</span>; containment beats fuzzy ratio</td><td>best &lt; 0.30 → <span class="mono">VALIDATION_FAILED</span> handoff; case ends as FAILED_VALIDATION</td></tr>
+  <tr><td>2</td><td>Derive procedure code</td><td><span class="mono">"PROC-" + policy_id.split("-")[-1]</span> — deterministic, so the Critique Agent can re-derive and verify it</td><td>—</td></tr>
+  <tr><td>3</td><td>Assemble fields</td><td>Run the builder lambda for each of the template's <span class="mono">required_fields</span>; missing builder → empty → "UNSPECIFIED"</td><td>hard-required gaps recorded as errors, not exceptions</td></tr>
+  <tr><td>4</td><td>Completeness check</td><td>Five hard-required fields must be non-empty; ambiguous laterality rejected</td><td>appends to <span class="mono">validation_errors[]</span></td></tr>
+  <tr><td>5</td><td>Consistency check</td><td>Note-vs-procedure laterality; ICD-code-vs-note laterality</td><td>appends to <span class="mono">validation_errors[]</span></td></tr>
+  <tr><td>6</td><td>Emit typed form</td><td><span class="mono">PriorAuthForm</span> Pydantic-validated; confidence scored; OK handoff (defects travel <i>inside</i> the form)</td><td>orchestrator routes on <span class="mono">form.is_valid</span></td></tr>
+</table>
+
+<div class="formula">confidence = 1.0 (clean form) &nbsp;·&nbsp; otherwise&nbsp; max(0, 1.0 − 0.15 × validation_error_count)</div>
+
+<h3>Worked example (auto-approved TAVR case)</h3>
+<div class="diagram">
+requested_procedure = "TAVR"
+  template scores → <span class="g">FORM-CARD-04 (cardiac) wins</span> · others &lt; floor
+  procedure_code  → policy POL-CARD-TAVR-011 → <span class="g">"PROC-011"</span>
+  fields          → age 72 · sex F · diagnosis_code I35.0 · policy POL-CARD-TAVR-011
+                    imaging "Echocardiogram confirms…" · treatments "None documented"
+  validation      → <span class="g">0 errors → is_valid = true → confidence 1.00</span>
+  orchestrator    → policy criteria met → <span class="g">COMPLETED (auto-approved)</span>
+  Critique (5th)  → re-verifies every value independently → <span class="g">PASS · 100/100</span></div>
+
+<!-- ================================ 5. FAILURE MATRIX ================================ -->
+<span class="tag">5 · Failure &amp; safeguard matrix</span>
+<h2>Defect handling</h2>
+<table>
+  <tr><th>Condition</th><th>Behaviour</th><th>Case outcome</th></tr>
+  <tr><td>No template scores ≥ 0.30</td><td>Failed handoff with the unmatched procedure named</td><td><span class="mono">FAILED_VALIDATION</span></td></tr>
+  <tr><td>Hard-required field unfillable</td><td>Field emitted as "UNSPECIFIED" + validation error</td><td><span class="mono">FAILED_VALIDATION</span></td></tr>
+  <tr><td>Laterality "unknown" (note said both sides)</td><td>Explicit validation error — never guesses a side</td><td><span class="mono">FAILED_VALIDATION</span></td></tr>
+  <tr><td>Note laterality ≠ procedure laterality</td><td>Consistency error (belt-and-braces: the orchestrator also gates this earlier)</td><td><span class="mono">FAILED_VALIDATION</span></td></tr>
+  <tr><td>ICD code laterality ≠ documented laterality</td><td>Consistency error sourced from the ICD Coder's <span class="mono">laterality_match</span> flag</td><td><span class="mono">FAILED_VALIDATION</span></td></tr>
+  <tr><td>Form clean but policy criteria unmet</td><td>Form still produced (evidence preserved for the reviewer)</td><td><span class="mono">SUSPENDED_POLICY_MISMATCH</span> → human queue</td></tr>
+</table>
+
+<div class="box amber">
+  <b class="title">Why defects travel inside the form (not as exceptions)</b>
+  A hospital reviewer fixing a rejected case needs to see the <i>whole</i> form with the exact
+  gaps marked — not a stack trace. Emitting a complete-but-annotated form preserves every
+  piece of assembled evidence for the human who picks the case up.
+</div>
+
+<!-- ================================ 6. TRUST ================================ -->
+<span class="tag">6 · Security &amp; auditability</span>
+<h2>Trust properties</h2>
+<ul>
+  <li><b>Deterministic end-to-end:</b> no LLM, no network, no randomness — identical inputs always produce byte-identical forms.</li>
+  <li><b>PHI:</b> operates exclusively on the already-masked payloads; patient identifiers cannot reach a form field by construction.</li>
+  <li><b>Traceable values:</b> every field's provenance is a typed upstream output; the <span class="mono">procedure_code</span> derivation is re-computable by auditors and is re-computed by the Critique Agent on every run.</li>
+  <li><b>Independent QA:</b> Agent 5 re-validates form-vs-Extractor, form-vs-ICD, form-vs-Policy and the decision itself — a second pair of eyes that shares no code with the assembler.</li>
+  <li><b>Extensible by data:</b> new insurer forms are added by appending a template (keywords + field list) to <span class="mono">templates.json</span>; new field types are one builder entry — no logic changes.</li>
+</ul>
+
+<p class="footer-note">
+  Prior Authorization AI · Form Filler Agent architecture · July 2026 ·
+  Companion documents: <b>Policy-RAG-Architecture.pdf</b> · <b>Policy-RAG-Agent-Explained.pdf</b> · <b>Policy-RAG-Flow.pptx</b>
+</p>
+</body>
+</html>

@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>The Policy RAG Agent — Explained in Plain English</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Segoe UI", Arial, sans-serif; color: #1a2233; font-size: 11.5pt;
+    line-height: 1.65;
+  }
+  .cover {
+    text-align: center; padding: 90px 40px 60px; page-break-after: always;
+  }
+  .cover .logo {
+    width: 70px; height: 70px; border-radius: 20px; margin: 0 auto 26px;
+    background: linear-gradient(135deg, #6366F1, #4F46E5); color: #fff;
+    display: flex; align-items: center; justify-content: center; font-size: 34px; font-weight: 800;
+  }
+  .cover h1 { font-size: 30pt; letter-spacing: -0.5pt; line-height: 1.15; color: #1e1b4b; }
+  .cover .subtitle { font-size: 14pt; color: #4F46E5; margin-top: 14px; font-weight: 600; }
+  .cover .plain { margin: 34px auto 0; max-width: 520px; font-size: 12pt; color: #475069; }
+  .cover .meta { margin-top: 70px; color: #8a93a8; font-size: 10pt; }
+  h2 {
+    font-size: 17pt; color: #1e1b4b; margin: 34px 0 10px; letter-spacing: -0.3pt;
+    border-bottom: 3px solid #EEF2FF; padding-bottom: 6px; page-break-after: avoid;
+  }
+  h3 { font-size: 13pt; color: #4338CA; margin: 22px 0 8px; page-break-after: avoid; }
+  p { margin: 8px 0; }
+  .tag {
+    display: inline-block; background: #EEF2FF; color: #4338CA; font-weight: 700;
+    font-size: 9pt; border-radius: 999px; padding: 2px 12px; letter-spacing: 1px;
+    text-transform: uppercase; margin-bottom: 6px;
+  }
+  .box {
+    background: #F7F8FC; border: 1px solid #E5E7EB; border-left: 5px solid #4F46E5;
+    border-radius: 10px; padding: 14px 18px; margin: 14px 0; page-break-inside: avoid;
+  }
+  .box.green { border-left-color: #16A34A; background: #F0FDF4; border-color: #BBF7D0; }
+  .box.amber { border-left-color: #D97706; background: #FFFBEB; border-color: #FDE68A; }
+  .box b.title { display: block; margin-bottom: 4px; color: #1e1b4b; }
+  table {
+    width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 10.5pt;
+    page-break-inside: avoid;
+  }
+  th {
+    text-align: left; background: #1e1b4b; color: #fff; padding: 9px 12px;
+    font-size: 9.5pt; text-transform: uppercase; letter-spacing: 0.6px;
+  }
+  td { padding: 9px 12px; border-bottom: 1px solid #E5E7EB; vertical-align: top; }
+  tr:nth-child(even) td { background: #FAFBFE; }
+  .step {
+    display: flex; gap: 14px; margin: 12px 0; page-break-inside: avoid;
+  }
+  .step .n {
+    flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%;
+    background: #4F46E5; color: #fff; font-weight: 800; font-size: 13pt;
+    display: flex; align-items: center; justify-content: center; margin-top: 2px;
+  }
+  .step .body b { color: #1e1b4b; }
+  .pill-flow { text-align: center; margin: 18px 0; page-break-inside: avoid; }
+  .pill-flow .pill {
+    display: inline-block; background: #EEF2FF; border: 2px solid #C7D2FE;
+    color: #3730A3; border-radius: 999px; padding: 7px 16px; font-weight: 700; font-size: 10pt;
+    margin: 3px 1px;
+  }
+  .pill-flow .pill.hero { background: #4F46E5; border-color: #4F46E5; color: #fff; }
+  .pill-flow .arrow { color: #94A3B8; font-weight: 700; margin: 0 3px; }
+  .footer-note { margin-top: 36px; color: #8a93a8; font-size: 9.5pt; border-top: 1px solid #E5E7EB; padding-top: 10px; }
+  .example { font-family: Consolas, monospace; font-size: 9.5pt; background: #0B1220; color: #C9D6EE;
+    border-radius: 10px; padding: 14px 16px; margin: 10px 0; page-break-inside: avoid; }
+  .example .g { color: #86EFAC; } .example .y { color: #FCD34D; }
+  .checkmark { color: #16A34A; font-weight: 800; }
+  .crossmark { color: #DC2626; font-weight: 800; }
+</style>
+</head>
+<body>
+
+<!-- ============================ COVER ============================ -->
+<div class="cover">
+  <div class="logo">✚</div>
+  <h1>The Policy&nbsp;RAG Agent</h1>
+  <div class="subtitle">Explained in Plain English — No Technical Background Needed</div>
+  <p class="plain">
+    How our Prior&nbsp;Authorization AI decides whether a medical treatment
+    meets the insurance company's rules — what it does, how it does it,
+    and which technology is behind it.
+  </p>
+  <div class="meta">Prior Authorization AI &nbsp;·&nbsp; July 2026 &nbsp;·&nbsp; Document for non-technical readers</div>
+</div>
+
+<!-- ============================ 1. THE PROBLEM ============================ -->
+<span class="tag">Part 1</span>
+<h2>What problem does this system solve?</h2>
+<p>
+  Before a hospital can perform many treatments — a knee replacement, a heart procedure,
+  an expensive medication — the insurance company must approve it first. This approval is
+  called a <b>Prior Authorization</b>.
+</p>
+<p>
+  Today this is mostly manual work: someone reads the doctor's note, looks up the right
+  insurance policy, checks the note against every rule in that policy, and fills in a long
+  form. It is slow (days, sometimes weeks), repetitive, and easy to get wrong.
+</p>
+<div class="box green">
+  <b class="title">What our system does</b>
+  It reads the doctor's note and produces an insurer-ready decision in well under a second —
+  and whenever it is not sure, it stops and hands the case to a human instead of guessing.
+</div>
+
+<h3>The assembly line: five AI workers</h3>
+<p>The system works like an assembly line with five specialised workers ("agents"). Each one does a single job and passes its result to the next:</p>
+<div class="pill-flow">
+  <span class="pill">1 · Extractor<br/><small>reads the note</small></span><span class="arrow">→</span>
+  <span class="pill">2 · ICD Coder<br/><small>names the diagnosis</small></span><span class="arrow">→</span>
+  <span class="pill hero">3 · Policy RAG<br/><small>checks insurer rules</small></span><span class="arrow">→</span>
+  <span class="pill">4 · Form Filler<br/><small>prepares paperwork</small></span><span class="arrow">→</span>
+  <span class="pill">5 · Critique<br/><small>final quality check</small></span>
+</div>
+<p>This document is about worker number <b>3 — the Policy RAG Agent</b>, the one that decides whether the treatment meets the insurance company's rules.</p>
+
+<!-- ============================ 2. WHAT IS THE POLICY RAG AGENT ============================ -->
+<span class="tag">Part 2</span>
+<h2>Meet the Policy RAG Agent — a librarian with a checklist</h2>
+<p>The easiest way to understand this agent is to picture <b>two people in one</b>:</p>
+<div class="box">
+  <b class="title">📚 The Librarian</b>
+  The insurance company has a library of <b>32 policy documents</b> — one for knee replacements,
+  one for heart procedures, one for biologic drugs, and so on. Given a patient's case, the
+  librarian's job is to walk into that library and pull out the <b>one policy document that
+  applies to this exact treatment</b>.
+</div>
+<div class="box">
+  <b class="title">📋 The Inspector</b>
+  Once the right policy is found, the inspector opens it. Inside is a checklist of rules —
+  for example: <i>"the condition must be severe", "the patient must have tried simpler
+  treatments for at least 12 weeks", "an X-ray or scan must confirm the problem"</i>.
+  The inspector ticks each rule the patient's note satisfies, and writes down every rule it does not.
+</div>
+<p>
+  <b>"RAG"</b> stands for <b>Retrieval-Augmented Generation</b> — a fancy phrase for a simple idea:
+  <i>instead of letting an AI answer from memory, first go and <b>retrieve</b> the actual reference
+  documents, and base the answer on them.</i> Exactly what a careful human would do: never approve
+  from memory — always open the policy binder first.
+</p>
+
+<!-- ============================ 3. STEP BY STEP ============================ -->
+<span class="tag">Part 3</span>
+<h2>How it works, step by step</h2>
+
+<div class="step"><div class="n">1</div><div class="body">
+  <b>It receives the patient's facts — with privacy already protected.</b>
+  By the time the case reaches this agent, the patient's name, date of birth, address, phone
+  number and record number have already been removed by the first agent. The Policy RAG agent
+  only ever sees medical facts: the diagnosis, the requested treatment, the symptoms,
+  what has already been tried, and any imaging results.
+</div></div>
+
+<div class="step"><div class="n">2</div><div class="body">
+  <b>It searches the policy library.</b>
+  It compares the words in the patient's case against the keywords of all 32 policies —
+  like scanning the labels on a filing cabinet. Each policy gets a <b>match score</b>:
+  how many important words overlap, plus how closely phrases resemble each other (so
+  "total knee replacement" still finds the knee policy even if the note words it slightly
+  differently). The policy with the highest score wins.
+</div></div>
+
+<div class="step"><div class="n">3</div><div class="body">
+  <b>It checks every rule in the winning policy.</b>
+  Each policy contains a checklist. There are three kinds of rules, and each is checked
+  mechanically — the same way every single time:
+  <table>
+    <tr><th>Rule type</th><th>Plain-English meaning</th><th>How it is checked</th></tr>
+    <tr><td><b>Severity words</b></td><td>"The condition must be serious enough"</td><td>Looks for words like <i>severe, end-stage, advanced</i> in the case facts</td></tr>
+    <tr><td><b>Simpler treatment first</b></td><td>"Cheaper options must have been tried long enough"</td><td>Compares the documented weeks of therapy against the policy's minimum (e.g. 12 weeks)</td></tr>
+    <tr><td><b>Imaging proof</b></td><td>"A scan or X-ray must confirm the diagnosis"</td><td>Checks whether the note documents an imaging result</td></tr>
+  </table>
+</div></div>
+
+<div class="step"><div class="n">4</div><div class="body">
+  <b>It writes an honest report card.</b>
+  The output lists <b>which rules passed</b>, <b>which rules are missing</b>, a
+  <b>confidence score</b>, and a one-line explanation of how it reached its conclusion.
+  If even one rule is unmet, the case is <b>not rejected</b> — it is routed to a human
+  reviewer with a precise note about exactly what is missing.
+</div></div>
+
+<h3>A real example</h3>
+<div class="example">
+Patient case: <span class="y">"75-year-old, end-stage degenerative joint disease,
+no conservative therapy documented, imaging confirms, requesting total knee replacement"</span><br/><br/>
+Library search  → best match: <span class="g">POL-ORTHO-TKR-001 "Total Knee Replacement Policy"</span><br/><br/>
+Checklist:<br/>
+&nbsp;&nbsp;<span class="g">✓</span> Severity documented ........... "end-stage" found<br/>
+&nbsp;&nbsp;<span class="g">✓</span> Imaging confirms ............... X-ray result present<br/>
+&nbsp;&nbsp;<span class="y">✗</span> 12+ weeks conservative therapy . nothing documented<br/><br/>
+Result: <span class="y">2 of 3 rules met → case sent to a HUMAN REVIEWER</span><br/>
+Reason given: "Missing: conservative therapy failed for at least 12 weeks"
+</div>
+<p>Notice what did <i>not</i> happen: the system did not guess, did not approve anyway, and did not reject the patient. It explained exactly what was missing and asked a person to decide.</p>
+
+<!-- ============================ 4. THE JARGON ============================ -->
+<span class="tag">Part 4</span>
+<h2>The jargon, translated — and what this system actually uses</h2>
+<p>
+  When people talk about RAG systems you will hear words like <i>chunking, embeddings,
+  vector databases and semantic search</i>. Here is what each one means — and, honestly,
+  whether this project uses it. (Spoiler: our policy library is small — 32 documents — so we
+  deliberately chose a simpler method that is easier to explain and audit. The fancy tools
+  become worthwhile when the library grows to thousands of documents.)
+</p>
+<table>
+  <tr><th>Term</th><th>Plain-English meaning</th><th>Used here?</th></tr>
+  <tr>
+    <td><b>Retrieval (the "R" in RAG)</b></td>
+    <td>Go and fetch the actual reference document before answering — never answer from memory.</td>
+    <td><b>✓ Yes.</b> Every case fetches a real policy from the library first.</td>
+  </tr>
+  <tr>
+    <td><b>Keyword &amp; fuzzy matching</b></td>
+    <td>Compare the words in the case against the words that describe each policy; "fuzzy" means near-misses still count ("knee arthroplasty" ≈ "knee replacement").</td>
+    <td><b>✓ Yes — this is our search engine.</b> Simple, fast, and every match can be explained word by word.</td>
+  </tr>
+  <tr>
+    <td><b>Chunking</b></td>
+    <td>Cutting long documents into bite-sized pieces so a search can point at the exact paragraph, not just the whole file.</td>
+    <td><b>Not needed.</b> Each policy is already stored as a small structured card (title, keywords, checklist), so there is nothing long to cut up.</td>
+  </tr>
+  <tr>
+    <td><b>Embeddings</b></td>
+    <td>Turning a sentence into a list of numbers that captures its <i>meaning</i>, so a computer can measure how similar two sentences are even when they share no words.</td>
+    <td><b>Not currently.</b> With 32 well-labelled policies, keyword matching finds the right one reliably — and its reasoning is fully auditable. Embeddings are the natural upgrade if the library grows large.</td>
+  </tr>
+  <tr>
+    <td><b>Vector database</b></td>
+    <td>A special filing cabinet built to store those number-lists and find the closest ones very quickly.</td>
+    <td><b>Not currently</b> — no embeddings, so nothing to store. The policies live in a simple structured file.</td>
+  </tr>
+  <tr>
+    <td><b>Semantic search</b></td>
+    <td>Searching by meaning rather than exact words ("chest pain drug" finds "angina medication").</td>
+    <td><b>Partly.</b> Fuzzy matching gives a light version of this. Full semantic search would come with embeddings.</td>
+  </tr>
+  <tr>
+    <td><b>LLM (Large Language Model)</b></td>
+    <td>The kind of AI that reads and writes text, like GPT-4o.</td>
+    <td><b>Optional, and never for decisions.</b> Azure OpenAI GPT-4o can be switched on to help read messy doctor's notes (step 1 only). All policy checking is done by fixed rules, so the same case always gets the same answer.</td>
+  </tr>
+</table>
+
+<div class="box amber">
+  <b class="title">Why the simple way is a feature, not a shortcut</b>
+  In healthcare, an approval decision must be <b>explainable and repeatable</b>. Our rule-based
+  checks mean: the same note always produces the same result, every tick on the checklist can be
+  traced to actual words in the note, and an auditor can verify any decision by hand.
+  A purely AI-driven judgement could not promise any of that.
+</div>
+
+<!-- ============================ 5. TECHNOLOGY ============================ -->
+<span class="tag">Part 5</span>
+<h2>The technology behind it (one-line each)</h2>
+<table>
+  <tr><th>Technology</th><th>What it is</th><th>What it does in this project</th></tr>
+  <tr><td><b>Python</b></td><td>A popular programming language</td><td>Everything is written in it</td></tr>
+  <tr><td><b>Pydantic</b></td><td>A "form validator" for data</td><td>Guarantees every agent hands over complete, correctly-shaped information — a typo or missing field is caught instantly</td></tr>
+  <tr><td><b>FastAPI + Uvicorn</b></td><td>A web server toolkit</td><td>Powers the dashboard you open in the browser</td></tr>
+  <tr><td><b>NetworkX knowledge graph</b></td><td>A map of connected medical facts</td><td>Stores the ICD-10 diagnosis codes the ICD Coder matches against</td></tr>
+  <tr><td><b>difflib fuzzy matching</b></td><td>A built-in text-similarity tool</td><td>The "close enough" word matching used by the policy search</td></tr>
+  <tr><td><b>JSON policy library</b></td><td>A structured text file</td><td>Holds all 32 insurer policies with their keywords and checklists</td></tr>
+  <tr><td><b>Azure OpenAI (GPT-4o)</b></td><td>Microsoft-hosted AI language model</td><td><i>Optional:</i> helps read free-text doctor's notes. Never checks policies, never approves anything</td></tr>
+  <tr><td><b>Audit trace logger</b></td><td>A flight recorder</td><td>Writes down every step, timestamp, confidence and reason for every case</td></tr>
+</table>
+
+<h3>How the confidence score is calculated</h3>
+<p>The agent's confidence blends two questions, weighted so that the checklist matters most:</p>
+<div class="box">
+  <b>30%</b> — "How sure am I that I pulled the right policy off the shelf?" (library match score)<br/>
+  <b>70%</b> — "How many of that policy's rules did the patient actually meet?" (checklist score)
+</div>
+<p>A case matching the perfect policy but meeting only 1 of 3 rules gets a low score — and low scores are exactly what route a case to a human.</p>
+
+<!-- ============================ 6. SAFETY ============================ -->
+<span class="tag">Part 6</span>
+<h2>Safety promises, in plain words</h2>
+<table>
+  <tr><th>Promise</th><th>How it is kept</th></tr>
+  <tr><td><b>Patient privacy</b></td><td>Names, birth dates, addresses, phone numbers and record numbers are masked before <i>any</i> AI reasoning happens — and every later agent re-checks its own input for leaks</td></tr>
+  <tr><td><b>No guessing</b></td><td>Unclear diagnosis? Conflicting left/right side? Missing policy requirement? The case stops and goes to a human — with a written reason</td></tr>
+  <tr><td><b>Every decision explainable</b></td><td>Rule-based checks + an audit log means any decision can be reconstructed and verified afterwards</td></tr>
+  <tr><td><b>Independent double-check</b></td><td>A fifth agent (the Critique Agent) re-verifies every completed package — field by field — before it leaves the system</td></tr>
+</table>
+
+<p class="footer-note">
+  Prior Authorization AI · Policy RAG Agent explainer · Generated July 2026.
+  Companion file: <b>policy-rag-flow.pptx</b> — a slide deck with the visual flow diagram of this agent.
+</p>
+
+</body>
+</html>
