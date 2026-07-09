@@ -1,0 +1,177 @@
+[
+  {
+    "case_id": "GEN-0151",
+    "specialty": "ophthalmology",
+    "note_text": "Patient: 50F presenting with macular degeneration.\nConservative management including immunomodulator therapy, beta-blockers was attempted without adequate improvement.\nImaging studies confirm findings consistent with macular degeneration.\nReferring ophthalmology physician requests authorization for anti-vegf injection.",
+    "gold": {
+      "age": 50,
+      "sex": "F",
+      "diagnosis": "macular degeneration",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "immunomodulator therapy",
+        "beta-blockers"
+      ],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": "findings consistent with macular degeneration",
+      "requested_procedure": "anti-vegf injection",
+      "icd10_code": "H35.30",
+      "policy_id": "POL-OPHTH-ANTIVEGF-066",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0152",
+    "specialty": "ophthalmology",
+    "note_text": "Patient: 57F presenting with macular degeneration.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with macular degeneration.\nReferring ophthalmology physician requests authorization for anti-vegf injection.",
+    "gold": {
+      "age": 57,
+      "sex": "F",
+      "diagnosis": "macular degeneration",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 0,
+      "imaging_evidence": "findings consistent with macular degeneration",
+      "requested_procedure": "anti-vegf injection",
+      "icd10_code": "H35.30",
+      "policy_id": "POL-OPHTH-ANTIVEGF-066",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0153",
+    "specialty": "ophthalmology",
+    "note_text": "Patient: 52F presenting with macular degeneration.\nNo conservative therapy has been documented yet.\nImaging workup is still pending.\nReferring ophthalmology physician requests authorization for anti-vegf injection.",
+    "gold": {
+      "age": 52,
+      "sex": "F",
+      "diagnosis": "macular degeneration",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": null,
+      "requested_procedure": "anti-vegf injection",
+      "icd10_code": "H35.30",
+      "policy_id": "POL-OPHTH-ANTIVEGF-066",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0154",
+    "specialty": "ophthalmology",
+    "note_text": "Patient: 72F presenting with significant cataract.\nConservative management including immunomodulator therapy, beta-blockers was attempted without adequate improvement.\nImaging workup is still pending.\nReferring ophthalmology physician requests authorization for cataract surgery.",
+    "gold": {
+      "age": 72,
+      "sex": "F",
+      "diagnosis": "significant cataract",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "immunomodulator therapy",
+        "beta-blockers"
+      ],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": null,
+      "requested_procedure": "cataract surgery",
+      "icd10_code": "H25.9",
+      "policy_id": "POL-OPHTH-CATARACT-067",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0155",
+    "specialty": "ophthalmology",
+    "note_text": "Patient: 64M presenting with severe cataract.\nNo conservative therapy has been documented yet.\nImaging workup is still pending.\nReferring ophthalmology physician requests authorization for cataract surgery.",
+    "gold": {
+      "age": 64,
+      "sex": "M",
+      "diagnosis": "severe cataract",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 0,
+      "imaging_evidence": null,
+      "requested_procedure": "cataract surgery",
+      "icd10_code": "H25.9",
+      "policy_id": "POL-OPHTH-CATARACT-067",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0156",
+    "specialty": "ophthalmology",
+    "note_text": "Patient: 77M presenting with cataract.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with cataract.\nReferring ophthalmology physician requests authorization for cataract surgery.",
+    "gold": {
+      "age": 77,
+      "sex": "M",
+      "diagnosis": "cataract",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 6,
+      "imaging_evidence": "findings consistent with cataract",
+      "requested_procedure": "cataract surgery",
+      "icd10_code": "H25.9",
+      "policy_id": "POL-OPHTH-CATARACT-067",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0157",
+    "specialty": "ophthalmology",
+    "note_text": "Patient: 68M presenting with glaucoma.\nConservative management including immunomodulator therapy, NSAIDs was attempted over approximately 18 weeks without adequate improvement.\nImaging studies confirm findings consistent with glaucoma.\nReferring ophthalmology physician requests authorization for glaucoma surgery.",
+    "gold": {
+      "age": 68,
+      "sex": "M",
+      "diagnosis": "glaucoma",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "immunomodulator therapy",
+        "NSAIDs"
+      ],
+      "conservative_therapy_duration_weeks": 18,
+      "imaging_evidence": "findings consistent with glaucoma",
+      "requested_procedure": "glaucoma surgery",
+      "icd10_code": "H40.9",
+      "policy_id": "POL-OPHTH-GLAUCOMA-068",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0158",
+    "specialty": "ophthalmology",
+    "note_text": "Patient: 78F presenting with glaucoma.\nConservative management including dietary and lifestyle modification was attempted over approximately 8 weeks without adequate improvement.\nImaging studies confirm findings consistent with glaucoma.\nReferring ophthalmology physician requests authorization for glaucoma surgery.",
+    "gold": {
+      "age": 78,
+      "sex": "F",
+      "diagnosis": "glaucoma",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "dietary and lifestyle modification"
+      ],
+      "conservative_therapy_duration_weeks": 8,
+      "imaging_evidence": "findings consistent with glaucoma",
+      "requested_procedure": "glaucoma surgery",
+      "icd10_code": "H40.9",
+      "policy_id": "POL-OPHTH-GLAUCOMA-068",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0159",
+    "specialty": "ophthalmology",
+    "note_text": "Patient: 74M presenting with glaucoma.\nConservative management including antiarrhythmic medication was attempted without adequate improvement.\nImaging workup is still pending.\nReferring ophthalmology physician requests authorization for glaucoma surgery.",
+    "gold": {
+      "age": 74,
+      "sex": "M",
+      "diagnosis": "glaucoma",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "antiarrhythmic medication"
+      ],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": null,
+      "requested_procedure": "glaucoma surgery",
+      "icd10_code": "H40.9",
+      "policy_id": "POL-OPHTH-GLAUCOMA-068",
+      "variant": "varied"
+    }
+  }
+]

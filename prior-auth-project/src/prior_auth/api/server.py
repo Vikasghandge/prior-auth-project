@@ -147,6 +147,26 @@ def run_case(req: RunRequest) -> dict:
     }
 
 
+class ReviewDecisionRequest(BaseModel):
+    decision: str  # "APPROVED" or "REJECTED"
+    reviewer: str = "unspecified"
+
+
+@app.get("/api/review-queue")
+def review_queue() -> list[dict]:
+    return _workflow.hitl_queue.list_pending()
+
+
+@app.post("/api/review-queue/{case_id}/resolve")
+def resolve_review(case_id: str, req: ReviewDecisionRequest) -> dict:
+    if req.decision not in ("APPROVED", "REJECTED"):
+        raise HTTPException(status_code=400, detail="decision must be APPROVED or REJECTED")
+    try:
+        return _workflow.hitl_queue.resolve(case_id, req.decision, req.reviewer)
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail=f"No pending review found for case {case_id}")
+
+
 app.mount("/static", StaticFiles(directory=_STATIC_DIR), name="static")
 
 

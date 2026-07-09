@@ -1,0 +1,118 @@
+[
+  {
+    "case_id": "GEN-0145",
+    "specialty": "ent",
+    "note_text": "Patient: 55M presenting with severe sensorineural hearing loss.\nConservative management including disease-modifying medication, corticosteroid injection was attempted without adequate improvement.\nImaging studies confirm findings consistent with sensorineural hearing loss.\nReferring ent physician requests authorization for cochlear implant.",
+    "gold": {
+      "age": 55,
+      "sex": "M",
+      "diagnosis": "severe sensorineural hearing loss",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "disease-modifying medication",
+        "corticosteroid injection"
+      ],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": "findings consistent with sensorineural hearing loss",
+      "requested_procedure": "cochlear implant",
+      "icd10_code": "H90.3",
+      "policy_id": "POL-ENT-COCHLEAR-063",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0146",
+    "specialty": "ent",
+    "note_text": "Patient: 29M presenting with profound sensorineural hearing loss.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with sensorineural hearing loss.\nReferring ent physician requests authorization for cochlear implant.",
+    "gold": {
+      "age": 29,
+      "sex": "M",
+      "diagnosis": "profound sensorineural hearing loss",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 0,
+      "imaging_evidence": "findings consistent with sensorineural hearing loss",
+      "requested_procedure": "cochlear implant",
+      "icd10_code": "H90.3",
+      "policy_id": "POL-ENT-COCHLEAR-063",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0147",
+    "specialty": "ent",
+    "note_text": "Patient: 46F presenting with sensorineural hearing loss.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with sensorineural hearing loss.\nReferring ent physician requests authorization for cochlear implant.",
+    "gold": {
+      "age": 46,
+      "sex": "F",
+      "diagnosis": "sensorineural hearing loss",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 16,
+      "imaging_evidence": "findings consistent with sensorineural hearing loss",
+      "requested_procedure": "cochlear implant",
+      "icd10_code": "H90.3",
+      "policy_id": "POL-ENT-COCHLEAR-063",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0148",
+    "specialty": "ent",
+    "note_text": "Patient: 38M presenting with chronic chronic tonsillitis.\nConservative management including dietary and lifestyle modification, beta-blockers was attempted without adequate improvement.\nImaging studies confirm findings consistent with chronic tonsillitis.\nReferring ent physician requests authorization for tonsillectomy.",
+    "gold": {
+      "age": 38,
+      "sex": "M",
+      "diagnosis": "chronic chronic tonsillitis",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "dietary and lifestyle modification",
+        "beta-blockers"
+      ],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": "findings consistent with chronic tonsillitis",
+      "requested_procedure": "tonsillectomy",
+      "icd10_code": "J35.01",
+      "policy_id": "POL-ENT-TONSIL-064",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0149",
+    "specialty": "ent",
+    "note_text": "Patient: 65M presenting with chronic chronic tonsillitis.\nNo conservative therapy has been documented yet.\nImaging workup is still pending.\nReferring ent physician requests authorization for tonsillectomy.",
+    "gold": {
+      "age": 65,
+      "sex": "M",
+      "diagnosis": "chronic chronic tonsillitis",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 0,
+      "imaging_evidence": null,
+      "requested_procedure": "tonsillectomy",
+      "icd10_code": "J35.01",
+      "policy_id": "POL-ENT-TONSIL-064",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0150",
+    "specialty": "ent",
+    "note_text": "Patient: 57F presenting with chronic chronic tonsillitis.\nConservative management including immunomodulator therapy was attempted over approximately 16 weeks without adequate improvement.\nImaging studies confirm findings consistent with chronic tonsillitis.\nReferring ent physician requests authorization for tonsillectomy.",
+    "gold": {
+      "age": 57,
+      "sex": "F",
+      "diagnosis": "chronic chronic tonsillitis",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "immunomodulator therapy"
+      ],
+      "conservative_therapy_duration_weeks": 16,
+      "imaging_evidence": "findings consistent with chronic tonsillitis",
+      "requested_procedure": "tonsillectomy",
+      "icd10_code": "J35.01",
+      "policy_id": "POL-ENT-TONSIL-064",
+      "variant": "varied"
+    }
+  }
+]

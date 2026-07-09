@@ -1,0 +1,246 @@
+[
+  {
+    "case_id": "GEN-0088",
+    "specialty": "rheumatology",
+    "note_text": "Patient: 67M presenting with moderate rheumatoid arthritis.\nConservative management including dietary and lifestyle modification, NSAIDs was attempted over approximately 17 weeks without adequate improvement.\nImaging studies confirm findings consistent with rheumatoid arthritis.\nReferring rheumatology physician requests authorization for biologic therapy.",
+    "gold": {
+      "age": 67,
+      "sex": "M",
+      "diagnosis": "moderate rheumatoid arthritis",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "dietary and lifestyle modification",
+        "NSAIDs"
+      ],
+      "conservative_therapy_duration_weeks": 17,
+      "imaging_evidence": "findings consistent with rheumatoid arthritis",
+      "requested_procedure": "biologic therapy",
+      "icd10_code": "M05.79",
+      "policy_id": "POL-RHEUM-BIO-RA-038",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0089",
+    "specialty": "rheumatology",
+    "note_text": "Patient: 36F presenting with severe rheumatoid arthritis.\nConservative management including bracing was attempted over approximately 8 weeks without adequate improvement.\nImaging workup is still pending.\nReferring rheumatology physician requests authorization for biologic therapy.",
+    "gold": {
+      "age": 36,
+      "sex": "F",
+      "diagnosis": "severe rheumatoid arthritis",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "bracing"
+      ],
+      "conservative_therapy_duration_weeks": 8,
+      "imaging_evidence": null,
+      "requested_procedure": "biologic therapy",
+      "icd10_code": "M05.79",
+      "policy_id": "POL-RHEUM-BIO-RA-038",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0090",
+    "specialty": "rheumatology",
+    "note_text": "Patient: 41F presenting with rheumatoid arthritis.\nConservative management including bracing was attempted over approximately 12 weeks without adequate improvement.\nImaging workup is still pending.\nReferring rheumatology physician requests authorization for biologic therapy.",
+    "gold": {
+      "age": 41,
+      "sex": "F",
+      "diagnosis": "rheumatoid arthritis",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "bracing"
+      ],
+      "conservative_therapy_duration_weeks": 12,
+      "imaging_evidence": null,
+      "requested_procedure": "biologic therapy",
+      "icd10_code": "M05.79",
+      "policy_id": "POL-RHEUM-BIO-RA-038",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0091",
+    "specialty": "rheumatology",
+    "note_text": "Patient: 58M presenting with moderate psoriatic arthritis.\nConservative management including NSAIDs, antiarrhythmic medication was attempted over approximately 17 weeks without adequate improvement.\nImaging studies confirm findings consistent with psoriatic arthritis.\nReferring rheumatology physician requests authorization for biologic therapy.",
+    "gold": {
+      "age": 58,
+      "sex": "M",
+      "diagnosis": "moderate psoriatic arthritis",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "NSAIDs",
+        "antiarrhythmic medication"
+      ],
+      "conservative_therapy_duration_weeks": 17,
+      "imaging_evidence": "findings consistent with psoriatic arthritis",
+      "requested_procedure": "biologic therapy",
+      "icd10_code": "L40.54",
+      "policy_id": "POL-RHEUM-BIO-PSA-039",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0092",
+    "specialty": "rheumatology",
+    "note_text": "Patient: 77M presenting with active psoriatic arthritis.\nConservative management including activity modification was attempted over approximately 5 weeks without adequate improvement.\nImaging studies confirm findings consistent with psoriatic arthritis.\nReferring rheumatology physician requests authorization for biologic therapy.",
+    "gold": {
+      "age": 77,
+      "sex": "M",
+      "diagnosis": "active psoriatic arthritis",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "activity modification"
+      ],
+      "conservative_therapy_duration_weeks": 5,
+      "imaging_evidence": "findings consistent with psoriatic arthritis",
+      "requested_procedure": "biologic therapy",
+      "icd10_code": "L40.54",
+      "policy_id": "POL-RHEUM-BIO-PSA-039",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0093",
+    "specialty": "rheumatology",
+    "note_text": "Patient: 43M presenting with psoriatic arthritis.\nConservative management including activity modification, disease-modifying medication was attempted without adequate improvement.\nImaging workup is still pending.\nReferring rheumatology physician requests authorization for biologic therapy.",
+    "gold": {
+      "age": 43,
+      "sex": "M",
+      "diagnosis": "psoriatic arthritis",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "activity modification",
+        "disease-modifying medication"
+      ],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": null,
+      "requested_procedure": "biologic therapy",
+      "icd10_code": "L40.54",
+      "policy_id": "POL-RHEUM-BIO-PSA-039",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0094",
+    "specialty": "rheumatology",
+    "note_text": "Patient: 66M presenting with active ankylosing spondylitis.\nConservative management including physical therapy, dietary and lifestyle modification was attempted over approximately 15 weeks without adequate improvement.\nImaging studies confirm findings consistent with ankylosing spondylitis.\nReferring rheumatology physician requests authorization for biologic therapy.",
+    "gold": {
+      "age": 66,
+      "sex": "M",
+      "diagnosis": "active ankylosing spondylitis",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "physical therapy",
+        "dietary and lifestyle modification"
+      ],
+      "conservative_therapy_duration_weeks": 15,
+      "imaging_evidence": "findings consistent with ankylosing spondylitis",
+      "requested_procedure": "biologic therapy",
+      "icd10_code": "M45.9",
+      "policy_id": "POL-RHEUM-BIO-AS-040",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0095",
+    "specialty": "rheumatology",
+    "note_text": "Patient: 64F presenting with severe ankylosing spondylitis.\nConservative management including physical therapy was attempted over approximately 5 weeks without adequate improvement.\nImaging studies confirm findings consistent with ankylosing spondylitis.\nReferring rheumatology physician requests authorization for biologic therapy.",
+    "gold": {
+      "age": 64,
+      "sex": "F",
+      "diagnosis": "severe ankylosing spondylitis",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "physical therapy"
+      ],
+      "conservative_therapy_duration_weeks": 5,
+      "imaging_evidence": "findings consistent with ankylosing spondylitis",
+      "requested_procedure": "biologic therapy",
+      "icd10_code": "M45.9",
+      "policy_id": "POL-RHEUM-BIO-AS-040",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0096",
+    "specialty": "rheumatology",
+    "note_text": "Patient: 72F presenting with ankylosing spondylitis.\nConservative management including preventive medication trial was attempted without adequate improvement.\nImaging workup is still pending.\nReferring rheumatology physician requests authorization for biologic therapy.",
+    "gold": {
+      "age": 72,
+      "sex": "F",
+      "diagnosis": "ankylosing spondylitis",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "preventive medication trial"
+      ],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": null,
+      "requested_procedure": "biologic therapy",
+      "icd10_code": "M45.9",
+      "policy_id": "POL-RHEUM-BIO-AS-040",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0097",
+    "specialty": "rheumatology",
+    "note_text": "Patient: 60F presenting with severe systemic lupus erythematosus.\nConservative management including disease-modifying medication, physical therapy was attempted over approximately 8 weeks without adequate improvement.\nImaging workup is still pending.\nReferring rheumatology physician requests authorization for ivig therapy.",
+    "gold": {
+      "age": 60,
+      "sex": "F",
+      "diagnosis": "severe systemic lupus erythematosus",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "disease-modifying medication",
+        "physical therapy"
+      ],
+      "conservative_therapy_duration_weeks": 8,
+      "imaging_evidence": null,
+      "requested_procedure": "ivig therapy",
+      "icd10_code": "M32.9",
+      "policy_id": "POL-RHEUM-IVIG-LUPUS-041",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0098",
+    "specialty": "rheumatology",
+    "note_text": "Patient: 68F presenting with severe systemic lupus erythematosus.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with systemic lupus erythematosus.\nReferring rheumatology physician requests authorization for ivig therapy.",
+    "gold": {
+      "age": 68,
+      "sex": "F",
+      "diagnosis": "severe systemic lupus erythematosus",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 0,
+      "imaging_evidence": "findings consistent with systemic lupus erythematosus",
+      "requested_procedure": "ivig therapy",
+      "icd10_code": "M32.9",
+      "policy_id": "POL-RHEUM-IVIG-LUPUS-041",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0099",
+    "specialty": "rheumatology",
+    "note_text": "Patient: 67F presenting with refractory systemic lupus erythematosus.\nConservative management including dietary and lifestyle modification, bracing was attempted over approximately 14 weeks without adequate improvement.\nImaging workup is still pending.\nReferring rheumatology physician requests authorization for ivig therapy.",
+    "gold": {
+      "age": 67,
+      "sex": "F",
+      "diagnosis": "refractory systemic lupus erythematosus",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "dietary and lifestyle modification",
+        "bracing"
+      ],
+      "conservative_therapy_duration_weeks": 14,
+      "imaging_evidence": null,
+      "requested_procedure": "ivig therapy",
+      "icd10_code": "M32.9",
+      "policy_id": "POL-RHEUM-IVIG-LUPUS-041",
+      "variant": "varied"
+    }
+  }
+]

@@ -43,6 +43,16 @@
       "Oncology": "IN_NETWORK",
       "Neurology": "IN_NETWORK",
       "Gastroenterology": "IN_NETWORK",
+      "Pulmonology": "IN_NETWORK",
+      "Rheumatology": "IN_NETWORK",
+      "Endocrinology": "IN_NETWORK",
+      "Nephrology": "IN_NETWORK",
+      "Dermatology": "IN_NETWORK",
+      "Urology": "IN_NETWORK",
+      "Psychiatry": "IN_NETWORK",
+      "Ent": "IN_NETWORK",
+      "Ophthalmology": "IN_NETWORK",
+      "Infectious_disease": "IN_NETWORK",
       "Unknown": "IN_NETWORK"
     }
   },
@@ -63,6 +73,12 @@
     "DEMO-INACTIVE-MEMBER": { "member_status": "INACTIVE" },
     "DEMO-OON": { "provider_status": "OUT_OF_NETWORK" },
     "DEMO-NOTCOVERED": { "force_not_covered": true },
-    "DEMO-DUP": { "force_duplicate": true }
+    "DEMO-DUP": { "force_duplicate": true },
+
+    "FAIL-INS-01": { "plan_id": "PLAN-EXPIRED-01" },
+    "FAIL-INS-02": { "plan_id": "PLAN-SUSPENDED-01" },
+    "FAIL-INS-03": { "force_not_covered": true },
+    "FAIL-INS-04": { "provider_status": "OUT_OF_NETWORK" },
+    "FAIL-INS-05": { "force_duplicate": true }
   }
 }

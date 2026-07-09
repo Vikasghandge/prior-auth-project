@@ -1,0 +1,180 @@
+[
+  {
+    "case_id": "GEN-0136",
+    "specialty": "psychiatry",
+    "note_text": "Patient: 40M presenting with treatment-resistant severe recurrent depression.\nConservative management including beta-blockers, antiarrhythmic medication was attempted over approximately 15 weeks without adequate improvement.\nImaging workup is still pending.\nReferring psychiatry physician requests authorization for transcranial magnetic stimulation.",
+    "gold": {
+      "age": 40,
+      "sex": "M",
+      "diagnosis": "treatment-resistant severe recurrent depression",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "beta-blockers",
+        "antiarrhythmic medication"
+      ],
+      "conservative_therapy_duration_weeks": 15,
+      "imaging_evidence": null,
+      "requested_procedure": "transcranial magnetic stimulation",
+      "icd10_code": "F33.2",
+      "policy_id": "POL-PSYCH-TMS-059",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0137",
+    "specialty": "psychiatry",
+    "note_text": "Patient: 46F presenting with refractory severe recurrent depression.\nConservative management including corticosteroid injection was attempted over approximately 1 weeks without adequate improvement.\nImaging workup is still pending.\nReferring psychiatry physician requests authorization for transcranial magnetic stimulation.",
+    "gold": {
+      "age": 46,
+      "sex": "F",
+      "diagnosis": "refractory severe recurrent depression",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "corticosteroid injection"
+      ],
+      "conservative_therapy_duration_weeks": 1,
+      "imaging_evidence": null,
+      "requested_procedure": "transcranial magnetic stimulation",
+      "icd10_code": "F33.2",
+      "policy_id": "POL-PSYCH-TMS-059",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0138",
+    "specialty": "psychiatry",
+    "note_text": "Patient: 50F presenting with refractory severe recurrent depression.\nConservative management including antiarrhythmic medication was attempted over approximately 22 weeks without adequate improvement.\nImaging studies confirm findings consistent with severe recurrent depression.\nReferring psychiatry physician requests authorization for transcranial magnetic stimulation.",
+    "gold": {
+      "age": 50,
+      "sex": "F",
+      "diagnosis": "refractory severe recurrent depression",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "antiarrhythmic medication"
+      ],
+      "conservative_therapy_duration_weeks": 22,
+      "imaging_evidence": "findings consistent with severe recurrent depression",
+      "requested_procedure": "transcranial magnetic stimulation",
+      "icd10_code": "F33.2",
+      "policy_id": "POL-PSYCH-TMS-059",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0139",
+    "specialty": "psychiatry",
+    "note_text": "Patient: 42F presenting with severe treatment-resistant depression.\nConservative management including antiarrhythmic medication, disease-modifying medication was attempted without adequate improvement.\nImaging workup is still pending.\nReferring psychiatry physician requests authorization for electroconvulsive therapy.",
+    "gold": {
+      "age": 42,
+      "sex": "F",
+      "diagnosis": "severe treatment-resistant depression",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "antiarrhythmic medication",
+        "disease-modifying medication"
+      ],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": null,
+      "requested_procedure": "electroconvulsive therapy",
+      "icd10_code": "F33.3",
+      "policy_id": "POL-PSYCH-ECT-060",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0140",
+    "specialty": "psychiatry",
+    "note_text": "Patient: 70M presenting with treatment-resistant treatment-resistant depression.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with treatment-resistant depression.\nReferring psychiatry physician requests authorization for electroconvulsive therapy.",
+    "gold": {
+      "age": 70,
+      "sex": "M",
+      "diagnosis": "treatment-resistant treatment-resistant depression",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 0,
+      "imaging_evidence": "findings consistent with treatment-resistant depression",
+      "requested_procedure": "electroconvulsive therapy",
+      "icd10_code": "F33.3",
+      "policy_id": "POL-PSYCH-ECT-060",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0141",
+    "specialty": "psychiatry",
+    "note_text": "Patient: 60F presenting with severe treatment-resistant depression.\nNo conservative therapy has been documented yet.\nImaging workup is still pending.\nReferring psychiatry physician requests authorization for electroconvulsive therapy.",
+    "gold": {
+      "age": 60,
+      "sex": "F",
+      "diagnosis": "severe treatment-resistant depression",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 16,
+      "imaging_evidence": null,
+      "requested_procedure": "electroconvulsive therapy",
+      "icd10_code": "F33.3",
+      "policy_id": "POL-PSYCH-ECT-060",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0142",
+    "specialty": "psychiatry",
+    "note_text": "Patient: 54M presenting with severe schizophrenia.\nConservative management including disease-modifying medication, bracing was attempted without adequate improvement.\nImaging workup is still pending.\nReferring psychiatry physician requests authorization for inpatient psychiatric admission.",
+    "gold": {
+      "age": 54,
+      "sex": "M",
+      "diagnosis": "severe schizophrenia",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "disease-modifying medication",
+        "bracing"
+      ],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": null,
+      "requested_procedure": "inpatient psychiatric admission",
+      "icd10_code": "F20.9",
+      "policy_id": "POL-PSYCH-INPT-061",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0143",
+    "specialty": "psychiatry",
+    "note_text": "Patient: 69M presenting with acute schizophrenia.\nNo conservative therapy has been documented yet.\nImaging workup is still pending.\nReferring psychiatry physician requests authorization for inpatient psychiatric admission.",
+    "gold": {
+      "age": 69,
+      "sex": "M",
+      "diagnosis": "acute schizophrenia",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 0,
+      "imaging_evidence": null,
+      "requested_procedure": "inpatient psychiatric admission",
+      "icd10_code": "F20.9",
+      "policy_id": "POL-PSYCH-INPT-061",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0144",
+    "specialty": "psychiatry",
+    "note_text": "Patient: 68F presenting with life-threatening schizophrenia.\nConservative management including physical therapy, activity modification was attempted without adequate improvement.\nImaging workup is still pending.\nReferring psychiatry physician requests authorization for inpatient psychiatric admission.",
+    "gold": {
+      "age": 68,
+      "sex": "F",
+      "diagnosis": "life-threatening schizophrenia",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "physical therapy",
+        "activity modification"
+      ],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": null,
+      "requested_procedure": "inpatient psychiatric admission",
+      "icd10_code": "F20.9",
+      "policy_id": "POL-PSYCH-INPT-061",
+      "variant": "varied"
+    }
+  }
+]

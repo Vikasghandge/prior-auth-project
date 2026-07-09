@@ -297,6 +297,18 @@ _DEPARTMENT_SPECIALTY = [
     ("gastroenterology", "Gastroenterology"), ("gastroenterologist", "Gastroenterology"),
     ("hepatology", "Gastroenterology"),
     ("oncology", "Oncology"), ("oncologist", "Oncology"),
+    # --- Expansion: 10 additional specialties (appended so no existing match order changes) ---
+    ("pulmonology", "Pulmonology"), ("pulmonologist", "Pulmonology"),
+    ("rheumatology", "Rheumatology"), ("rheumatologist", "Rheumatology"),
+    ("endocrinology", "Endocrinology"), ("endocrinologist", "Endocrinology"),
+    ("nephrology", "Nephrology"), ("nephrologist", "Nephrology"),
+    ("dermatology", "Dermatology"), ("dermatologist", "Dermatology"),
+    ("urology", "Urology"), ("urologist", "Urology"),
+    ("psychiatry", "Psychiatry"), ("psychiatrist", "Psychiatry"),
+    ("otolaryngology", "Ent"), ("otolaryngologist", "Ent"), (" ent ", "Ent"),
+    ("ophthalmology", "Ophthalmology"), ("ophthalmologist", "Ophthalmology"),
+    ("infectious disease", "Infectious_disease"),
+    ("pain management", "General"), ("occupational medicine", "General"), ("internal medicine", "General"),
 ]
 
 # Fallback: infer from diagnosis / procedure vocabulary when no department is named.
@@ -311,6 +323,20 @@ _SPECIALTY_KEYWORDS = [
                    "parkinson", "migraine", "neuropath", "demyelinat", "disease-modifying"]),
     ("Orthopedics", ["osteoarthritis", "arthroplasty", "joint", "knee", "hip", "spine",
                      "replacement", "degenerative", "physical therapy"]),
+    # --- Expansion: fallback keyword pools for the 10 additional specialties ---
+    ("Pulmonology", ["copd", "emphysema", "asthma", "pulmonary", "bronch", "sleep apnea", "cpap",
+                      "respiratory failure", "oxygen therapy"]),
+    ("Rheumatology", ["rheumatoid", "lupus", "ankylosing spondylitis", "psoriatic arthritis",
+                       "gout", "scleroderma", "sjogren", "fibromyalgia"]),
+    ("Endocrinology", ["diabetes", "thyroid", "hyperparathyroidism", "adrenal", "cushing",
+                        "insulin", "glucose"]),
+    ("Nephrology", ["renal", "kidney", "dialysis", "nephro", "glomerul", "ckd", "esrd"]),
+    ("Dermatology", ["psoriasis", "eczema", "dermatitis", "hidradenitis", "skin"]),
+    ("Urology", ["prostat", "bladder", "urinary", "urolog", "erectile", "incontinence"]),
+    ("Psychiatry", ["depress", "bipolar", "schizophreni", "anxiety", "psychiatric", "ptsd"]),
+    ("Ent", ["sinus", "tonsil", "hearing loss", "cochlear", "otitis", "nasal"]),
+    ("Ophthalmology", ["macular", "glaucoma", "cataract", "retin", "vision"]),
+    ("Infectious_disease", ["hiv", "hepatitis", "sepsis", "osteomyelitis", "tuberculosis"]),
 ]
 
 

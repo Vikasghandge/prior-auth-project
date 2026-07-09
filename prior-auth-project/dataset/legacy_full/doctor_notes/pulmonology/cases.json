@@ -1,0 +1,242 @@
+[
+  {
+    "case_id": "GEN-0076",
+    "specialty": "pulmonology",
+    "note_text": "Patient: 68M presenting with hypoxemic chronic respiratory failure.\nConservative management including beta-blockers, activity modification was attempted over approximately 8 weeks without adequate improvement.\nImaging studies confirm findings consistent with chronic respiratory failure.\nReferring pulmonology physician requests authorization for home oxygen therapy.",
+    "gold": {
+      "age": 68,
+      "sex": "M",
+      "diagnosis": "hypoxemic chronic respiratory failure",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "beta-blockers",
+        "activity modification"
+      ],
+      "conservative_therapy_duration_weeks": 8,
+      "imaging_evidence": "findings consistent with chronic respiratory failure",
+      "requested_procedure": "home oxygen therapy",
+      "icd10_code": "J96.10",
+      "policy_id": "POL-PULM-O2-033",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0077",
+    "specialty": "pulmonology",
+    "note_text": "Patient: 69M presenting with severe chronic respiratory failure.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with chronic respiratory failure.\nReferring pulmonology physician requests authorization for home oxygen therapy.",
+    "gold": {
+      "age": 69,
+      "sex": "M",
+      "diagnosis": "severe chronic respiratory failure",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 0,
+      "imaging_evidence": "findings consistent with chronic respiratory failure",
+      "requested_procedure": "home oxygen therapy",
+      "icd10_code": "J96.10",
+      "policy_id": "POL-PULM-O2-033",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0078",
+    "specialty": "pulmonology",
+    "note_text": "Patient: 39F presenting with severe chronic respiratory failure.\nNo conservative therapy has been documented yet.\nImaging workup is still pending.\nReferring pulmonology physician requests authorization for home oxygen therapy.",
+    "gold": {
+      "age": 39,
+      "sex": "F",
+      "diagnosis": "severe chronic respiratory failure",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 2,
+      "imaging_evidence": null,
+      "requested_procedure": "home oxygen therapy",
+      "icd10_code": "J96.10",
+      "policy_id": "POL-PULM-O2-033",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0079",
+    "specialty": "pulmonology",
+    "note_text": "Patient: 70F presenting with moderate sleep apnea.\nConservative management including dietary and lifestyle modification, preventive medication trial was attempted without adequate improvement.\nImaging studies confirm findings consistent with sleep apnea.\nReferring pulmonology physician requests authorization for cpap therapy.",
+    "gold": {
+      "age": 70,
+      "sex": "F",
+      "diagnosis": "moderate sleep apnea",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "dietary and lifestyle modification",
+        "preventive medication trial"
+      ],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": "findings consistent with sleep apnea",
+      "requested_procedure": "cpap therapy",
+      "icd10_code": "G47.30",
+      "policy_id": "POL-PULM-CPAP-034",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0080",
+    "specialty": "pulmonology",
+    "note_text": "Patient: 81F presenting with severe sleep apnea.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with sleep apnea.\nReferring pulmonology physician requests authorization for cpap therapy.",
+    "gold": {
+      "age": 81,
+      "sex": "F",
+      "diagnosis": "severe sleep apnea",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 0,
+      "imaging_evidence": "findings consistent with sleep apnea",
+      "requested_procedure": "cpap therapy",
+      "icd10_code": "G47.30",
+      "policy_id": "POL-PULM-CPAP-034",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0081",
+    "specialty": "pulmonology",
+    "note_text": "Patient: 56F presenting with sleep apnea.\nConservative management including disease-modifying medication, activity modification was attempted over approximately 6 weeks without adequate improvement.\nImaging workup is still pending.\nReferring pulmonology physician requests authorization for cpap therapy.",
+    "gold": {
+      "age": 56,
+      "sex": "F",
+      "diagnosis": "sleep apnea",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "disease-modifying medication",
+        "activity modification"
+      ],
+      "conservative_therapy_duration_weeks": 6,
+      "imaging_evidence": null,
+      "requested_procedure": "cpap therapy",
+      "icd10_code": "G47.30",
+      "policy_id": "POL-PULM-CPAP-034",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0082",
+    "specialty": "pulmonology",
+    "note_text": "Patient: 73F presenting with severe chronic obstructive pulmonary disease.\nConservative management including antiarrhythmic medication, immunomodulator therapy was attempted over approximately 11 weeks without adequate improvement.\nImaging studies confirm findings consistent with chronic obstructive pulmonary disease.\nReferring pulmonology physician requests authorization for pulmonary rehabilitation.",
+    "gold": {
+      "age": 73,
+      "sex": "F",
+      "diagnosis": "severe chronic obstructive pulmonary disease",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "antiarrhythmic medication",
+        "immunomodulator therapy"
+      ],
+      "conservative_therapy_duration_weeks": 11,
+      "imaging_evidence": "findings consistent with chronic obstructive pulmonary disease",
+      "requested_procedure": "pulmonary rehabilitation",
+      "icd10_code": "J44.9",
+      "policy_id": "POL-PULM-REHAB-035",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0083",
+    "specialty": "pulmonology",
+    "note_text": "Patient: 37M presenting with moderate chronic obstructive pulmonary disease.\nConservative management including activity modification was attempted over approximately 3 weeks without adequate improvement.\nImaging studies confirm findings consistent with chronic obstructive pulmonary disease.\nReferring pulmonology physician requests authorization for pulmonary rehabilitation.",
+    "gold": {
+      "age": 37,
+      "sex": "M",
+      "diagnosis": "moderate chronic obstructive pulmonary disease",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "activity modification"
+      ],
+      "conservative_therapy_duration_weeks": 3,
+      "imaging_evidence": "findings consistent with chronic obstructive pulmonary disease",
+      "requested_procedure": "pulmonary rehabilitation",
+      "icd10_code": "J44.9",
+      "policy_id": "POL-PULM-REHAB-035",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0084",
+    "specialty": "pulmonology",
+    "note_text": "Patient: 54F presenting with chronic obstructive pulmonary disease.\nConservative management including NSAIDs was attempted over approximately 18 weeks without adequate improvement.\nImaging studies confirm findings consistent with chronic obstructive pulmonary disease.\nReferring pulmonology physician requests authorization for pulmonary rehabilitation.",
+    "gold": {
+      "age": 54,
+      "sex": "F",
+      "diagnosis": "chronic obstructive pulmonary disease",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "NSAIDs"
+      ],
+      "conservative_therapy_duration_weeks": 18,
+      "imaging_evidence": "findings consistent with chronic obstructive pulmonary disease",
+      "requested_procedure": "pulmonary rehabilitation",
+      "icd10_code": "J44.9",
+      "policy_id": "POL-PULM-REHAB-035",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0085",
+    "specialty": "pulmonology",
+    "note_text": "Patient: 77M presenting with severe severe persistent asthma.\nConservative management including NSAIDs, antiarrhythmic medication was attempted over approximately 16 weeks without adequate improvement.\nImaging workup is still pending.\nReferring pulmonology physician requests authorization for biologic therapy.",
+    "gold": {
+      "age": 77,
+      "sex": "M",
+      "diagnosis": "severe severe persistent asthma",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "NSAIDs",
+        "antiarrhythmic medication"
+      ],
+      "conservative_therapy_duration_weeks": 16,
+      "imaging_evidence": null,
+      "requested_procedure": "biologic therapy",
+      "icd10_code": "J45.50",
+      "policy_id": "POL-PULM-BIO-ASTHMA-037",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0086",
+    "specialty": "pulmonology",
+    "note_text": "Patient: 82F presenting with severe severe persistent asthma.\nConservative management including activity modification was attempted over approximately 1 weeks without adequate improvement.\nImaging workup is still pending.\nReferring pulmonology physician requests authorization for biologic therapy.",
+    "gold": {
+      "age": 82,
+      "sex": "F",
+      "diagnosis": "severe severe persistent asthma",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "activity modification"
+      ],
+      "conservative_therapy_duration_weeks": 1,
+      "imaging_evidence": null,
+      "requested_procedure": "biologic therapy",
+      "icd10_code": "J45.50",
+      "policy_id": "POL-PULM-BIO-ASTHMA-037",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0087",
+    "specialty": "pulmonology",
+    "note_text": "Patient: 59M presenting with severe persistent asthma.\nConservative management including immunomodulator therapy, beta-blockers was attempted over approximately 12 weeks without adequate improvement.\nImaging studies confirm findings consistent with severe persistent asthma.\nReferring pulmonology physician requests authorization for biologic therapy.",
+    "gold": {
+      "age": 59,
+      "sex": "M",
+      "diagnosis": "severe persistent asthma",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "immunomodulator therapy",
+        "beta-blockers"
+      ],
+      "conservative_therapy_duration_weeks": 12,
+      "imaging_evidence": "findings consistent with severe persistent asthma",
+      "requested_procedure": "biologic therapy",
+      "icd10_code": "J45.50",
+      "policy_id": "POL-PULM-BIO-ASTHMA-037",
+      "variant": "varied"
+    }
+  }
+]

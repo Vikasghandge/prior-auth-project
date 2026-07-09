@@ -978,5 +978,1126 @@
       }
     ],
     "policy_text": "A knee brace is medically necessary when joint instability or an offloading need is documented."
+  },
+  {
+    "policy_id": "POL-PULM-O2-033",
+    "title": "Home Oxygen Therapy Policy",
+    "specialty": "pulmonology",
+    "procedure_keywords": [
+      "home oxygen therapy",
+      "supplemental oxygen",
+      "long-term oxygen therapy"
+    ],
+    "diagnosis_keywords": [
+      "copd",
+      "chronic respiratory failure",
+      "hypoxemia"
+    ],
+    "criteria": [
+      {
+        "id": "hypoxemia_documented",
+        "description": "Resting or exertional hypoxemia documented",
+        "check": "severity_keywords",
+        "value": [
+          "severe",
+          "hypoxemic"
+        ]
+      },
+      {
+        "id": "failed_conservative_4wk",
+        "description": "Bronchodilator therapy trialed for at least 4 weeks",
+        "check": "min_conservative_weeks",
+        "value": 4
+      },
+      {
+        "id": "imaging_confirms",
+        "description": "Pulmonary function testing or imaging confirms disease",
+        "check": "imaging_required",
+        "value": true
+      }
+    ],
+    "policy_text": "Home oxygen therapy is covered when hypoxemia is documented, bronchodilator therapy has been trialed for at least 4 weeks, and pulmonary testing confirms the diagnosis."
+  },
+  {
+    "policy_id": "POL-PULM-CPAP-034",
+    "title": "CPAP for Obstructive Sleep Apnea Policy",
+    "specialty": "pulmonology",
+    "procedure_keywords": [
+      "cpap therapy",
+      "cpap",
+      "continuous positive airway pressure"
+    ],
+    "diagnosis_keywords": [
+      "obstructive sleep apnea",
+      "sleep apnea"
+    ],
+    "criteria": [
+      {
+        "id": "severity_documented",
+        "description": "Moderate to severe sleep apnea documented",
+        "check": "severity_keywords",
+        "value": [
+          "severe",
+          "moderate"
+        ]
+      },
+      {
+        "id": "imaging_confirms",
+        "description": "Sleep study confirms diagnosis",
+        "check": "imaging_required",
+        "value": true
+      }
+    ],
+    "policy_text": "CPAP therapy is covered when a sleep study confirms moderate-to-severe obstructive sleep apnea."
+  },
+  {
+    "policy_id": "POL-PULM-REHAB-035",
+    "title": "Pulmonary Rehabilitation Policy",
+    "specialty": "pulmonology",
+    "procedure_keywords": [
+      "pulmonary rehabilitation",
+      "pulmonary rehab"
+    ],
+    "diagnosis_keywords": [
+      "copd",
+      "chronic obstructive pulmonary disease",
+      "emphysema"
+    ],
+    "criteria": [
+      {
+        "id": "severity_documented",
+        "description": "Moderate to severe COPD documented",
+        "check": "severity_keywords",
+        "value": [
+          "severe",
+          "moderate",
+          "advanced"
+        ]
+      },
+      {
+        "id": "failed_conservative_8wk",
+        "description": "Standard bronchodilator therapy failed for at least 8 weeks",
+        "check": "min_conservative_weeks",
+        "value": 8
+      }
+    ],
+    "policy_text": "Pulmonary rehabilitation is covered for patients with moderate-to-severe COPD who have not adequately responded to 8 weeks of standard bronchodilator therapy."
+  },
+  {
+    "policy_id": "POL-PULM-LVRS-036",
+    "title": "Lung Volume Reduction Surgery Policy",
+    "specialty": "pulmonology",
+    "procedure_keywords": [
+      "lung volume reduction surgery",
+      "lvrs"
+    ],
+    "diagnosis_keywords": [
+      "emphysema",
+      "severe copd"
+    ],
+    "criteria": [
+      {
+        "id": "severity_documented",
+        "description": "Severe emphysema documented",
+        "check": "severity_keywords",
+        "value": [
+          "severe",
+          "advanced",
+          "end-stage"
+        ]
+      },
+      {
+        "id": "failed_conservative_12wk",
+        "description": "Pulmonary rehabilitation completed for at least 12 weeks",
+        "check": "min_conservative_weeks",
+        "value": 12
+      },
+      {
+        "id": "imaging_confirms",
+        "description": "CT imaging confirms hyperinflation/emphysema distribution",
+        "check": "imaging_required",
+        "value": true
+      }
+    ],
+    "policy_text": "Lung volume reduction surgery is medically necessary when severe emphysema is documented, pulmonary rehabilitation has been completed for at least 12 weeks, and CT imaging confirms distribution suitable for surgery."
+  },
+  {
+    "policy_id": "POL-PULM-BIO-ASTHMA-037",
+    "title": "Biologic Therapy for Severe Eosinophilic Asthma Policy",
+    "specialty": "pulmonology",
+    "procedure_keywords": [
+      "biologic therapy",
+      "anti-il5 therapy",
+      "omalizumab",
+      "mepolizumab"
+    ],
+    "diagnosis_keywords": [
+      "severe asthma",
+      "eosinophilic asthma",
+      "severe persistent asthma"
+    ],
+    "criteria": [
+      {
+        "id": "severity_documented",
+        "description": "Severe persistent asthma documented",
+        "check": "severity_keywords",
+        "value": [
+          "severe"
+        ]
+      },
+      {
+        "id": "failed_conservative_12wk",
+        "description": "Standard inhaled therapy failed for at least 12 weeks",
+        "check": "min_conservative_weeks",
+        "value": 12
+      }
+    ],
+    "policy_text": "Biologic therapy for severe eosinophilic asthma is covered when severe persistent asthma is documented and standard inhaled therapy has failed for at least 12 weeks."
+  },
+  {
+    "policy_id": "POL-RHEUM-BIO-RA-038",
+    "title": "Biologic Therapy for Rheumatoid Arthritis Policy",
+    "specialty": "rheumatology",
+    "procedure_keywords": [
+      "biologic therapy",
+      "tnf inhibitor",
+      "adalimumab",
+      "etanercept"
+    ],
+    "diagnosis_keywords": [
+      "rheumatoid arthritis",
+      "ra"
+    ],
+    "criteria": [
+      {
+        "id": "severity_documented",
+        "description": "Moderate to severe rheumatoid arthritis documented",
+        "check": "severity_keywords",
+        "value": [
+          "severe",
+          "moderate",
+          "active"
+        ]
+      },
+      {
+        "id": "failed_conservative_12wk",
+        "description": "Methotrexate or other DMARD trialed for at least 12 weeks",
+        "check": "min_conservative_weeks",
+        "value": 12
+      }
+    ],
+    "policy_text": "Biologic therapy for rheumatoid arthritis is covered when moderate-to-severe disease is documented and conventional DMARD therapy has failed for at least 12 weeks."
+  },
+  {
+    "policy_id": "POL-RHEUM-BIO-PSA-039",
+    "title": "Biologic Therapy for Psoriatic Arthritis Policy",
+    "specialty": "rheumatology",
+    "procedure_keywords": [
+      "biologic therapy",
+      "il-17 inhibitor",
+      "secukinumab"
+    ],
+    "diagnosis_keywords": [
+      "psoriatic arthritis"
+    ],
+    "criteria": [
+      {
+        "id": "severity_documented",
+        "description": "Active psoriatic arthritis documented",
+        "check": "severity_keywords",
+        "value": [
+          "active",
+          "severe",
+          "moderate"
+        ]
+      },
+      {
+        "id": "failed_conservative_12wk",
+        "description": "Conventional DMARD therapy failed for at least 12 weeks",
+        "check": "min_conservative_weeks",
+        "value": 12
+      }
+    ],
+    "policy_text": "Biologic therapy for psoriatic arthritis is covered when active disease is documented and conventional DMARD therapy has failed for at least 12 weeks."
+  },
+  {
+    "policy_id": "POL-RHEUM-BIO-AS-040",
+    "title": "Biologic Therapy for Ankylosing Spondylitis Policy",
+    "specialty": "rheumatology",
+    "procedure_keywords": [
+      "biologic therapy",
+      "tnf inhibitor for spondylitis"
+    ],
+    "diagnosis_keywords": [
+      "ankylosing spondylitis"
+    ],
+    "criteria": [
+      {
+        "id": "severity_documented",
+        "description": "Active ankylosing spondylitis documented",
+        "check": "severity_keywords",
+        "value": [
+          "active",
+          "severe"
+        ]
+      },
+      {
+        "id": "failed_conservative_12wk",
+        "description": "NSAID therapy failed for at least 12 weeks",
+        "check": "min_conservative_weeks",
+        "value": 12
+      }
+    ],
+    "policy_text": "Biologic therapy for ankylosing spondylitis is covered when active disease is documented and NSAID therapy has failed for at least 12 weeks."
+  },
+  {
+    "policy_id": "POL-RHEUM-IVIG-LUPUS-041",
+    "title": "IVIG Therapy for Lupus Flare Policy",
+    "specialty": "rheumatology",
+    "procedure_keywords": [
+      "ivig therapy",
+      "intravenous immunoglobulin"
+    ],
+    "diagnosis_keywords": [
+      "systemic lupus erythematosus",
+      "lupus flare"
+    ],
+    "criteria": [
+      {
+        "id": "severity_documented",
+        "description": "Severe or refractory lupus flare documented",
+        "check": "severity_keywords",
+        "value": [
+          "severe",
+          "refractory"
+        ]
+      },
+      {
+        "id": "failed_conservative_4wk",
+        "description": "Corticosteroid therapy failed for at least 4 weeks",
+        "check": "min_conservative_weeks",
+        "value": 4
+      }
+    ],
+    "policy_text": "IVIG therapy is covered for severe or refractory lupus flares that have not responded to at least 4 weeks of corticosteroid therapy."
+  },
+  {
+    "policy_id": "POL-RHEUM-GOUT-042",
+    "title": "Advanced Gout Therapy Policy",
+    "specialty": "rheumatology",
+    "procedure_keywords": [
+      "pegloticase therapy",
+      "advanced gout therapy"
+    ],
+    "diagnosis_keywords": [
+      "gout",
+      "chronic tophaceous gout"
+    ],
+    "criteria": [
+      {
+        "id": "severity_documented",
+        "description": "Chronic tophaceous gout documented",
+        "check": "severity_keywords",
+        "value": [
+          "chronic",
+          "severe",
+          "refractory"
+        ]
+      },
+      {
+        "id": "failed_conservative_12wk",
+        "description": "Standard urate-lowering therapy failed for at least 12 weeks",
+        "check": "min_conservative_weeks",
+        "value": 12
+      }
+    ],
+    "policy_text": "Advanced gout therapy is covered when chronic tophaceous gout is documented and standard urate-lowering therapy has failed for 12 weeks."
+  },
+  {
+    "policy_id": "POL-ENDO-CGM-043",
+    "title": "Continuous Glucose Monitor Policy",
+    "specialty": "endocrinology",
+    "procedure_keywords": [
+      "continuous glucose monitor",
+      "cgm"
+    ],
+    "diagnosis_keywords": [
+      "type 1 diabetes",
+      "type 2 diabetes",
+      "insulin-dependent diabetes"
+    ],
+    "criteria": [
+      {
+        "id": "severity_documented",
+        "description": "Insulin-dependent diabetes documented",
+        "check": "severity_keywords",
+        "value": [
+          "insulin-dependent",
+          "uncontrolled",
+          "poorly controlled"
+        ]
+      },
+      {
+        "id": "imaging_confirms",
+        "description": "Recent HbA1c or glucose log confirms need",
+        "check": "imaging_required",
+        "value": true
+      }
+    ],
+    "policy_text": "A continuous glucose monitor is covered for insulin-dependent diabetic patients with documented glucose monitoring history."
+  },
+  {
+    "policy_id": "POL-ENDO-PUMP-044",
+    "title": "Insulin Pump Therapy Policy",
+    "specialty": "endocrinology",
+    "procedure_keywords": [
+      "insulin pump",
+      "insulin pump therapy"
+    ],
+    "diagnosis_keywords": [
+      "type 1 diabetes",
+      "brittle diabetes"
+    ],
+    "criteria": [
+      {
+        "id": "severity_documented",
+        "description": "Poorly controlled diabetes on multiple daily injections",
+        "check": "severity_keywords",
+        "value": [
+          "poorly controlled",
+          "uncontrolled",
+          "brittle"
+        ]
+      },
+      {
+        "id": "failed_conservative_12wk",
+        "description": "Multiple daily insulin injections trialed for 12 weeks",
+        "check": "min_conservative_weeks",
+        "value": 12
+      }
+    ],
+    "policy_text": "Insulin pump therapy is covered when diabetes remains poorly controlled after at least 12 weeks of multiple daily insulin injections."
+  },
+  {
+    "policy_id": "POL-ENDO-PARATHY-045",
+    "title": "Parathyroidectomy for Hyperparathyroidism Policy",
+    "specialty": "endocrinology",
+    "procedure_keywords": [
+      "parathyroidectomy"
+    ],
+    "diagnosis_keywords": [
+      "primary hyperparathyroidism",
+      "hyperparathyroidism"
+    ],
+    "criteria": [
+      {
+        "id": "severity_documented",
+        "description": "Symptomatic hyperparathyroidism documented",
+        "check": "severity_keywords",
+        "value": [
+          "symptomatic",
+          "severe"
+        ]
+      },
+      {
+        "id": "imaging_confirms",
+        "description": "Imaging localizes parathyroid adenoma",
+        "check": "imaging_required",
+        "value": true
+      }
+    ],
+    "policy_text": "Parathyroidectomy is covered when symptomatic primary hyperparathyroidism is documented and imaging localizes the adenoma."
+  },
+  {
+    "policy_id": "POL-ENDO-GH-046",
+    "title": "Growth Hormone Therapy Policy",
+    "specialty": "endocrinology",
+    "procedure_keywords": [
+      "growth hormone therapy",
+      "somatropin"
+    ],
+    "diagnosis_keywords": [
+      "growth hormone deficiency"
+    ],
+    "criteria": [
+      {
+        "id": "severity_documented",
+        "description": "Confirmed growth hormone deficiency",
+        "check": "severity_keywords",
+        "value": [
+          "confirmed",
+          "documented"
+        ]
+      },
+      {
+        "id": "imaging_confirms",
+        "description": "Stimulation testing confirms deficiency",
+        "check": "imaging_required",
+        "value": true
+      }
+    ],
+    "policy_text": "Growth hormone therapy is covered when stimulation testing confirms growth hormone deficiency."
+  },
+  {
+    "policy_id": "POL-NEPH-DIALYSIS-047",
+    "title": "Dialysis Initiation Policy",
+    "specialty": "nephrology",
+    "procedure_keywords": [
+      "hemodialysis",
+      "dialysis initiation",
+      "renal dialysis"
+    ],
+    "diagnosis_keywords": [
+      "end stage renal disease",
+      "chronic kidney disease stage 5"
+    ],
+    "criteria": [
+      {
+        "id": "severity_documented",
+        "description": "End-stage renal disease documented",
+        "check": "severity_keywords",
+        "value": [
+          "end-stage",
+          "advanced",
+          "severe"
+        ]
+      },
+      {
+        "id": "imaging_confirms",
+        "description": "Lab values (GFR/creatinine) confirm renal failure",
+        "check": "imaging_required",
+        "value": true
+      }
+    ],
+    "policy_text": "Dialysis initiation is covered when end-stage renal disease is documented and confirmed by lab values."
+  },
+  {
+    "policy_id": "POL-NEPH-TRANSPLANT-048",
+    "title": "Kidney Transplant Evaluation Policy",
+    "specialty": "nephrology",
+    "procedure_keywords": [
+      "kidney transplant evaluation",
+      "renal transplant workup"
+    ],
+    "diagnosis_keywords": [
+      "end stage renal disease",
+      "chronic kidney disease stage 5"
+    ],
+    "criteria": [
+      {
+        "id": "severity_documented",
+        "description": "End-stage renal disease documented",
+        "check": "severity_keywords",
+        "value": [
+          "end-stage",
+          "severe"
+        ]
+      },
+      {
+        "id": "failed_conservative_12wk",
+        "description": "Dialysis maintained for at least 12 weeks",
+        "check": "min_conservative_weeks",
+        "value": 12
+      }
+    ],
+    "policy_text": "Kidney transplant evaluation is covered for patients with end-stage renal disease maintained on dialysis for at least 12 weeks."
+  },
+  {
+    "policy_id": "POL-NEPH-NEPHRECTOMY-049",
+    "title": "Nephrectomy Policy",
+    "specialty": "nephrology",
+    "procedure_keywords": [
+      "nephrectomy",
+      "kidney removal"
+    ],
+    "diagnosis_keywords": [
+      "renal mass",
+      "kidney cancer",
+      "nonfunctioning kidney"
+    ],
+    "criteria": [
+      {
+        "id": "severity_documented",
+        "description": "Severe or malignant renal condition documented",
+        "check": "severity_keywords",
+        "value": [
+          "severe",
+          "malignant"
+        ]
+      },
+      {
+        "id": "imaging_confirms",
+        "description": "Imaging confirms renal mass or nonfunction",
+        "check": "imaging_required",
+        "value": true
+      }
+    ],
+    "policy_text": "Nephrectomy is covered when imaging confirms a renal mass or nonfunctioning kidney with severe underlying disease."
+  },
+  {
+    "policy_id": "POL-NEPH-PDCATH-050",
+    "title": "Peritoneal Dialysis Catheter Placement Policy",
+    "specialty": "nephrology",
+    "procedure_keywords": [
+      "peritoneal dialysis catheter placement",
+      "pd catheter"
+    ],
+    "diagnosis_keywords": [
+      "end stage renal disease"
+    ],
+    "criteria": [
+      {
+        "id": "severity_documented",
+        "description": "End-stage renal disease documented",
+        "check": "severity_keywords",
+        "value": [
+          "end-stage",
+          "severe"
+        ]
+      },
+      {
+        "id": "imaging_confirms",
+        "description": "Lab values confirm renal failure",
+        "check": "imaging_required",
+        "value": true
+      }
+    ],
+    "policy_text": "Peritoneal dialysis catheter placement is covered for confirmed end-stage renal disease."
+  },
+  {
+    "policy_id": "POL-DERM-BIO-PSO-051",
+    "title": "Biologic Therapy for Plaque Psoriasis Policy",
+    "specialty": "dermatology",
+    "procedure_keywords": [
+      "biologic therapy",
+      "il-23 inhibitor",
+      "ustekinumab"
+    ],
+    "diagnosis_keywords": [
+      "plaque psoriasis",
+      "psoriasis vulgaris"
+    ],
+    "criteria": [
+      {
+        "id": "severity_documented",
+        "description": "Moderate to severe plaque psoriasis documented",
+        "check": "severity_keywords",
+        "value": [
+          "severe",
+          "moderate"
+        ]
+      },
+      {
+        "id": "failed_conservative_12wk",
+        "description": "Topical therapy failed for at least 12 weeks",
+        "check": "min_conservative_weeks",
+        "value": 12
+      }
+    ],
+    "policy_text": "Biologic therapy for plaque psoriasis is covered when moderate-to-severe disease is documented and topical therapy has failed for 12 weeks."
+  },
+  {
+    "policy_id": "POL-DERM-MOHS-052",
+    "title": "Mohs Micrographic Surgery Policy",
+    "specialty": "dermatology",
+    "procedure_keywords": [
+      "mohs surgery",
+      "mohs micrographic surgery"
+    ],
+    "diagnosis_keywords": [
+      "basal cell carcinoma",
+      "squamous cell carcinoma",
+      "skin cancer"
+    ],
+    "criteria": [
+      {
+        "id": "imaging_confirms",
+        "description": "Biopsy confirms malignancy",
+        "check": "imaging_required",
+        "value": true
+      }
+    ],
+    "policy_text": "Mohs micrographic surgery is covered when biopsy confirms basal cell or squamous cell carcinoma in a cosmetically or functionally sensitive area."
+  },
+  {
+    "policy_id": "POL-DERM-BIO-HS-053",
+    "title": "Biologic Therapy for Hidradenitis Suppurativa Policy",
+    "specialty": "dermatology",
+    "procedure_keywords": [
+      "biologic therapy",
+      "adalimumab for hidradenitis"
+    ],
+    "diagnosis_keywords": [
+      "hidradenitis suppurativa"
+    ],
+    "criteria": [
+      {
+        "id": "severity_documented",
+        "description": "Moderate to severe hidradenitis suppurativa documented",
+        "check": "severity_keywords",
+        "value": [
+          "severe",
+          "moderate"
+        ]
+      },
+      {
+        "id": "failed_conservative_12wk",
+        "description": "Oral antibiotic therapy failed for at least 12 weeks",
+        "check": "min_conservative_weeks",
+        "value": 12
+      }
+    ],
+    "policy_text": "Biologic therapy for hidradenitis suppurativa is covered when moderate-to-severe disease is documented and oral antibiotics have failed for 12 weeks."
+  },
+  {
+    "policy_id": "POL-DERM-PHOTO-054",
+    "title": "Phototherapy Policy",
+    "specialty": "dermatology",
+    "procedure_keywords": [
+      "phototherapy",
+      "uvb phototherapy"
+    ],
+    "diagnosis_keywords": [
+      "plaque psoriasis",
+      "atopic dermatitis",
+      "eczema"
+    ],
+    "criteria": [
+      {
+        "id": "failed_conservative_8wk",
+        "description": "Topical therapy failed for at least 8 weeks",
+        "check": "min_conservative_weeks",
+        "value": 8
+      }
+    ],
+    "policy_text": "Phototherapy is covered when topical therapy has failed for at least 8 weeks."
+  },
+  {
+    "policy_id": "POL-URO-BPH-055",
+    "title": "Minimally Invasive BPH Procedure Policy",
+    "specialty": "urology",
+    "procedure_keywords": [
+      "turp",
+      "prostate artery embolization",
+      "bph procedure"
+    ],
+    "diagnosis_keywords": [
+      "benign prostatic hyperplasia",
+      "bph"
+    ],
+    "criteria": [
+      {
+        "id": "severity_documented",
+        "description": "Moderate to severe lower urinary tract symptoms documented",
+        "check": "severity_keywords",
+        "value": [
+          "severe",
+          "moderate"
+        ]
+      },
+      {
+        "id": "failed_conservative_12wk",
+        "description": "Alpha-blocker therapy failed for at least 12 weeks",
+        "check": "min_conservative_weeks",
+        "value": 12
+      }
+    ],
+    "policy_text": "Minimally invasive BPH procedures are covered when moderate-to-severe symptoms persist after 12 weeks of alpha-blocker therapy."
+  },
+  {
+    "policy_id": "POL-URO-STONE-056",
+    "title": "Nephrolithotomy for Kidney Stones Policy",
+    "specialty": "urology",
+    "procedure_keywords": [
+      "nephrolithotomy",
+      "lithotripsy",
+      "ureteroscopy"
+    ],
+    "diagnosis_keywords": [
+      "kidney stone",
+      "renal calculus",
+      "ureteral stone"
+    ],
+    "criteria": [
+      {
+        "id": "imaging_confirms",
+        "description": "Imaging confirms stone size and location",
+        "check": "imaging_required",
+        "value": true
+      }
+    ],
+    "policy_text": "Surgical stone removal is covered when imaging confirms a stone unlikely to pass spontaneously."
+  },
+  {
+    "policy_id": "POL-URO-PROSTHESIS-057",
+    "title": "Penile Prosthesis Policy",
+    "specialty": "urology",
+    "procedure_keywords": [
+      "penile prosthesis",
+      "penile implant"
+    ],
+    "diagnosis_keywords": [
+      "erectile dysfunction"
+    ],
+    "criteria": [
+      {
+        "id": "failed_conservative_12wk",
+        "description": "Oral and injection therapy failed for at least 12 weeks",
+        "check": "min_conservative_weeks",
+        "value": 12
+      }
+    ],
+    "policy_text": "Penile prosthesis placement is covered when oral and injection therapy have failed for at least 12 weeks."
+  },
+  {
+    "policy_id": "POL-URO-SACRAL-058",
+    "title": "Sacral Nerve Stimulation for Incontinence Policy",
+    "specialty": "urology",
+    "procedure_keywords": [
+      "sacral nerve stimulation",
+      "sacral neuromodulation"
+    ],
+    "diagnosis_keywords": [
+      "overactive bladder",
+      "urinary incontinence"
+    ],
+    "criteria": [
+      {
+        "id": "failed_conservative_12wk",
+        "description": "Behavioral and medication therapy failed for at least 12 weeks",
+        "check": "min_conservative_weeks",
+        "value": 12
+      }
+    ],
+    "policy_text": "Sacral nerve stimulation is covered when behavioral and medication therapy have failed for at least 12 weeks."
+  },
+  {
+    "policy_id": "POL-PSYCH-TMS-059",
+    "title": "Transcranial Magnetic Stimulation Policy",
+    "specialty": "psychiatry",
+    "procedure_keywords": [
+      "transcranial magnetic stimulation",
+      "tms therapy"
+    ],
+    "diagnosis_keywords": [
+      "major depressive disorder",
+      "treatment-resistant depression"
+    ],
+    "criteria": [
+      {
+        "id": "severity_documented",
+        "description": "Treatment-resistant major depression documented",
+        "check": "severity_keywords",
+        "value": [
+          "treatment-resistant",
+          "severe",
+          "refractory"
+        ]
+      },
+      {
+        "id": "failed_conservative_12wk",
+        "description": "At least two antidepressant trials of 12 weeks each",
+        "check": "min_conservative_weeks",
+        "value": 12
+      }
+    ],
+    "policy_text": "TMS therapy is covered for treatment-resistant major depressive disorder after failure of at least two adequate antidepressant trials."
+  },
+  {
+    "policy_id": "POL-PSYCH-ECT-060",
+    "title": "Electroconvulsive Therapy Policy",
+    "specialty": "psychiatry",
+    "procedure_keywords": [
+      "electroconvulsive therapy",
+      "ect"
+    ],
+    "diagnosis_keywords": [
+      "severe major depressive disorder",
+      "treatment-resistant depression",
+      "catatonia"
+    ],
+    "criteria": [
+      {
+        "id": "severity_documented",
+        "description": "Severe, treatment-resistant, or life-threatening presentation",
+        "check": "severity_keywords",
+        "value": [
+          "severe",
+          "treatment-resistant",
+          "refractory"
+        ]
+      }
+    ],
+    "policy_text": "Electroconvulsive therapy is covered for severe, treatment-resistant psychiatric presentations."
+  },
+  {
+    "policy_id": "POL-PSYCH-INPT-061",
+    "title": "Inpatient Psychiatric Admission Policy",
+    "specialty": "psychiatry",
+    "procedure_keywords": [
+      "inpatient psychiatric admission",
+      "psychiatric hospitalization"
+    ],
+    "diagnosis_keywords": [
+      "major depressive disorder",
+      "schizophrenia",
+      "bipolar disorder",
+      "suicidal ideation"
+    ],
+    "criteria": [
+      {
+        "id": "severity_documented",
+        "description": "Acute severe psychiatric crisis documented",
+        "check": "severity_keywords",
+        "value": [
+          "severe",
+          "acute",
+          "life-threatening"
+        ]
+      }
+    ],
+    "policy_text": "Inpatient psychiatric admission is covered when an acute, severe psychiatric crisis is documented."
+  },
+  {
+    "policy_id": "POL-PSYCH-ESKETAMINE-062",
+    "title": "Esketamine Therapy Policy",
+    "specialty": "psychiatry",
+    "procedure_keywords": [
+      "esketamine therapy",
+      "ketamine therapy"
+    ],
+    "diagnosis_keywords": [
+      "treatment-resistant depression"
+    ],
+    "criteria": [
+      {
+        "id": "severity_documented",
+        "description": "Treatment-resistant depression documented",
+        "check": "severity_keywords",
+        "value": [
+          "treatment-resistant",
+          "refractory"
+        ]
+      },
+      {
+        "id": "failed_conservative_12wk",
+        "description": "At least two antidepressant trials of 12 weeks each",
+        "check": "min_conservative_weeks",
+        "value": 12
+      }
+    ],
+    "policy_text": "Esketamine therapy is covered for treatment-resistant depression after failure of at least two adequate antidepressant trials."
+  },
+  {
+    "policy_id": "POL-ENT-COCHLEAR-063",
+    "title": "Cochlear Implant Policy",
+    "specialty": "ent",
+    "procedure_keywords": [
+      "cochlear implant"
+    ],
+    "diagnosis_keywords": [
+      "sensorineural hearing loss",
+      "bilateral hearing loss"
+    ],
+    "criteria": [
+      {
+        "id": "severity_documented",
+        "description": "Severe to profound hearing loss documented",
+        "check": "severity_keywords",
+        "value": [
+          "severe",
+          "profound"
+        ]
+      },
+      {
+        "id": "imaging_confirms",
+        "description": "Audiometric testing confirms hearing loss level",
+        "check": "imaging_required",
+        "value": true
+      }
+    ],
+    "policy_text": "Cochlear implantation is covered when audiometric testing confirms severe-to-profound sensorineural hearing loss with inadequate benefit from hearing aids."
+  },
+  {
+    "policy_id": "POL-ENT-TONSIL-064",
+    "title": "Tonsillectomy Policy",
+    "specialty": "ent",
+    "procedure_keywords": [
+      "tonsillectomy"
+    ],
+    "diagnosis_keywords": [
+      "chronic tonsillitis",
+      "obstructive sleep apnea"
+    ],
+    "criteria": [
+      {
+        "id": "severity_documented",
+        "description": "Recurrent or chronic tonsillitis documented",
+        "check": "severity_keywords",
+        "value": [
+          "chronic",
+          "recurrent"
+        ]
+      }
+    ],
+    "policy_text": "Tonsillectomy is covered for documented chronic or recurrent tonsillitis, or airway obstruction."
+  },
+  {
+    "policy_id": "POL-ENT-SINUS-065",
+    "title": "Functional Endoscopic Sinus Surgery Policy",
+    "specialty": "ent",
+    "procedure_keywords": [
+      "functional endoscopic sinus surgery",
+      "fess",
+      "sinus surgery"
+    ],
+    "diagnosis_keywords": [
+      "chronic sinusitis",
+      "nasal polyps"
+    ],
+    "criteria": [
+      {
+        "id": "failed_conservative_12wk",
+        "description": "Medical therapy (antibiotics/steroids) failed for at least 12 weeks",
+        "check": "min_conservative_weeks",
+        "value": 12
+      },
+      {
+        "id": "imaging_confirms",
+        "description": "CT imaging confirms sinus disease",
+        "check": "imaging_required",
+        "value": true
+      }
+    ],
+    "policy_text": "Sinus surgery is covered when medical therapy has failed for 12 weeks and CT imaging confirms chronic sinus disease."
+  },
+  {
+    "policy_id": "POL-OPHTH-ANTIVEGF-066",
+    "title": "Anti-VEGF Injection for Macular Degeneration Policy",
+    "specialty": "ophthalmology",
+    "procedure_keywords": [
+      "anti-vegf injection",
+      "intravitreal injection"
+    ],
+    "diagnosis_keywords": [
+      "macular degeneration",
+      "diabetic retinopathy"
+    ],
+    "criteria": [
+      {
+        "id": "imaging_confirms",
+        "description": "Retinal imaging confirms neovascularization or edema",
+        "check": "imaging_required",
+        "value": true
+      }
+    ],
+    "policy_text": "Anti-VEGF injections are covered when retinal imaging confirms active neovascular disease or macular edema."
+  },
+  {
+    "policy_id": "POL-OPHTH-CATARACT-067",
+    "title": "Cataract Surgery Policy",
+    "specialty": "ophthalmology",
+    "procedure_keywords": [
+      "cataract surgery",
+      "cataract extraction"
+    ],
+    "diagnosis_keywords": [
+      "cataract"
+    ],
+    "criteria": [
+      {
+        "id": "severity_documented",
+        "description": "Visually significant cataract documented",
+        "check": "severity_keywords",
+        "value": [
+          "significant",
+          "advanced",
+          "severe"
+        ]
+      }
+    ],
+    "policy_text": "Cataract surgery is covered when a visually significant cataract is documented and impairs daily function."
+  },
+  {
+    "policy_id": "POL-OPHTH-GLAUCOMA-068",
+    "title": "Glaucoma Surgery Policy",
+    "specialty": "ophthalmology",
+    "procedure_keywords": [
+      "glaucoma surgery",
+      "trabeculectomy"
+    ],
+    "diagnosis_keywords": [
+      "glaucoma"
+    ],
+    "criteria": [
+      {
+        "id": "failed_conservative_12wk",
+        "description": "Medical therapy (eye drops) failed for at least 12 weeks",
+        "check": "min_conservative_weeks",
+        "value": 12
+      },
+      {
+        "id": "imaging_confirms",
+        "description": "Visual field/optic nerve imaging confirms progression",
+        "check": "imaging_required",
+        "value": true
+      }
+    ],
+    "policy_text": "Glaucoma surgery is covered when medical therapy has failed for 12 weeks and imaging confirms disease progression."
+  },
+  {
+    "policy_id": "POL-ID-OPAT-069",
+    "title": "Outpatient Parenteral Antibiotic Therapy Policy",
+    "specialty": "infectious_disease",
+    "procedure_keywords": [
+      "outpatient parenteral antibiotic therapy",
+      "opat",
+      "iv antibiotics"
+    ],
+    "diagnosis_keywords": [
+      "osteomyelitis",
+      "sepsis",
+      "chronic infection"
+    ],
+    "criteria": [
+      {
+        "id": "severity_documented",
+        "description": "Severe or deep-seated infection documented",
+        "check": "severity_keywords",
+        "value": [
+          "severe",
+          "chronic"
+        ]
+      },
+      {
+        "id": "imaging_confirms",
+        "description": "Imaging or cultures confirm infection source",
+        "check": "imaging_required",
+        "value": true
+      }
+    ],
+    "policy_text": "Outpatient IV antibiotic therapy is covered when a severe or deep-seated infection is confirmed by imaging or cultures."
+  },
+  {
+    "policy_id": "POL-ID-HIVPREP-070",
+    "title": "HIV Biologic/PrEP Therapy Policy",
+    "specialty": "infectious_disease",
+    "procedure_keywords": [
+      "antiretroviral therapy",
+      "hiv biologic therapy"
+    ],
+    "diagnosis_keywords": [
+      "hiv",
+      "human immunodeficiency virus"
+    ],
+    "criteria": [
+      {
+        "id": "imaging_confirms",
+        "description": "Laboratory testing confirms HIV status/viral load",
+        "check": "imaging_required",
+        "value": true
+      }
+    ],
+    "policy_text": "Antiretroviral therapy is covered when laboratory testing confirms HIV infection or viral load requiring treatment."
   }
 ]

@@ -18,6 +18,7 @@ from prior_auth.agents.icd_coder import ICDCoderAgent
 from prior_auth.agents.insurance import InsuranceCompanyAgent
 from prior_auth.agents.policy_rag import PolicyRAGAgent
 from prior_auth.audit.trace_logger import make_event, save_trace
+from prior_auth.orchestration.extraction_gate import extraction_review_reason
 from prior_auth.orchestration.hitl_queue import HITLQueue
 from prior_auth.schemas.case import PriorAuthCase
 from prior_auth.schemas.common import HandoffStatus, Laterality, WorkflowStatus
@@ -64,6 +65,15 @@ class PriorAuthWorkflow:
 
         case.clinical_facts = handoff.payload
         facts = case.clinical_facts
+
+        # --- Extraction-quality gate (independent of the ICD confidence gate below) ---
+        review_reason = extraction_review_reason(facts)
+        if review_reason:
+            self.hitl_queue.enqueue(
+                case_id, review_reason, WorkflowStatus.SUSPENDED_EXTRACTION_REVIEW.value, _now(),
+                context={"extraction_confidence": facts.extraction_confidence},
+            )
+            return self._finalize(case, trace, WorkflowStatus.SUSPENDED_EXTRACTION_REVIEW, [review_reason], persist_trace)
 
         # --- Laterality-conflict business rule (independent of the ICD confidence gate) ---
         if (

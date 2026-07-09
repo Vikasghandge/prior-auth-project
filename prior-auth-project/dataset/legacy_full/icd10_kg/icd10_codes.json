@@ -1247,5 +1247,2397 @@
       "fluid in lungs"
     ],
     "rare_disease": false
+  },
+  {
+    "code": "M75.30",
+    "category": "M75",
+    "description": "Calcific tendinitis of shoulder, unspecified",
+    "specialty": "orthopedics",
+    "laterality": "not_applicable",
+    "keywords": [
+      "calcific tendinitis",
+      "shoulder tendinitis"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "M75.40",
+    "category": "M75",
+    "description": "Impingement syndrome of shoulder, unspecified",
+    "specialty": "orthopedics",
+    "laterality": "not_applicable",
+    "keywords": [
+      "shoulder impingement",
+      "impingement syndrome"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "M24.571",
+    "category": "M24",
+    "description": "Contracture, right ankle",
+    "specialty": "orthopedics",
+    "laterality": "right",
+    "keywords": [
+      "ankle contracture",
+      "right ankle"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "M24.572",
+    "category": "M24",
+    "description": "Contracture, left ankle",
+    "specialty": "orthopedics",
+    "laterality": "left",
+    "keywords": [
+      "ankle contracture",
+      "left ankle"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "M23.50",
+    "category": "M23",
+    "description": "Chronic instability of knee, unspecified",
+    "specialty": "orthopedics",
+    "laterality": "not_applicable",
+    "keywords": [
+      "knee instability",
+      "chronic knee instability"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "M65.9",
+    "category": "M65",
+    "description": "Synovitis and tenosynovitis, unspecified",
+    "specialty": "orthopedics",
+    "laterality": "not_applicable",
+    "keywords": [
+      "synovitis",
+      "tenosynovitis"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "M77.10",
+    "category": "M77",
+    "description": "Lateral epicondylitis, unspecified elbow",
+    "specialty": "orthopedics",
+    "laterality": "not_applicable",
+    "keywords": [
+      "tennis elbow",
+      "lateral epicondylitis"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "M77.00",
+    "category": "M77",
+    "description": "Medial epicondylitis, unspecified elbow",
+    "specialty": "orthopedics",
+    "laterality": "not_applicable",
+    "keywords": [
+      "golfer's elbow",
+      "medial epicondylitis"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "M43.16",
+    "category": "M43",
+    "description": "Spondylolisthesis, lumbar region",
+    "specialty": "orthopedics",
+    "laterality": "not_applicable",
+    "keywords": [
+      "spondylolisthesis",
+      "lumbar instability"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "M48.06",
+    "category": "M48",
+    "description": "Spinal stenosis, lumbar region",
+    "specialty": "orthopedics",
+    "laterality": "not_applicable",
+    "keywords": [
+      "lumbar spinal stenosis",
+      "spinal stenosis"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "S82.001A",
+    "category": "S82",
+    "description": "Fracture of right patella, initial encounter",
+    "specialty": "orthopedics",
+    "laterality": "right",
+    "keywords": [
+      "patella fracture",
+      "right knee fracture"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "S82.002A",
+    "category": "S82",
+    "description": "Fracture of left patella, initial encounter",
+    "specialty": "orthopedics",
+    "laterality": "left",
+    "keywords": [
+      "patella fracture",
+      "left knee fracture"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "S42.001A",
+    "category": "S42",
+    "description": "Fracture of right clavicle, initial encounter",
+    "specialty": "orthopedics",
+    "laterality": "right",
+    "keywords": [
+      "clavicle fracture",
+      "right shoulder fracture"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "S42.002A",
+    "category": "S42",
+    "description": "Fracture of left clavicle, initial encounter",
+    "specialty": "orthopedics",
+    "laterality": "left",
+    "keywords": [
+      "clavicle fracture",
+      "left shoulder fracture"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "M20.111",
+    "category": "M20",
+    "description": "Hallux valgus (bunion), right foot",
+    "specialty": "orthopedics",
+    "laterality": "right",
+    "keywords": [
+      "bunion",
+      "hallux valgus",
+      "right foot"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "M20.112",
+    "category": "M20",
+    "description": "Hallux valgus (bunion), left foot",
+    "specialty": "orthopedics",
+    "laterality": "left",
+    "keywords": [
+      "bunion",
+      "hallux valgus",
+      "left foot"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "M72.2",
+    "category": "M72",
+    "description": "Plantar fascial fibromatosis",
+    "specialty": "orthopedics",
+    "laterality": "not_applicable",
+    "keywords": [
+      "plantar fasciitis",
+      "heel pain"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "M76.61",
+    "category": "M76",
+    "description": "Achilles tendinitis, right leg",
+    "specialty": "orthopedics",
+    "laterality": "right",
+    "keywords": [
+      "achilles tendinitis",
+      "right heel"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "M76.62",
+    "category": "M76",
+    "description": "Achilles tendinitis, left leg",
+    "specialty": "orthopedics",
+    "laterality": "left",
+    "keywords": [
+      "achilles tendinitis",
+      "left heel"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "M19.90",
+    "category": "M19",
+    "description": "Osteoarthritis, unspecified site",
+    "specialty": "orthopedics",
+    "laterality": "not_applicable",
+    "keywords": [
+      "generalized osteoarthritis",
+      "osteoarthritis unspecified"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "I08.0",
+    "category": "I08",
+    "description": "Rheumatic mitral and aortic valve disease",
+    "specialty": "cardiology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "rheumatic valve disease",
+      "mitral and aortic valve disease"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "I34.1",
+    "category": "I34",
+    "description": "Nonrheumatic mitral valve prolapse",
+    "specialty": "cardiology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "mitral valve prolapse",
+      "mvp"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "I36.1",
+    "category": "I36",
+    "description": "Nonrheumatic tricuspid valve insufficiency",
+    "specialty": "cardiology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "tricuspid regurgitation",
+      "tricuspid insufficiency"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "I44.2",
+    "category": "I44",
+    "description": "Atrioventricular block, complete",
+    "specialty": "cardiology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "complete heart block",
+      "av block"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "I45.10",
+    "category": "I45",
+    "description": "Right bundle branch block, unspecified",
+    "specialty": "cardiology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "bundle branch block",
+      "rbbb"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "I47.1",
+    "category": "I47",
+    "description": "Supraventricular tachycardia",
+    "specialty": "cardiology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "svt",
+      "supraventricular tachycardia"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "I47.2",
+    "category": "I47",
+    "description": "Ventricular tachycardia",
+    "specialty": "cardiology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "ventricular tachycardia",
+      "vtach"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "I49.02",
+    "category": "I49",
+    "description": "Ventricular fibrillation",
+    "specialty": "cardiology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "ventricular fibrillation",
+      "vfib"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "I50.9",
+    "category": "I50",
+    "description": "Heart failure, unspecified",
+    "specialty": "cardiology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "heart failure",
+      "congestive heart failure"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "I50.42",
+    "category": "I50",
+    "description": "Chronic combined systolic and diastolic heart failure",
+    "specialty": "cardiology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "combined heart failure",
+      "systolic and diastolic heart failure"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "I70.203",
+    "category": "I70",
+    "description": "Atherosclerosis of native arteries of extremities with rest pain, bilateral legs",
+    "specialty": "cardiology",
+    "laterality": "bilateral",
+    "keywords": [
+      "peripheral artery disease",
+      "atherosclerosis",
+      "rest pain"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "I71.4",
+    "category": "I71",
+    "description": "Abdominal aortic aneurysm, without rupture",
+    "specialty": "cardiology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "abdominal aortic aneurysm",
+      "aaa"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "I77.1",
+    "category": "I77",
+    "description": "Stricture of artery",
+    "specialty": "cardiology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "arterial stenosis",
+      "renal artery stenosis"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "I27.0",
+    "category": "I27",
+    "description": "Primary pulmonary hypertension",
+    "specialty": "cardiology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "pulmonary hypertension",
+      "primary pulmonary hypertension"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "C43.9",
+    "category": "C43",
+    "description": "Malignant melanoma, unspecified",
+    "specialty": "oncology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "melanoma",
+      "malignant melanoma"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "C44.91",
+    "category": "C44",
+    "description": "Basal cell carcinoma of skin, unspecified",
+    "specialty": "oncology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "basal cell carcinoma",
+      "skin cancer"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "C67.9",
+    "category": "C67",
+    "description": "Malignant neoplasm of bladder, unspecified",
+    "specialty": "oncology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "bladder cancer"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "C73",
+    "category": "C73",
+    "description": "Malignant neoplasm of thyroid gland",
+    "specialty": "oncology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "thyroid cancer"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "C16.9",
+    "category": "C16",
+    "description": "Malignant neoplasm of stomach, unspecified",
+    "specialty": "oncology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "stomach cancer",
+      "gastric cancer"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "C15.9",
+    "category": "C15",
+    "description": "Malignant neoplasm of esophagus, unspecified",
+    "specialty": "oncology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "esophageal cancer"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "C22.0",
+    "category": "C22",
+    "description": "Liver cell carcinoma",
+    "specialty": "oncology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "hepatocellular carcinoma",
+      "liver cancer"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "C53.9",
+    "category": "C53",
+    "description": "Malignant neoplasm of cervix uteri, unspecified",
+    "specialty": "oncology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "cervical cancer"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "C54.1",
+    "category": "C54",
+    "description": "Malignant neoplasm of endometrium",
+    "specialty": "oncology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "endometrial cancer",
+      "uterine cancer"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "C62.90",
+    "category": "C62",
+    "description": "Malignant neoplasm of testis, unspecified",
+    "specialty": "oncology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "testicular cancer"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "C81.90",
+    "category": "C81",
+    "description": "Hodgkin lymphoma, unspecified",
+    "specialty": "oncology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "hodgkin lymphoma",
+      "hodgkin's disease"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "C92.00",
+    "category": "C92",
+    "description": "Acute myeloid leukemia, not having achieved remission",
+    "specialty": "oncology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "acute myeloid leukemia",
+      "aml"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "C91.10",
+    "category": "C91",
+    "description": "Chronic lymphocytic leukemia",
+    "specialty": "oncology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "chronic lymphocytic leukemia",
+      "cll"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "C95.90",
+    "category": "C95",
+    "description": "Leukemia, unspecified",
+    "specialty": "oncology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "leukemia unspecified"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "D46.9",
+    "category": "D46",
+    "description": "Myelodysplastic syndrome, unspecified",
+    "specialty": "oncology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "myelodysplastic syndrome",
+      "mds"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "C79.51",
+    "category": "C79",
+    "description": "Secondary malignant neoplasm of bone",
+    "specialty": "oncology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "metastatic bone cancer",
+      "bone metastasis"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "C79.31",
+    "category": "C79",
+    "description": "Secondary malignant neoplasm of brain",
+    "specialty": "oncology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "brain metastasis",
+      "metastatic brain cancer"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "C80.1",
+    "category": "C80",
+    "description": "Malignant neoplasm, unspecified (cancer of unknown primary)",
+    "specialty": "oncology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "cancer of unknown primary",
+      "malignant neoplasm unspecified"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "G61.0",
+    "category": "G61",
+    "description": "Guillain-Barre syndrome",
+    "specialty": "neurology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "guillain-barre syndrome",
+      "acute inflammatory polyneuropathy"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "G62.9",
+    "category": "G62",
+    "description": "Polyneuropathy, unspecified",
+    "specialty": "neurology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "polyneuropathy",
+      "peripheral neuropathy"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "G51.0",
+    "category": "G51",
+    "description": "Bell's palsy",
+    "specialty": "neurology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "bell's palsy",
+      "facial nerve palsy"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "G24.9",
+    "category": "G24",
+    "description": "Dystonia, unspecified",
+    "specialty": "neurology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "dystonia"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "G25.0",
+    "category": "G25",
+    "description": "Essential tremor",
+    "specialty": "neurology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "essential tremor"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "G31.83",
+    "category": "G31",
+    "description": "Dementia with Lewy bodies",
+    "specialty": "neurology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "lewy body dementia",
+      "dementia with lewy bodies"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "G31.9",
+    "category": "G31",
+    "description": "Degenerative disease of nervous system, unspecified",
+    "specialty": "neurology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "neurodegenerative disease"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "G81.90",
+    "category": "G81",
+    "description": "Hemiplegia, unspecified affecting unspecified side",
+    "specialty": "neurology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "hemiplegia",
+      "post-stroke paralysis"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "G82.20",
+    "category": "G82",
+    "description": "Paraplegia, unspecified",
+    "specialty": "neurology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "paraplegia"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "G44.1",
+    "category": "G44",
+    "description": "Vascular headache, not elsewhere classified",
+    "specialty": "neurology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "vascular headache",
+      "cluster headache"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "G40.301",
+    "category": "G40",
+    "description": "Generalized idiopathic epilepsy, intractable",
+    "specialty": "neurology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "intractable epilepsy",
+      "refractory epilepsy"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "G36.0",
+    "category": "G36",
+    "description": "Neuromyelitis optica (Devic disease)",
+    "specialty": "neurology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "neuromyelitis optica",
+      "devic disease"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "G23.1",
+    "category": "G23",
+    "description": "Progressive supranuclear palsy",
+    "specialty": "neurology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "progressive supranuclear palsy"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "K90.0",
+    "category": "K90",
+    "description": "Celiac disease",
+    "specialty": "gastroenterology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "celiac disease",
+      "gluten enteropathy"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "K58.9",
+    "category": "K58",
+    "description": "Irritable bowel syndrome, unspecified",
+    "specialty": "gastroenterology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "irritable bowel syndrome",
+      "ibs"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "K22.70",
+    "category": "K22",
+    "description": "Barrett's esophagus without dysplasia",
+    "specialty": "gastroenterology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "barrett's esophagus"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "K44.9",
+    "category": "K44",
+    "description": "Diaphragmatic hernia without obstruction or gangrene",
+    "specialty": "gastroenterology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "hiatal hernia",
+      "diaphragmatic hernia"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "K92.2",
+    "category": "K92",
+    "description": "Gastrointestinal hemorrhage, unspecified",
+    "specialty": "gastroenterology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "gi bleed",
+      "gastrointestinal hemorrhage"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "K56.609",
+    "category": "K56",
+    "description": "Unspecified intestinal obstruction",
+    "specialty": "gastroenterology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "intestinal obstruction",
+      "bowel obstruction"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "K63.5",
+    "category": "K63",
+    "description": "Polyp of colon",
+    "specialty": "gastroenterology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "colon polyp"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "K35.80",
+    "category": "K35",
+    "description": "Unspecified acute appendicitis",
+    "specialty": "gastroenterology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "appendicitis"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "K70.30",
+    "category": "K70",
+    "description": "Alcoholic cirrhosis of liver without ascites",
+    "specialty": "gastroenterology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "alcoholic cirrhosis"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "K72.90",
+    "category": "K72",
+    "description": "Hepatic failure, unspecified, without coma",
+    "specialty": "gastroenterology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "hepatic failure",
+      "liver failure"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "K75.4",
+    "category": "K75",
+    "description": "Autoimmune hepatitis",
+    "specialty": "gastroenterology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "autoimmune hepatitis"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "K86.1",
+    "category": "K86",
+    "description": "Other chronic pancreatitis",
+    "specialty": "gastroenterology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "chronic pancreatitis"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "K91.2",
+    "category": "K91",
+    "description": "Postsurgical malabsorption, not elsewhere classified",
+    "specialty": "gastroenterology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "postsurgical malabsorption"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "K59.00",
+    "category": "K59",
+    "description": "Constipation, unspecified",
+    "specialty": "gastroenterology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "chronic constipation"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "B18.2",
+    "category": "B18",
+    "description": "Chronic viral hepatitis C",
+    "specialty": "gastroenterology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "hepatitis c",
+      "chronic hepatitis c"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "E75.02",
+    "category": "E75",
+    "description": "Tay-Sachs disease",
+    "specialty": "rare_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "tay-sachs disease",
+      "gm2 gangliosidosis"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "E75.23",
+    "category": "E75",
+    "description": "Niemann-Pick disease",
+    "specialty": "rare_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "niemann-pick disease"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "E76.01",
+    "category": "E76",
+    "description": "Hurler syndrome (MPS I)",
+    "specialty": "rare_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "hurler syndrome",
+      "mucopolysaccharidosis type 1"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "E76.1",
+    "category": "E76",
+    "description": "Hunter syndrome (MPS II)",
+    "specialty": "rare_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "hunter syndrome",
+      "mucopolysaccharidosis type 2"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "E70.330",
+    "category": "E70",
+    "description": "Ocular albinism",
+    "specialty": "rare_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "ocular albinism"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "E71.310",
+    "category": "E71",
+    "description": "Adrenoleukodystrophy",
+    "specialty": "rare_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "adrenoleukodystrophy",
+      "ald"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "E80.21",
+    "category": "E80",
+    "description": "Acute intermittent porphyria",
+    "specialty": "rare_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "acute intermittent porphyria",
+      "porphyria"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "E88.02",
+    "category": "E88",
+    "description": "Alpha-1 antitrypsin deficiency",
+    "specialty": "rare_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "alpha-1 antitrypsin deficiency"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "E23.2",
+    "category": "E23",
+    "description": "Diabetes insipidus",
+    "specialty": "rare_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "diabetes insipidus",
+      "central diabetes insipidus"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "Q87.40",
+    "category": "Q87",
+    "description": "Marfan syndrome, unspecified",
+    "specialty": "rare_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "marfan syndrome"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "Q78.0",
+    "category": "Q78",
+    "description": "Osteogenesis imperfecta",
+    "specialty": "rare_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "osteogenesis imperfecta",
+      "brittle bone disease"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "Q90.9",
+    "category": "Q90",
+    "description": "Down syndrome, unspecified",
+    "specialty": "rare_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "down syndrome",
+      "trisomy 21"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "Q96.9",
+    "category": "Q96",
+    "description": "Turner's syndrome, unspecified",
+    "specialty": "rare_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "turner syndrome",
+      "turner's syndrome"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "D57.1",
+    "category": "D57",
+    "description": "Sickle cell disease without crisis",
+    "specialty": "rare_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "sickle cell disease",
+      "sickle cell anemia"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "D66",
+    "category": "D66",
+    "description": "Hereditary factor VIII deficiency",
+    "specialty": "rare_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "hemophilia a",
+      "factor viii deficiency"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "D68.0",
+    "category": "D68",
+    "description": "Von Willebrand's disease",
+    "specialty": "rare_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "von willebrand disease"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "D84.1",
+    "category": "D84",
+    "description": "Defects in the complement system",
+    "specialty": "rare_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "complement deficiency"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "D86.9",
+    "category": "D86",
+    "description": "Sarcoidosis, unspecified",
+    "specialty": "rare_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "sarcoidosis"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "G71.11",
+    "category": "G71",
+    "description": "Myotonic dystrophy",
+    "specialty": "rare_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "myotonic dystrophy"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "G71.09",
+    "category": "G71",
+    "description": "Other specified muscular dystrophies",
+    "specialty": "rare_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "limb-girdle muscular dystrophy",
+      "muscular dystrophy"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "E84.0",
+    "category": "E84",
+    "description": "Cystic fibrosis with pulmonary manifestations",
+    "specialty": "rare_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "cystic fibrosis",
+      "pulmonary cystic fibrosis"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "G12.0",
+    "category": "G12",
+    "description": "Infantile spinal muscular atrophy, type I",
+    "specialty": "rare_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "spinal muscular atrophy",
+      "werdnig-hoffman disease"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "E22.0",
+    "category": "E22",
+    "description": "Acromegaly and pituitary gigantism",
+    "specialty": "rare_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "acromegaly",
+      "pituitary gigantism"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "K74.3",
+    "category": "K74",
+    "description": "Primary biliary cholangitis",
+    "specialty": "rare_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "primary biliary cholangitis",
+      "primary biliary cirrhosis"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "M08.00",
+    "category": "M08",
+    "description": "Juvenile rheumatoid arthritis, unspecified site",
+    "specialty": "rare_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "juvenile rheumatoid arthritis",
+      "juvenile idiopathic arthritis"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "D61.9",
+    "category": "D61",
+    "description": "Aplastic anemia, unspecified",
+    "specialty": "rare_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "aplastic anemia"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "J43.9",
+    "category": "J43",
+    "description": "Emphysema, unspecified",
+    "specialty": "pulmonology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "emphysema"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "J47.9",
+    "category": "J47",
+    "description": "Bronchiectasis, uncomplicated",
+    "specialty": "pulmonology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "bronchiectasis"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "J96.10",
+    "category": "J96",
+    "description": "Chronic respiratory failure, unspecified",
+    "specialty": "pulmonology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "chronic respiratory failure"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "G47.30",
+    "category": "G47",
+    "description": "Sleep apnea, unspecified",
+    "specialty": "pulmonology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "sleep apnea"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "J41.0",
+    "category": "J41",
+    "description": "Simple chronic bronchitis",
+    "specialty": "pulmonology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "chronic bronchitis"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "J82",
+    "category": "J82",
+    "description": "Pulmonary eosinophilia, not elsewhere classified",
+    "specialty": "pulmonology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "eosinophilic asthma",
+      "pulmonary eosinophilia"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "J95.851",
+    "category": "J95",
+    "description": "Ventilator associated pneumonia",
+    "specialty": "pulmonology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "ventilator associated pneumonia"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "J91.8",
+    "category": "J91",
+    "description": "Pleural effusion in other conditions classified elsewhere",
+    "specialty": "pulmonology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "malignant pleural effusion"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "A15.0",
+    "category": "A15",
+    "description": "Tuberculosis of lung",
+    "specialty": "pulmonology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "pulmonary tuberculosis",
+      "tb"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "J68.4",
+    "category": "J68",
+    "description": "Chronic respiratory conditions due to chemicals, gases, fumes and vapors",
+    "specialty": "pulmonology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "occupational lung disease"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "J84.10",
+    "category": "J84",
+    "description": "Pulmonary fibrosis, unspecified",
+    "specialty": "pulmonology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "pulmonary fibrosis"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "J45.50",
+    "category": "J45",
+    "description": "Severe persistent asthma, uncomplicated",
+    "specialty": "pulmonology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "severe persistent asthma",
+      "severe asthma"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "J96.00",
+    "category": "J96",
+    "description": "Acute respiratory failure, unspecified",
+    "specialty": "pulmonology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "acute respiratory failure"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "M05.79",
+    "category": "M05",
+    "description": "Rheumatoid arthritis with rheumatoid factor, multiple sites",
+    "specialty": "rheumatology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "rheumatoid arthritis",
+      "ra"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "M06.9",
+    "category": "M06",
+    "description": "Rheumatoid arthritis, unspecified",
+    "specialty": "rheumatology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "rheumatoid arthritis unspecified"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "M32.9",
+    "category": "M32",
+    "description": "Systemic lupus erythematosus, unspecified",
+    "specialty": "rheumatology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "systemic lupus erythematosus",
+      "sle",
+      "lupus"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "M45.9",
+    "category": "M45",
+    "description": "Ankylosing spondylitis of unspecified sites in spine",
+    "specialty": "rheumatology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "ankylosing spondylitis"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "L40.54",
+    "category": "L40",
+    "description": "Psoriatic arthritis mutilans",
+    "specialty": "rheumatology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "psoriatic arthritis"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "M35.00",
+    "category": "M35",
+    "description": "Sicca syndrome, unspecified (Sjogren's syndrome)",
+    "specialty": "rheumatology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "sjogren's syndrome",
+      "sicca syndrome"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "M34.0",
+    "category": "M34",
+    "description": "Progressive systemic sclerosis (scleroderma)",
+    "specialty": "rheumatology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "scleroderma",
+      "systemic sclerosis"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "M10.9",
+    "category": "M10",
+    "description": "Gout, unspecified",
+    "specialty": "rheumatology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "gout"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "M31.30",
+    "category": "M31",
+    "description": "Wegener's granulomatosis without renal involvement",
+    "specialty": "rheumatology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "wegener's granulomatosis",
+      "granulomatosis with polyangiitis"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "M33.10",
+    "category": "M33",
+    "description": "Other dermatopolymyositis, organ involvement unspecified",
+    "specialty": "rheumatology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "dermatomyositis",
+      "polymyositis"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "M06.4",
+    "category": "M06",
+    "description": "Inflammatory polyarthropathy",
+    "specialty": "rheumatology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "inflammatory polyarthropathy"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "E11.22",
+    "category": "E11",
+    "description": "Type 2 diabetes mellitus with diabetic chronic kidney disease",
+    "specialty": "endocrinology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "type 2 diabetes",
+      "diabetic nephropathy"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "E11.9",
+    "category": "E11",
+    "description": "Type 2 diabetes mellitus without complications",
+    "specialty": "endocrinology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "type 2 diabetes"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "E10.9",
+    "category": "E10",
+    "description": "Type 1 diabetes mellitus without complications",
+    "specialty": "endocrinology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "type 1 diabetes"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "E11.40",
+    "category": "E11",
+    "description": "Type 2 diabetes mellitus with diabetic neuropathy, unspecified",
+    "specialty": "endocrinology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "diabetic neuropathy"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "E05.90",
+    "category": "E05",
+    "description": "Thyrotoxicosis, unspecified without thyrotoxic crisis",
+    "specialty": "endocrinology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "hyperthyroidism",
+      "thyrotoxicosis"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "E03.9",
+    "category": "E03",
+    "description": "Hypothyroidism, unspecified",
+    "specialty": "endocrinology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "hypothyroidism"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "E21.0",
+    "category": "E21",
+    "description": "Primary hyperparathyroidism",
+    "specialty": "endocrinology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "hyperparathyroidism"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "E27.1",
+    "category": "E27",
+    "description": "Primary adrenocortical insufficiency (Addison's disease)",
+    "specialty": "endocrinology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "addison's disease",
+      "adrenal insufficiency"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "E24.9",
+    "category": "E24",
+    "description": "Cushing's syndrome, unspecified",
+    "specialty": "endocrinology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "cushing's syndrome"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "E66.01",
+    "category": "E66",
+    "description": "Morbid (severe) obesity due to excess calories",
+    "specialty": "endocrinology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "morbid obesity",
+      "severe obesity"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "E28.2",
+    "category": "E28",
+    "description": "Polycystic ovarian syndrome",
+    "specialty": "endocrinology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "polycystic ovarian syndrome",
+      "pcos"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "E16.2",
+    "category": "E16",
+    "description": "Hypoglycemia, unspecified",
+    "specialty": "endocrinology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "hypoglycemia"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "N18.3",
+    "category": "N18",
+    "description": "Chronic kidney disease, stage 3",
+    "specialty": "nephrology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "chronic kidney disease stage 3",
+      "ckd stage 3"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "N18.4",
+    "category": "N18",
+    "description": "Chronic kidney disease, stage 4",
+    "specialty": "nephrology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "chronic kidney disease stage 4",
+      "ckd stage 4"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "N18.5",
+    "category": "N18",
+    "description": "Chronic kidney disease, stage 5",
+    "specialty": "nephrology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "chronic kidney disease stage 5",
+      "ckd stage 5",
+      "end stage renal disease"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "N18.6",
+    "category": "N18",
+    "description": "End stage renal disease",
+    "specialty": "nephrology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "end stage renal disease",
+      "esrd"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "N04.9",
+    "category": "N04",
+    "description": "Nephrotic syndrome, unspecified",
+    "specialty": "nephrology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "nephrotic syndrome"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "N00.9",
+    "category": "N00",
+    "description": "Acute nephritic syndrome, unspecified",
+    "specialty": "nephrology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "acute glomerulonephritis",
+      "nephritic syndrome"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "N20.0",
+    "category": "N20",
+    "description": "Calculus of kidney",
+    "specialty": "nephrology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "kidney stone",
+      "renal calculus"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "N13.30",
+    "category": "N13",
+    "description": "Unspecified hydronephrosis",
+    "specialty": "nephrology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "hydronephrosis"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "N03.9",
+    "category": "N03",
+    "description": "Chronic nephritic syndrome, unspecified",
+    "specialty": "nephrology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "chronic glomerulonephritis"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "Q61.3",
+    "category": "Q61",
+    "description": "Polycystic kidney, unspecified",
+    "specialty": "nephrology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "polycystic kidney disease"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "L40.0",
+    "category": "L40",
+    "description": "Psoriasis vulgaris",
+    "specialty": "dermatology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "plaque psoriasis",
+      "psoriasis vulgaris"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "L20.9",
+    "category": "L20",
+    "description": "Atopic dermatitis, unspecified",
+    "specialty": "dermatology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "eczema",
+      "atopic dermatitis"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "L73.2",
+    "category": "L73",
+    "description": "Hidradenitis suppurativa",
+    "specialty": "dermatology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "hidradenitis suppurativa"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "L93.0",
+    "category": "L93",
+    "description": "Discoid lupus erythematosus",
+    "specialty": "dermatology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "discoid lupus",
+      "cutaneous lupus"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "L10.9",
+    "category": "L10",
+    "description": "Pemphigus, unspecified",
+    "specialty": "dermatology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "pemphigus"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "L12.0",
+    "category": "L12",
+    "description": "Bullous pemphigoid",
+    "specialty": "dermatology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "bullous pemphigoid"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "L97.929",
+    "category": "L97",
+    "description": "Non-pressure chronic ulcer of unspecified leg",
+    "specialty": "dermatology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "chronic leg ulcer",
+      "non-healing wound"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "L57.0",
+    "category": "L57",
+    "description": "Actinic keratosis",
+    "specialty": "dermatology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "actinic keratosis"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "L30.9",
+    "category": "L30",
+    "description": "Dermatitis, unspecified",
+    "specialty": "dermatology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "dermatitis unspecified"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "L63.9",
+    "category": "L63",
+    "description": "Alopecia areata, unspecified",
+    "specialty": "dermatology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "alopecia areata"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "N40.1",
+    "category": "N40",
+    "description": "Benign prostatic hyperplasia with lower urinary tract symptoms",
+    "specialty": "urology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "bph",
+      "benign prostatic hyperplasia"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "N20.1",
+    "category": "N20",
+    "description": "Calculus of ureter",
+    "specialty": "urology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "ureteral stone",
+      "ureteral calculus"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "N39.3",
+    "category": "N39",
+    "description": "Stress incontinence (female)",
+    "specialty": "urology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "stress urinary incontinence"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "N39.46",
+    "category": "N39",
+    "description": "Mixed incontinence",
+    "specialty": "urology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "mixed urinary incontinence"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "N48.4",
+    "category": "N48",
+    "description": "Organic impotence (erectile dysfunction)",
+    "specialty": "urology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "erectile dysfunction"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "N32.81",
+    "category": "N32",
+    "description": "Overactive bladder",
+    "specialty": "urology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "overactive bladder"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "N43.3",
+    "category": "N43",
+    "description": "Hydrocele, unspecified",
+    "specialty": "urology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "hydrocele"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "N45.1",
+    "category": "N45",
+    "description": "Orchitis and epididymitis without abscess",
+    "specialty": "urology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "epididymitis",
+      "orchitis"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "N50.1",
+    "category": "N50",
+    "description": "Vascular disorders of male genital organs",
+    "specialty": "urology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "varicocele"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "R33.9",
+    "category": "R33",
+    "description": "Retention of urine, unspecified",
+    "specialty": "urology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "urinary retention"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "F33.2",
+    "category": "F33",
+    "description": "Major depressive disorder, recurrent, severe without psychotic features",
+    "specialty": "psychiatry",
+    "laterality": "not_applicable",
+    "keywords": [
+      "major depressive disorder",
+      "severe recurrent depression"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "F31.9",
+    "category": "F31",
+    "description": "Bipolar disorder, unspecified",
+    "specialty": "psychiatry",
+    "laterality": "not_applicable",
+    "keywords": [
+      "bipolar disorder"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "F20.9",
+    "category": "F20",
+    "description": "Schizophrenia, unspecified",
+    "specialty": "psychiatry",
+    "laterality": "not_applicable",
+    "keywords": [
+      "schizophrenia"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "F42.9",
+    "category": "F42",
+    "description": "Obsessive-compulsive disorder, unspecified",
+    "specialty": "psychiatry",
+    "laterality": "not_applicable",
+    "keywords": [
+      "obsessive-compulsive disorder",
+      "ocd"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "F43.10",
+    "category": "F43",
+    "description": "Post-traumatic stress disorder, unspecified",
+    "specialty": "psychiatry",
+    "laterality": "not_applicable",
+    "keywords": [
+      "ptsd",
+      "post-traumatic stress disorder"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "F41.1",
+    "category": "F41",
+    "description": "Generalized anxiety disorder",
+    "specialty": "psychiatry",
+    "laterality": "not_applicable",
+    "keywords": [
+      "generalized anxiety disorder",
+      "gad"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "F33.3",
+    "category": "F33",
+    "description": "Major depressive disorder, recurrent, severe with psychotic symptoms",
+    "specialty": "psychiatry",
+    "laterality": "not_applicable",
+    "keywords": [
+      "treatment-resistant depression",
+      "psychotic depression"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "F60.3",
+    "category": "F60",
+    "description": "Borderline personality disorder",
+    "specialty": "psychiatry",
+    "laterality": "not_applicable",
+    "keywords": [
+      "borderline personality disorder"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "F25.9",
+    "category": "F25",
+    "description": "Schizoaffective disorder, unspecified",
+    "specialty": "psychiatry",
+    "laterality": "not_applicable",
+    "keywords": [
+      "schizoaffective disorder"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "F10.20",
+    "category": "F10",
+    "description": "Alcohol dependence, uncomplicated",
+    "specialty": "psychiatry",
+    "laterality": "not_applicable",
+    "keywords": [
+      "alcohol use disorder",
+      "alcohol dependence"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "H90.3",
+    "category": "H90",
+    "description": "Sensorineural hearing loss, bilateral",
+    "specialty": "ent",
+    "laterality": "bilateral",
+    "keywords": [
+      "sensorineural hearing loss",
+      "bilateral hearing loss"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "J32.9",
+    "category": "J32",
+    "description": "Chronic sinusitis, unspecified",
+    "specialty": "ent",
+    "laterality": "not_applicable",
+    "keywords": [
+      "chronic sinusitis"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "J35.01",
+    "category": "J35",
+    "description": "Chronic tonsillitis",
+    "specialty": "ent",
+    "laterality": "not_applicable",
+    "keywords": [
+      "chronic tonsillitis"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "H81.09",
+    "category": "H81",
+    "description": "Meniere's disease, unspecified ear",
+    "specialty": "ent",
+    "laterality": "not_applicable",
+    "keywords": [
+      "meniere's disease",
+      "vertigo"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "J34.2",
+    "category": "J34",
+    "description": "Deviated nasal septum",
+    "specialty": "ent",
+    "laterality": "not_applicable",
+    "keywords": [
+      "deviated septum"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "H66.90",
+    "category": "H66",
+    "description": "Otitis media, unspecified, unspecified ear",
+    "specialty": "ent",
+    "laterality": "not_applicable",
+    "keywords": [
+      "otitis media",
+      "ear infection"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "J33.9",
+    "category": "J33",
+    "description": "Nasal polyp, unspecified",
+    "specialty": "ent",
+    "laterality": "not_applicable",
+    "keywords": [
+      "nasal polyps"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "H35.30",
+    "category": "H35",
+    "description": "Age-related macular degeneration, unspecified",
+    "specialty": "ophthalmology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "macular degeneration",
+      "amd"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "H40.9",
+    "category": "H40",
+    "description": "Unspecified glaucoma",
+    "specialty": "ophthalmology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "glaucoma"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "H25.9",
+    "category": "H25",
+    "description": "Unspecified age-related cataract",
+    "specialty": "ophthalmology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "cataract"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "H36.9",
+    "category": "H36",
+    "description": "Diabetic retinopathy, unspecified",
+    "specialty": "ophthalmology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "diabetic retinopathy"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "H33.20",
+    "category": "H33",
+    "description": "Serous retinal detachment, unspecified eye",
+    "specialty": "ophthalmology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "retinal detachment"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "H34.9",
+    "category": "H34",
+    "description": "Retinal vascular occlusion, unspecified",
+    "specialty": "ophthalmology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "retinal vein occlusion",
+      "retinal artery occlusion"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "H52.10",
+    "category": "H52",
+    "description": "Myopia, unspecified eye",
+    "specialty": "ophthalmology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "myopia"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "H18.60",
+    "category": "H18",
+    "description": "Keratoconus, unspecified eye, stage unspecified",
+    "specialty": "ophthalmology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "keratoconus"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "B20",
+    "category": "B20",
+    "description": "Human immunodeficiency virus [HIV] disease",
+    "specialty": "infectious_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "hiv",
+      "human immunodeficiency virus"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "B18.1",
+    "category": "B18",
+    "description": "Chronic viral hepatitis B without delta-agent",
+    "specialty": "infectious_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "chronic hepatitis b"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "A41.9",
+    "category": "A41",
+    "description": "Sepsis, unspecified organism",
+    "specialty": "infectious_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "sepsis"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "M86.9",
+    "category": "M86",
+    "description": "Osteomyelitis, unspecified",
+    "specialty": "infectious_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "osteomyelitis",
+      "bone infection"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "B37.9",
+    "category": "B37",
+    "description": "Candidiasis, unspecified",
+    "specialty": "infectious_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "candidiasis",
+      "fungal infection"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "A15.9",
+    "category": "A15",
+    "description": "Respiratory tuberculosis, unspecified",
+    "specialty": "infectious_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "tuberculosis"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "B58.9",
+    "category": "B58",
+    "description": "Toxoplasmosis, unspecified",
+    "specialty": "infectious_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "toxoplasmosis"
+    ],
+    "rare_disease": true
+  },
+  {
+    "code": "U09.9",
+    "category": "U09",
+    "description": "Post COVID-19 condition, unspecified",
+    "specialty": "infectious_disease",
+    "laterality": "not_applicable",
+    "keywords": [
+      "long covid",
+      "post covid condition"
+    ],
+    "rare_disease": false
+  },
+  {
+    "code": "M79.7",
+    "category": "M79",
+    "description": "Fibromyalgia",
+    "specialty": "rheumatology",
+    "laterality": "not_applicable",
+    "keywords": [
+      "fibromyalgia",
+      "chronic widespread pain"
+    ],
+    "rare_disease": false
   }
 ]

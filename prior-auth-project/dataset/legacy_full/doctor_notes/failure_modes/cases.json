@@ -1,0 +1,191 @@
+[
+  {
+    "case_id": "PYFAIL-01",
+    "specialty": "orthopedics",
+    "note_text": "A patient was referred to the clinic complaining of persistent joint pain. Conservative therapy including physical therapy was attempted without improvement. Imaging confirms degenerative changes. The referring physician requests authorization for total knee replacement.",
+    "gold": {
+      "variant": "pydantic_fail",
+      "failure_reason": "missing_age_and_sex",
+      "expected_status": "FAILED_VALIDATION",
+      "expected_stage": "Extractor",
+      "note": "No 'Patient: NNx' or 'NN years old' pattern anywhere in the note, so age and sex cannot be extracted. ExtractedClinicalFacts requires both, so Pydantic raises a validation error before any downstream agent runs."
+    }
+  },
+  {
+    "case_id": "PYFAIL-02",
+    "specialty": "orthopedics",
+    "note_text": "Patient: 999M presenting with severe osteoarthritis of the knee. Conservative management including NSAIDs was attempted over 15 weeks without improvement. Imaging studies confirm findings consistent with osteoarthritis. Referring orthopedics physician requests authorization for total knee replacement.",
+    "gold": {
+      "variant": "pydantic_fail",
+      "failure_reason": "age_out_of_range",
+      "expected_status": "FAILED_VALIDATION",
+      "expected_stage": "Extractor",
+      "note": "Age 999 fails the ExtractedClinicalFacts range constraint (0-130) — a range-validation failure rather than a missing-field failure."
+    }
+  },
+  {
+    "case_id": "PYFAIL-03",
+    "specialty": "cardiology",
+    "note_text": "Patient: 45X presenting with severe coronary artery disease. Conservative management including beta-blockers was attempted without improvement. Imaging studies confirm findings consistent with coronary artery disease. Referring cardiology physician requests authorization for pci.",
+    "gold": {
+      "variant": "pydantic_fail",
+      "failure_reason": "invalid_sex_code",
+      "expected_status": "FAILED_VALIDATION",
+      "expected_stage": "Extractor",
+      "note": "Sex code 'X' does not match the required pattern ^(M|F|U)$."
+    }
+  },
+  {
+    "case_id": "PYFAIL-04",
+    "specialty": "rheumatology",
+    "note_text": "Patient: 55F presenting with severe rheumatoid arthritis. Conservative management including methotrexate was attempted over 12 weeks without improvement. Imaging studies confirm joint erosion. The case remains under review by rheumatology.",
+    "gold": {
+      "variant": "pydantic_fail",
+      "failure_reason": "missing_requested_procedure",
+      "expected_status": "FAILED_VALIDATION",
+      "expected_stage": "Extractor",
+      "note": "The note never states a requested procedure ('requests authorization for X' / 'recommends X'), so requested_procedure cannot be extracted and the required field is missing."
+    }
+  },
+  {
+    "case_id": "PYFAIL-05",
+    "specialty": "general",
+    "note_text": "Pt seen in clinic. H/o pain. Auth req. TBD pending further workup.",
+    "gold": {
+      "variant": "pydantic_fail",
+      "failure_reason": "garbled_note_multiple_fields_missing",
+      "expected_status": "FAILED_VALIDATION",
+      "expected_stage": "Extractor",
+      "note": "A realistic worst-case dictated/abbreviated note with no extractable age, sex, diagnosis, or procedure — demonstrates multiple simultaneous Pydantic field errors."
+    }
+  },
+  {
+    "case_id": "ICDGAP-01",
+    "specialty": "general",
+    "note_text": "Patient: 44F presenting with complex regional pain of the right hand following a minor injury. Conservative management including physical therapy and nerve blocks was attempted over 16 weeks without improvement. Imaging workup is still pending. Referring pain management physician requests authorization for spinal cord stimulator trial.",
+    "gold": {
+      "variant": "icd_low_confidence",
+      "expected_status": "SUSPENDED_LOW_CONFIDENCE",
+      "expected_rare_disease_flag": false,
+      "note": "Complex regional pain syndrome is not represented in the ICD knowledge graph, so the coder's best candidate scores below the 0.70 general confidence threshold and the case is suspended for human coding rather than risking a wrong code."
+    }
+  },
+  {
+    "case_id": "ICDGAP-02",
+    "specialty": "neurology",
+    "note_text": "Patient: 51M presenting with lingering cognitive fog and dizziness after a workplace head injury months ago. Conservative management including vestibular therapy was attempted over 10 weeks without improvement. Imaging workup is still pending. Referring occupational medicine physician requests authorization for cognitive rehabilitation program.",
+    "gold": {
+      "variant": "icd_low_confidence",
+      "expected_status": "SUSPENDED_LOW_CONFIDENCE",
+      "expected_rare_disease_flag": false,
+      "note": "Post-concussion syndrome is not represented in the knowledge graph; the coder's weak best-guess match falls below the general confidence threshold."
+    }
+  },
+  {
+    "case_id": "ICDGAP-03",
+    "specialty": "general",
+    "note_text": "Patient: 36F presenting with intermittent chest wall tenderness of unclear cause, not cardiac in origin. Conservative management including NSAIDs was attempted over 8 weeks without improvement. Imaging workup is still pending. Referring pain management physician requests authorization for intercostal nerve block.",
+    "gold": {
+      "variant": "icd_low_confidence",
+      "expected_status": "SUSPENDED_LOW_CONFIDENCE",
+      "expected_rare_disease_flag": false,
+      "note": "A vague, unclassified pain presentation with no strong knowledge-graph match — demonstrates the coverage-gap failure mode distinctly from the rare-disease gate."
+    }
+  },
+  {
+    "case_id": "ICDGAP-04",
+    "specialty": "general",
+    "note_text": "Patient: 29M presenting with persistent unexplained exhaustion and post-exertional malaise lasting over a year. Conservative management including graded exercise therapy was attempted over 20 weeks without improvement. Imaging workup is still pending. Referring internal medicine physician requests authorization for specialty fatigue clinic evaluation.",
+    "gold": {
+      "variant": "icd_low_confidence",
+      "expected_status": "SUSPENDED_LOW_CONFIDENCE",
+      "expected_rare_disease_flag": false,
+      "note": "Chronic fatigue presentations are not represented in the knowledge graph, producing a low-confidence best guess."
+    }
+  },
+  {
+    "case_id": "ICDGAP-05",
+    "specialty": "cardiology",
+    "note_text": "Patient: 62F presenting with unexplained recurrent syncope of unclear etiology. Conservative management including medication adjustment was attempted over 6 weeks without improvement. Imaging workup is still pending. Referring cardiology physician requests authorization for implantable loop recorder.",
+    "gold": {
+      "variant": "icd_low_confidence",
+      "expected_status": "SUSPENDED_LOW_CONFIDENCE",
+      "expected_rare_disease_flag": false,
+      "note": "Unexplained syncope has no strong knowledge-graph match; best candidate (peripheral vascular disease) scores well below the general confidence threshold."
+    }
+  },
+  {
+    "case_id": "FAIL-INS-01",
+    "specialty": "gastroenterology",
+    "note_text": "Patient: 34M presenting with severe Crohn's disease. Conservative management including preventive medication trial was attempted over 14 weeks without adequate improvement. Imaging studies confirm findings consistent with Crohn's disease. Referring gastroenterology physician requests authorization for biologic therapy.",
+    "gold": {
+      "variant": "payer_denied",
+      "expected_provider_status": "COMPLETED",
+      "expected_payer_decision": "DENIED",
+      "payer_override_reason": "member's plan is EXPIRED",
+      "note": "Clinically clean, provider-side approvable case. The payer directory maps this case_id to an expired plan (PLAN-EXPIRED-01), demonstrating an administrative denial despite a clean clinical package."
+    }
+  },
+  {
+    "case_id": "FAIL-INS-02",
+    "specialty": "cardiology",
+    "note_text": "Patient: 66F presenting with severe aortic stenosis. Echocardiogram confirms findings consistent with aortic stenosis. Referring cardiology physician requests authorization for tavr.",
+    "gold": {
+      "variant": "payer_denied",
+      "expected_provider_status": "COMPLETED",
+      "expected_payer_decision": "DENIED",
+      "payer_override_reason": "member's plan is SUSPENDED for non-payment",
+      "note": "Clinically clean TAVR case; payer directory maps this case_id to a suspended plan, demonstrating denial for a non-clinical administrative reason."
+    }
+  },
+  {
+    "case_id": "FAIL-INS-03",
+    "specialty": "dermatology",
+    "note_text": "Patient: 49M presenting with severe plaque psoriasis. Conservative management including topical therapy was attempted over 14 weeks without adequate improvement. Imaging studies confirm findings consistent with plaque psoriasis. Referring dermatology physician requests authorization for biologic therapy.",
+    "gold": {
+      "variant": "payer_denied",
+      "expected_provider_status": "COMPLETED",
+      "expected_payer_decision": "DENIED",
+      "payer_override_reason": "requested procedure is not a covered benefit under the member's plan",
+      "note": "Demonstrates a coverage-based denial: the clinical package is complete and correct, but the specific procedure is excluded from the member's plan."
+    }
+  },
+  {
+    "case_id": "FAIL-INS-04",
+    "specialty": "ophthalmology",
+    "note_text": "Patient: 71F presenting with severe glaucoma. Conservative management including eye drops was attempted over 14 weeks without adequate improvement. Imaging studies confirm findings consistent with glaucoma. Referring ophthalmology physician requests authorization for glaucoma surgery.",
+    "gold": {
+      "variant": "payer_denied",
+      "expected_provider_status": "COMPLETED",
+      "expected_payer_decision": "DENIED",
+      "payer_override_reason": "referring provider is OUT_OF_NETWORK",
+      "note": "Demonstrates a network-based denial: clinically approvable, but the referring provider is out-of-network for this member's plan."
+    }
+  },
+  {
+    "case_id": "FAIL-INS-05",
+    "specialty": "rheumatology",
+    "note_text": "Patient: 55M presenting with severe rheumatoid arthritis. Conservative management including methotrexate was attempted over 14 weeks without adequate improvement. Imaging studies confirm findings consistent with rheumatoid arthritis. Referring rheumatology physician requests authorization for biologic therapy.",
+    "gold": {
+      "variant": "payer_pending_duplicate",
+      "expected_provider_status": "COMPLETED",
+      "expected_payer_decision": "PENDING_REVIEW",
+      "payer_override_reason": "possible duplicate authorization request",
+      "note": "Demonstrates the fraud/duplicate check routing a clean clinical package to manual payer review rather than an outright denial."
+    }
+  },
+  {
+    "case_id": "CRITWARN-01",
+    "specialty": "neurology",
+    "note_text": "Patient: 47M presenting with progressive proximal weakness and elevated CK. Limb-girdle muscular dystrophy pattern noted. Imaging workup is still pending. Referring neurology physician requests authorization for specialty neuromuscular evaluation.",
+    "gold": {
+      "variant": "critique_warning_showcase",
+      "expected_critique_status": "PASS_WITH_WARNINGS",
+      "expected_critique_warnings_include": [
+        "No imaging evidence documented in the package",
+        "Policy RAG confidence below the review threshold"
+      ],
+      "note": "Confidently coded (ICD confidence >= 0.90, clears the confidence gate) but the note has no imaging and only a weak policy match. The Critique Agent runs regardless of the provider-side decision and flags both issues without blocking or altering it."
+    }
+  }
+]

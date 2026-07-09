@@ -1,0 +1,178 @@
+[
+  {
+    "case_id": "GEN-0106",
+    "specialty": "nephrology",
+    "note_text": "Patient: 55F presenting with advanced end stage renal disease.\nConservative management including disease-modifying medication, bracing was attempted without adequate improvement.\nImaging studies confirm findings consistent with end stage renal disease.\nReferring nephrology physician requests authorization for hemodialysis.",
+    "gold": {
+      "age": 55,
+      "sex": "F",
+      "diagnosis": "advanced end stage renal disease",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "disease-modifying medication",
+        "bracing"
+      ],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": "findings consistent with end stage renal disease",
+      "requested_procedure": "hemodialysis",
+      "icd10_code": "N18.6",
+      "policy_id": "POL-NEPH-DIALYSIS-047",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0107",
+    "specialty": "nephrology",
+    "note_text": "Patient: 44M presenting with end-stage end stage renal disease.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with end stage renal disease.\nReferring nephrology physician requests authorization for hemodialysis.",
+    "gold": {
+      "age": 44,
+      "sex": "M",
+      "diagnosis": "end-stage end stage renal disease",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 0,
+      "imaging_evidence": "findings consistent with end stage renal disease",
+      "requested_procedure": "hemodialysis",
+      "icd10_code": "N18.6",
+      "policy_id": "POL-NEPH-DIALYSIS-047",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0108",
+    "specialty": "nephrology",
+    "note_text": "Patient: 48M presenting with end stage renal disease.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with end stage renal disease.\nReferring nephrology physician requests authorization for hemodialysis.",
+    "gold": {
+      "age": 48,
+      "sex": "M",
+      "diagnosis": "end stage renal disease",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 2,
+      "imaging_evidence": "findings consistent with end stage renal disease",
+      "requested_procedure": "hemodialysis",
+      "icd10_code": "N18.6",
+      "policy_id": "POL-NEPH-DIALYSIS-047",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0109",
+    "specialty": "nephrology",
+    "note_text": "Patient: 74F presenting with end-stage chronic kidney disease stage 5.\nConservative management including bracing, activity modification was attempted over approximately 14 weeks without adequate improvement.\nImaging workup is still pending.\nReferring nephrology physician requests authorization for kidney transplant evaluation.",
+    "gold": {
+      "age": 74,
+      "sex": "F",
+      "diagnosis": "end-stage chronic kidney disease stage 5",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "bracing",
+        "activity modification"
+      ],
+      "conservative_therapy_duration_weeks": 14,
+      "imaging_evidence": null,
+      "requested_procedure": "kidney transplant evaluation",
+      "icd10_code": "N18.5",
+      "policy_id": "POL-NEPH-TRANSPLANT-048",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0110",
+    "specialty": "nephrology",
+    "note_text": "Patient: 47M presenting with end-stage chronic kidney disease stage 5.\nConservative management including NSAIDs was attempted over approximately 4 weeks without adequate improvement.\nImaging studies confirm findings consistent with chronic kidney disease stage 5.\nReferring nephrology physician requests authorization for kidney transplant evaluation.",
+    "gold": {
+      "age": 47,
+      "sex": "M",
+      "diagnosis": "end-stage chronic kidney disease stage 5",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "NSAIDs"
+      ],
+      "conservative_therapy_duration_weeks": 4,
+      "imaging_evidence": "findings consistent with chronic kidney disease stage 5",
+      "requested_procedure": "kidney transplant evaluation",
+      "icd10_code": "N18.5",
+      "policy_id": "POL-NEPH-TRANSPLANT-048",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0111",
+    "specialty": "nephrology",
+    "note_text": "Patient: 72M presenting with chronic kidney disease stage 5.\nNo conservative therapy has been documented yet.\nImaging workup is still pending.\nReferring nephrology physician requests authorization for kidney transplant evaluation.",
+    "gold": {
+      "age": 72,
+      "sex": "M",
+      "diagnosis": "chronic kidney disease stage 5",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": null,
+      "requested_procedure": "kidney transplant evaluation",
+      "icd10_code": "N18.5",
+      "policy_id": "POL-NEPH-TRANSPLANT-048",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0112",
+    "specialty": "nephrology",
+    "note_text": "Patient: 56F presenting with severe renal cell carcinoma.\nConservative management including NSAIDs, bracing was attempted without adequate improvement.\nImaging studies confirm findings consistent with renal cell carcinoma.\nReferring nephrology physician requests authorization for nephrectomy.",
+    "gold": {
+      "age": 56,
+      "sex": "F",
+      "diagnosis": "severe renal cell carcinoma",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "NSAIDs",
+        "bracing"
+      ],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": "findings consistent with renal cell carcinoma",
+      "requested_procedure": "nephrectomy",
+      "icd10_code": "C64.1",
+      "policy_id": "POL-NEPH-NEPHRECTOMY-049",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0113",
+    "specialty": "nephrology",
+    "note_text": "Patient: 35M presenting with malignant renal cell carcinoma.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with renal cell carcinoma.\nReferring nephrology physician requests authorization for nephrectomy.",
+    "gold": {
+      "age": 35,
+      "sex": "M",
+      "diagnosis": "malignant renal cell carcinoma",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 0,
+      "imaging_evidence": "findings consistent with renal cell carcinoma",
+      "requested_procedure": "nephrectomy",
+      "icd10_code": "C64.1",
+      "policy_id": "POL-NEPH-NEPHRECTOMY-049",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0114",
+    "specialty": "nephrology",
+    "note_text": "Patient: 32M presenting with severe renal cell carcinoma.\nConservative management including bracing, physical therapy was attempted over approximately 2 weeks without adequate improvement.\nImaging studies confirm findings consistent with renal cell carcinoma.\nReferring nephrology physician requests authorization for nephrectomy.",
+    "gold": {
+      "age": 32,
+      "sex": "M",
+      "diagnosis": "severe renal cell carcinoma",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "bracing",
+        "physical therapy"
+      ],
+      "conservative_therapy_duration_weeks": 2,
+      "imaging_evidence": "findings consistent with renal cell carcinoma",
+      "requested_procedure": "nephrectomy",
+      "icd10_code": "C64.1",
+      "policy_id": "POL-NEPH-NEPHRECTOMY-049",
+      "variant": "varied"
+    }
+  }
+]

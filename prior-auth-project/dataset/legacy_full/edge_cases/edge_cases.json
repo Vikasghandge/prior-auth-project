@@ -4,214 +4,485 @@
     "category": "missing_conservative_therapy",
     "note_text": "Patient: 58F with severe right knee pain for 2 weeks. X-ray shows advanced osteoarthritis. Orthopedic surgeon recommends total knee replacement.",
     "expected_behavior": "Policy RAG should mark 'failed_conservative_12wk' as missing and set policy_match=false since no conservative therapy was attempted.",
-    "gold": {"diagnosis": "severe right knee osteoarthritis", "conservative_therapy_duration_weeks": 0, "failed_treatments": [], "expected_policy_match": false, "expected_missing_criteria": ["failed_conservative_12wk"]}
+    "gold": {
+      "diagnosis": "severe right knee osteoarthritis",
+      "conservative_therapy_duration_weeks": 0,
+      "failed_treatments": [],
+      "expected_policy_match": false,
+      "expected_missing_criteria": [
+        "failed_conservative_12wk"
+      ]
+    }
   },
   {
     "case_id": "EDGE-0002",
     "category": "missing_conservative_therapy",
     "note_text": "Patient: 62M with severe left hip pain. Imaging confirms advanced degeneration. Patient has not tried any physical therapy, NSAIDs, or injections. Requesting total hip replacement.",
     "expected_behavior": "Policy RAG should reject: conservative therapy explicitly not attempted.",
-    "gold": {"diagnosis": "severe left hip osteoarthritis", "conservative_therapy_duration_weeks": 0, "failed_treatments": [], "expected_policy_match": false, "expected_missing_criteria": ["failed_conservative_12wk"]}
+    "gold": {
+      "diagnosis": "severe left hip osteoarthritis",
+      "conservative_therapy_duration_weeks": 0,
+      "failed_treatments": [],
+      "expected_policy_match": false,
+      "expected_missing_criteria": [
+        "failed_conservative_12wk"
+      ]
+    }
   },
   {
     "case_id": "EDGE-0003",
     "category": "missing_conservative_therapy",
     "note_text": "Patient: 45F with chronic migraine, 18 headache days per month, significantly disabling. No preventive medications have been tried. Requesting CGRP inhibitor therapy.",
     "expected_behavior": "Policy RAG should reject: no preventive medication trials documented, criterion 'failed_two_preventives' unmet.",
-    "gold": {"diagnosis": "chronic migraine", "conservative_therapy_duration_weeks": 0, "failed_treatments": [], "expected_policy_match": false, "expected_missing_criteria": ["failed_two_preventives"]}
+    "gold": {
+      "diagnosis": "chronic migraine",
+      "conservative_therapy_duration_weeks": 0,
+      "failed_treatments": [],
+      "expected_policy_match": false,
+      "expected_missing_criteria": [
+        "failed_two_preventives"
+      ]
+    }
   },
   {
     "case_id": "EDGE-0004",
     "category": "missing_conservative_therapy",
     "note_text": "Patient: 51M diagnosed with symptomatic atrial fibrillation on recent ECG. No antiarrhythmic medications have been prescribed. Cardiology requests catheter ablation.",
     "expected_behavior": "Policy RAG should reject: no antiarrhythmic drug trial documented before ablation request.",
-    "gold": {"diagnosis": "symptomatic atrial fibrillation", "conservative_therapy_duration_weeks": 0, "failed_treatments": [], "expected_policy_match": false, "expected_missing_criteria": ["failed_antiarrhythmic_4wk"]}
+    "gold": {
+      "diagnosis": "symptomatic atrial fibrillation",
+      "conservative_therapy_duration_weeks": 0,
+      "failed_treatments": [],
+      "expected_policy_match": false,
+      "expected_missing_criteria": [
+        "failed_antiarrhythmic_4wk"
+      ]
+    }
   },
   {
     "case_id": "EDGE-0005",
     "category": "missing_conservative_therapy",
     "note_text": "Patient: 39F with confirmed Crohn's disease on colonoscopy. No steroids or immunomodulators have been tried yet. Gastroenterology requests biologic therapy (infliximab).",
     "expected_behavior": "Policy RAG should reject: conventional therapy has not been attempted before biologics.",
-    "gold": {"diagnosis": "Crohn's disease", "conservative_therapy_duration_weeks": 0, "failed_treatments": [], "expected_policy_match": false, "expected_missing_criteria": ["failed_conventional_8wk"]}
+    "gold": {
+      "diagnosis": "Crohn's disease",
+      "conservative_therapy_duration_weeks": 0,
+      "failed_treatments": [],
+      "expected_policy_match": false,
+      "expected_missing_criteria": [
+        "failed_conventional_8wk"
+      ]
+    }
   },
-
   {
     "case_id": "EDGE-0006",
     "category": "wrong_laterality",
     "note_text": "Patient: 64F with severe left knee pain for 18 months. X-ray shows advanced osteoarthritis. Failed NSAIDs, physiotherapy, and steroid injection over 16 weeks. Orthopedic surgeon recommends total RIGHT knee replacement.",
     "expected_behavior": "Extractor/ICD Coder should detect the laterality conflict between the diagnosed side (left) and the requested procedure side (right); laterality_match should be false and the case should be flagged rather than silently form-filled.",
-    "gold": {"diagnosis_laterality": "left", "requested_procedure_laterality": "right", "expected_laterality_conflict": true}
+    "gold": {
+      "diagnosis_laterality": "left",
+      "requested_procedure_laterality": "right",
+      "expected_laterality_conflict": true
+    }
   },
   {
     "case_id": "EDGE-0007",
     "category": "wrong_laterality",
     "note_text": "Patient: 55M with MRI-confirmed complete rotator cuff tear of the LEFT shoulder, failed 8 weeks of physical therapy. Surgeon requests rotator cuff repair of the right shoulder.",
     "expected_behavior": "Laterality mismatch between imaging-confirmed side and requested-procedure side must be flagged before form filling.",
-    "gold": {"diagnosis_laterality": "left", "requested_procedure_laterality": "right", "expected_laterality_conflict": true}
+    "gold": {
+      "diagnosis_laterality": "left",
+      "requested_procedure_laterality": "right",
+      "expected_laterality_conflict": true
+    }
   },
   {
     "case_id": "EDGE-0008",
     "category": "wrong_laterality",
     "note_text": "Patient: 47F, MRI shows right ACL tear with instability after 5 weeks of rehab. Requesting ACL reconstruction of the left knee.",
     "expected_behavior": "Laterality mismatch should be flagged; ICD coder's laterality_match=false for the mismatched code.",
-    "gold": {"diagnosis_laterality": "right", "requested_procedure_laterality": "left", "expected_laterality_conflict": true}
+    "gold": {
+      "diagnosis_laterality": "right",
+      "requested_procedure_laterality": "left",
+      "expected_laterality_conflict": true
+    }
   },
   {
     "case_id": "EDGE-0009",
     "category": "wrong_laterality",
     "note_text": "Patient: 60M with unspecified knee osteoarthritis, laterality not documented in the note. Surgeon requests right total knee replacement.",
     "expected_behavior": "When laterality is not documented, the ICD coder should surface the unspecified-knee code (not silently assume the requested side) and confidence should reflect that ambiguity.",
-    "gold": {"diagnosis_laterality": "unknown", "requested_procedure_laterality": "right", "expected_laterality_conflict": false, "expected_top_code": "M17.10"}
+    "gold": {
+      "diagnosis_laterality": "unknown",
+      "requested_procedure_laterality": "right",
+      "expected_laterality_conflict": false,
+      "expected_top_code": "M17.10"
+    }
   },
   {
     "case_id": "EDGE-0010",
     "category": "wrong_laterality",
     "note_text": "Patient: 33F with right kidney mass on CT, biopsy confirms renal cell carcinoma. Oncology requests chemotherapy targeting the left kidney lesion in error.",
     "expected_behavior": "Cross-check between diagnosis laterality (right) and requested treatment target (left) should be flagged as inconsistent before form filling.",
-    "gold": {"diagnosis_laterality": "right", "requested_procedure_laterality": "left", "expected_laterality_conflict": true}
+    "gold": {
+      "diagnosis_laterality": "right",
+      "requested_procedure_laterality": "left",
+      "expected_laterality_conflict": true
+    }
   },
-
   {
     "case_id": "EDGE-0011",
     "category": "rare_disease_low_confidence",
     "note_text": "Patient: 36M with recurrent kidney stones, bone pain, and cognitive slowing. Metabolic and genetic workup pending; a rare inherited storage disorder is suspected but not yet named. Requesting genetics and metabolic evaluation.",
     "expected_behavior": "ICD Coder should return a low-confidence, non-specific rare-disease candidate; workflow must suspend for human coding review rather than guessing a code.",
-    "gold": {"is_rare_disease_suspected": true, "expected_icd_confidence_max": 0.90, "expected_suspend": true}
+    "gold": {
+      "is_rare_disease_suspected": true,
+      "expected_icd_confidence_max": 0.9,
+      "expected_suspend": true
+    }
   },
   {
     "case_id": "EDGE-0012",
     "category": "rare_disease_low_confidence",
     "note_text": "Patient: 50F with rapidly progressive ataxia, dysarthria, and myoclonus of unclear etiology; genetics and neurology co-managing, no confirmed diagnosis yet. Requesting neurology evaluation.",
     "expected_behavior": "No confident code should be assigned; confidence gate should suspend for human review given diagnostic uncertainty.",
-    "gold": {"is_rare_disease_suspected": true, "expected_icd_confidence_max": 0.90, "expected_suspend": true}
+    "gold": {
+      "is_rare_disease_suspected": true,
+      "expected_icd_confidence_max": 0.9,
+      "expected_suspend": true
+    }
   },
   {
     "case_id": "EDGE-0013",
     "category": "rare_disease_low_confidence",
     "note_text": "Patient: 44F with recurrent GI bleeding, joint hypermobility, and easy bruising; a heritable connective tissue disorder is suspected pending confirmatory genetic panel. Requesting genetics and hematology evaluation.",
     "expected_behavior": "Directly exercises the special rule (illustrated in the brief with a 0.82 example): a rare-disease candidate coded below the 0.90 confidence threshold must suspend the workflow for human review, whatever the exact score.",
-    "gold": {"is_rare_disease_suspected": true, "expected_icd_confidence_max": 0.90, "expected_suspend": true}
+    "gold": {
+      "is_rare_disease_suspected": true,
+      "expected_icd_confidence_max": 0.9,
+      "expected_suspend": true
+    }
   },
   {
     "case_id": "EDGE-0014",
     "category": "rare_disease_low_confidence",
     "note_text": "Patient: 29M with unexplained recurrent pancreatitis episodes and a family history of a similarly-affected sibling; a genetic pancreatic disorder is suspected pending confirmatory panel. Requesting genetics evaluation.",
     "expected_behavior": "Ambiguous rare-disease presentation should yield low ICD confidence and trigger human review rather than an autonomous decision.",
-    "gold": {"is_rare_disease_suspected": true, "expected_icd_confidence_max": 0.90, "expected_suspend": true}
+    "gold": {
+      "is_rare_disease_suspected": true,
+      "expected_icd_confidence_max": 0.9,
+      "expected_suspend": true
+    }
   },
   {
     "case_id": "EDGE-0015",
     "category": "rare_disease_low_confidence",
     "note_text": "Patient: 58M with slowly progressive gait disturbance, peripheral neuropathy, and cardiac conduction abnormalities; an infiltrative or storage disease process suspected, biopsy pending. Requesting cardiology and neurology evaluation.",
     "expected_behavior": "Vague multi-system presentation without a confirmed rare-disease name should score below the 0.90 gate threshold and suspend.",
-    "gold": {"is_rare_disease_suspected": true, "expected_icd_confidence_max": 0.90, "expected_suspend": true}
+    "gold": {
+      "is_rare_disease_suspected": true,
+      "expected_icd_confidence_max": 0.9,
+      "expected_suspend": true
+    }
   },
-
   {
     "case_id": "EDGE-0016",
     "category": "policy_mismatch",
     "note_text": "Patient: 49M with right knee osteoarthritis documented on X-ray as mild degenerative changes. Failed NSAIDs and physical therapy over 14 weeks. Surgeon requests total knee replacement.",
     "expected_behavior": "Severity criterion unmet ('mild', not 'severe/advanced') even though conservative therapy duration is sufficient; Policy RAG should report policy_match=false with missing severity criterion.",
-    "gold": {"expected_policy_match": false, "expected_missing_criteria": ["severe_oa_documented"]}
+    "gold": {
+      "expected_policy_match": false,
+      "expected_missing_criteria": [
+        "severe_oa_documented"
+      ]
+    }
   },
   {
     "case_id": "EDGE-0017",
     "category": "policy_mismatch",
     "note_text": "Patient: 66F with severe right hip osteoarthritis, failed 14 weeks of NSAIDs and physical therapy, but no imaging has been obtained to confirm joint-space narrowing. Requesting total hip replacement.",
     "expected_behavior": "Imaging-required criterion unmet; Policy RAG should reject despite severity and duration criteria being met.",
-    "gold": {"expected_policy_match": false, "expected_missing_criteria": ["imaging_confirms_degeneration"]}
+    "gold": {
+      "expected_policy_match": false,
+      "expected_missing_criteria": [
+        "imaging_confirms_degeneration"
+      ]
+    }
   },
   {
     "case_id": "EDGE-0018",
     "category": "policy_mismatch",
     "note_text": "Patient: 52M with symptomatic coronary artery disease. Angiography has not been performed. Cardiology requests PCI with stent placement.",
     "expected_behavior": "Policy requires angiographic confirmation of significant stenosis; missing imaging should cause policy_match=false.",
-    "gold": {"expected_policy_match": false, "expected_missing_criteria": ["significant_stenosis"]}
+    "gold": {
+      "expected_policy_match": false,
+      "expected_missing_criteria": [
+        "significant_stenosis"
+      ]
+    }
   },
   {
     "case_id": "EDGE-0019",
     "category": "policy_mismatch",
     "note_text": "Patient: 41F with epilepsy, seizures well-controlled on a single anti-epileptic drug. Neurology requests evaluation for epilepsy surgery.",
     "expected_behavior": "Seizures are not drug-resistant (only one AED tried, well-controlled); Policy RAG should reject epilepsy surgery evaluation.",
-    "gold": {"expected_policy_match": false, "expected_missing_criteria": ["drug_resistant"]}
+    "gold": {
+      "expected_policy_match": false,
+      "expected_missing_criteria": [
+        "drug_resistant"
+      ]
+    }
   },
   {
     "case_id": "EDGE-0020",
     "category": "policy_mismatch",
     "note_text": "Patient: 59M with suspected liver disease, mild fibrosis on recent labs, fully compensated with no complications. Requesting liver transplant evaluation.",
     "expected_behavior": "Disease is not decompensated/end-stage; Policy RAG should reject the transplant evaluation request.",
-    "gold": {"expected_policy_match": false, "expected_missing_criteria": ["decompensated_disease"]}
+    "gold": {
+      "expected_policy_match": false,
+      "expected_missing_criteria": [
+        "decompensated_disease"
+      ]
+    }
   },
-
   {
     "case_id": "EDGE-0021",
     "category": "phi_leakage",
     "note_text": "Patient: 64F. Name: Sarah J. Whitfield, DOB: 03/14/1961, MRN#: 88213-A, residing at 742 Evergreen Terrace, Springfield, IL 62704, phone (555) 234-9981. Presents with severe right knee osteoarthritis, failed NSAIDs and physiotherapy over 16 weeks. Imaging confirms advanced degeneration. Requesting total knee replacement.",
     "expected_behavior": "PHI masking must strip name, DOB, MRN, address, and phone BEFORE the note reaches the ICD Coder / Policy RAG agents; contains_phi() must return False on the masked text and the downstream payload must never include raw identifiers.",
-    "gold": {"expected_phi_fields_masked": ["name", "mrn", "dob", "address", "phone"], "expected_phi_detected": true}
+    "gold": {
+      "expected_phi_fields_masked": [
+        "name",
+        "mrn",
+        "dob",
+        "address",
+        "phone"
+      ],
+      "expected_phi_detected": true
+    }
   },
   {
     "case_id": "EDGE-0022",
     "category": "phi_leakage",
     "note_text": "Patient: 52M. Mr. Robert Alan Chen, SSN 512-34-7788, email robert.chen@example.com. Diagnosed with symptomatic atrial fibrillation, failed antiarrhythmic therapy for 6 weeks. Cardiology requests catheter ablation.",
     "expected_behavior": "PHI masking must redact the SSN and email in addition to the honorific+name before any downstream handoff.",
-    "gold": {"expected_phi_fields_masked": ["name", "ssn", "email"], "expected_phi_detected": true}
+    "gold": {
+      "expected_phi_fields_masked": [
+        "name",
+        "ssn",
+        "email"
+      ],
+      "expected_phi_detected": true
+    }
   },
   {
     "case_id": "EDGE-0023",
     "category": "phi_leakage",
     "note_text": "Patient: 48F. Name: Maria Gonzalez, DOB: 11/02/1975. Diagnosed with Crohn's disease flare, failed steroids for 10 weeks. Requesting biologic therapy.",
     "expected_behavior": "Even without an MRN, the name and DOB fields must be masked prior to the Policy RAG handoff.",
-    "gold": {"expected_phi_fields_masked": ["name", "dob"], "expected_phi_detected": true}
+    "gold": {
+      "expected_phi_fields_masked": [
+        "name",
+        "dob"
+      ],
+      "expected_phi_detected": true
+    }
   },
   {
     "case_id": "EDGE-0024",
     "category": "phi_leakage",
     "note_text": "Patient: 58M. Dr. Amanda Torres notes severe left hip osteoarthritis, failed conservative therapy for 15 weeks, imaging confirms degeneration. Requesting total hip replacement.",
     "expected_behavior": "The referring physician's honorific+name must be masked even though it is not the patient's own identifier line.",
-    "gold": {"expected_phi_fields_masked": ["name"], "expected_phi_detected": true}
+    "gold": {
+      "expected_phi_fields_masked": [
+        "name"
+      ],
+      "expected_phi_detected": true
+    }
   },
   {
     "case_id": "EDGE-0025",
     "category": "phi_leakage",
     "note_text": "Patient: 44M. Name: John Michael Reyes, MRN# 004521, 15 Ocean View Ave, Miami, FL 33139. Chronic migraine, 16 headache days/month, failed two preventive drug classes over 10 weeks. Requesting CGRP inhibitor therapy.",
     "expected_behavior": "Full identifier bundle (name, MRN, address) must be stripped; contains_phi(masked_text) must be False before the case can proceed past the masking boundary.",
-    "gold": {"expected_phi_fields_masked": ["name", "mrn", "address"], "expected_phi_detected": true}
+    "gold": {
+      "expected_phi_fields_masked": [
+        "name",
+        "mrn",
+        "address"
+      ],
+      "expected_phi_detected": true
+    }
   },
-
   {
     "case_id": "EDGE-0026",
     "category": "form_field_mismatch",
     "note_text": "Patient with severe joint pain. Requesting a procedure.",
     "expected_behavior": "Extraction lacks age, sex, and a specific diagnosis/procedure; ExtractedClinicalFacts validation should fail gracefully (ValidationError) rather than producing a malformed handoff, and the case should be marked FAILED_VALIDATION.",
-    "gold": {"expected_extraction_valid": false, "expected_status": "FAILED_VALIDATION"}
+    "gold": {
+      "expected_extraction_valid": false,
+      "expected_status": "FAILED_VALIDATION"
+    }
   },
   {
     "case_id": "EDGE-0027",
     "category": "form_field_mismatch",
     "note_text": "Patient: 61F with severe right knee osteoarthritis, failed NSAIDs and PT for 14 weeks, imaging confirms degeneration. Requesting an experimental unlisted joint procedure not covered by any known template.",
     "expected_behavior": "No form template matches the requested procedure; Form Filler should report a validation error ('no matching form template') instead of guessing a template.",
-    "gold": {"expected_form_template_found": false}
+    "gold": {
+      "expected_form_template_found": false
+    }
   },
   {
     "case_id": "EDGE-0028",
     "category": "form_field_mismatch",
     "note_text": "Patient: 205 years old(?) with severe right knee osteoarthritis, failed conservative therapy for 14 weeks, imaging confirms degeneration. Requesting total knee replacement.",
     "expected_behavior": "Age of 205 is out of the valid human range; ExtractedClinicalFacts age field (ge=0, le=130) should raise a validation error and the case should fail gracefully.",
-    "gold": {"expected_extraction_valid": false, "expected_status": "FAILED_VALIDATION"}
+    "gold": {
+      "expected_extraction_valid": false,
+      "expected_status": "FAILED_VALIDATION"
+    }
   },
   {
     "case_id": "EDGE-0029",
     "category": "form_field_mismatch",
     "note_text": "Patient: 50X with severe right knee osteoarthritis, failed conservative therapy for 14 weeks, imaging confirms degeneration. Requesting total knee replacement.",
     "expected_behavior": "Sex code 'X' does not match the schema's constrained pattern (M/F/U); extraction should fail validation and the case should be routed to FAILED_VALIDATION rather than silently coerced.",
-    "gold": {"expected_extraction_valid": false, "expected_status": "FAILED_VALIDATION"}
+    "gold": {
+      "expected_extraction_valid": false,
+      "expected_status": "FAILED_VALIDATION"
+    }
   },
   {
     "case_id": "EDGE-0030",
     "category": "form_field_mismatch",
     "note_text": "Patient: 55M, Dr. Lee states diagnosis is 'knee issue', no imaging, no treatments documented. Requesting total knee replacement.",
     "expected_behavior": "Vague, under-specified diagnosis text combined with a missing conservative-therapy/imaging trail should produce both a low policy-match confidence and multiple missing_items, exercising the form filler's validation_errors path when required fields cannot be populated confidently.",
-    "gold": {"expected_policy_match": false, "expected_missing_criteria": ["severe_oa_documented", "failed_conservative_12wk", "imaging_confirms_degeneration"]}
+    "gold": {
+      "expected_policy_match": false,
+      "expected_missing_criteria": [
+        "severe_oa_documented",
+        "failed_conservative_12wk",
+        "imaging_confirms_degeneration"
+      ]
+    }
+  },
+  {
+    "case_id": "EDGE-0031",
+    "category": "icd_general_low_confidence",
+    "note_text": "Patient: 44F presenting with complex regional pain of the right hand following a minor injury. Conservative management including physical therapy and nerve blocks was attempted over 16 weeks without improvement. Imaging workup is still pending. Referring pain management physician requests authorization for spinal cord stimulator trial.",
+    "expected_behavior": "The diagnosis has no strong match in the ICD-10 knowledge graph (coverage gap, not a rare-disease flag). The top candidate should score below the 0.70 general confidence threshold, producing SUSPENDED_LOW_CONFIDENCE via the general safety net rather than the rare-disease gate.",
+    "gold": {
+      "expected_status": "SUSPENDED_LOW_CONFIDENCE",
+      "expected_is_rare_disease": false,
+      "expected_icd_confidence_max": 0.7
+    }
+  },
+  {
+    "case_id": "EDGE-0032",
+    "category": "icd_general_low_confidence",
+    "note_text": "Patient: 62F presenting with unexplained recurrent syncope of unclear etiology. Conservative management including medication adjustment was attempted over 6 weeks without improvement. Imaging workup is still pending. Referring cardiology physician requests authorization for implantable loop recorder.",
+    "expected_behavior": "A vague, unclassified cardiology presentation with no strong knowledge-graph match. Distinct from EDGE-0031 to show the general low-confidence gate is not orthopedics-specific.",
+    "gold": {
+      "expected_status": "SUSPENDED_LOW_CONFIDENCE",
+      "expected_is_rare_disease": false,
+      "expected_icd_confidence_max": 0.7
+    }
+  },
+  {
+    "case_id": "EDGE-0033",
+    "category": "rare_disease_low_confidence",
+    "note_text": "Patient: 3F with developmental regression, cherry-red macular spot on exam, and exaggerated startle response. Suspected GM2 gangliosidosis (Tay-Sachs disease) pending confirmatory enzyme assay. Neurology requests genetic counseling and enzyme testing authorization.",
+    "expected_behavior": "Hedge language ('suspected', 'pending confirmatory') dampens an otherwise strong keyword match to between the general (0.70) and rare-disease (0.90) thresholds, so the case is suspended specifically via the stricter rare-disease rule.",
+    "gold": {
+      "expected_status": "SUSPENDED_LOW_CONFIDENCE",
+      "expected_is_rare_disease": true,
+      "expected_icd_confidence_max": 0.9
+    }
+  },
+  {
+    "case_id": "EDGE-0034",
+    "category": "pydantic_validation_failure",
+    "note_text": "A patient was referred to the clinic complaining of persistent joint pain. Conservative therapy including physical therapy was attempted without improvement. Imaging confirms degenerative changes. The referring physician requests authorization for total knee replacement.",
+    "expected_behavior": "No 'Patient: NNx' or 'NN years old' pattern anywhere in the note, so age and sex cannot be extracted. ExtractedClinicalFacts requires both as typed fields, so Pydantic raises a validation error and the case fails at the Extractor stage before any downstream agent runs.",
+    "gold": {
+      "expected_status": "FAILED_VALIDATION",
+      "expected_stage": "Extractor",
+      "missing_fields": [
+        "age",
+        "sex"
+      ]
+    }
+  },
+  {
+    "case_id": "EDGE-0035",
+    "category": "pydantic_validation_failure",
+    "note_text": "Patient: 999M presenting with severe osteoarthritis of the knee. Conservative management including NSAIDs was attempted over 15 weeks without improvement. Imaging studies confirm findings consistent with osteoarthritis. Referring orthopedics physician requests authorization for total knee replacement.",
+    "expected_behavior": "Age 999 is extracted correctly by the regex but fails ExtractedClinicalFacts' range constraint (0-130) - a range-validation failure distinct from a missing-field failure.",
+    "gold": {
+      "expected_status": "FAILED_VALIDATION",
+      "expected_stage": "Extractor",
+      "invalid_field": "age",
+      "reason": "out_of_range"
+    }
+  },
+  {
+    "case_id": "EDGE-0036",
+    "category": "pydantic_validation_failure",
+    "note_text": "Patient: 55F presenting with severe rheumatoid arthritis. Conservative management including methotrexate was attempted over 12 weeks without improvement. Imaging studies confirm joint erosion. The case remains under review by rheumatology.",
+    "expected_behavior": "The note never states a requested procedure ('requests authorization for X' / 'recommends X'), so requested_procedure cannot be extracted and the required field is missing, failing Pydantic validation.",
+    "gold": {
+      "expected_status": "FAILED_VALIDATION",
+      "expected_stage": "Extractor",
+      "missing_fields": [
+        "requested_procedure"
+      ]
+    }
+  },
+  {
+    "case_id": "EDGE-0037",
+    "category": "critique_warning_showcase",
+    "note_text": "Patient: 47M presenting with progressive proximal weakness and elevated CK. Limb-girdle muscular dystrophy pattern noted. Imaging workup is still pending. Referring neurology physician requests authorization for specialty neuromuscular evaluation.",
+    "expected_behavior": "Confidently coded (ICD confidence clears the 0.90 gate) but the note has no imaging and only a weak policy match. The Critique Agent runs regardless of the provider-side decision and reports PASS_WITH_WARNINGS without blocking or altering that decision.",
+    "gold": {
+      "expected_critique_status": "PASS_WITH_WARNINGS",
+      "expected_critique_warnings_include": [
+        "No imaging evidence documented in the package",
+        "Policy RAG confidence below the review threshold"
+      ]
+    }
+  },
+  {
+    "case_id": "EDGE-0038",
+    "category": "insurance_denied",
+    "note_text": "Patient: 34M presenting with severe Crohn's disease. Conservative management including preventive medication trial was attempted over 14 weeks without adequate improvement. Imaging studies confirm findings consistent with Crohn's disease. Referring gastroenterology physician requests authorization for biologic therapy.",
+    "expected_behavior": "Clinically clean, provider-side approvable case (COMPLETED). The payer directory maps this case_id to an EXPIRED plan, so the Insurance Company agent issues a final DENIED decision despite the clean clinical package - demonstrating that clinical approval and payer approval are two independent gates.",
+    "gold": {
+      "expected_provider_status": "COMPLETED",
+      "expected_payer_decision": "DENIED",
+      "payer_override_reason": "plan_expired"
+    }
+  },
+  {
+    "case_id": "EDGE-0039",
+    "category": "insurance_denied",
+    "note_text": "Patient: 49M presenting with severe plaque psoriasis. Conservative management including topical therapy was attempted over 14 weeks without adequate improvement. Imaging studies confirm findings consistent with plaque psoriasis. Referring dermatology physician requests authorization for biologic therapy.",
+    "expected_behavior": "Clinically clean and provider-approved, but the payer directory flags the requested procedure as not covered under the member's plan, producing a coverage-based DENIED decision distinct from the policy-expiry case (EDGE-0038).",
+    "gold": {
+      "expected_provider_status": "COMPLETED",
+      "expected_payer_decision": "DENIED",
+      "payer_override_reason": "not_covered"
+    }
+  },
+  {
+    "case_id": "EDGE-0040",
+    "category": "insurance_pending_review",
+    "note_text": "Patient: 55M presenting with severe rheumatoid arthritis. Conservative management including methotrexate was attempted over 14 weeks without adequate improvement. Imaging studies confirm findings consistent with rheumatoid arthritis. Referring rheumatology physician requests authorization for biologic therapy.",
+    "expected_behavior": "Clinically clean and provider-approved, but the payer directory's deterministic duplicate check flags a matching patient/diagnosis/procedure fingerprint on file, routing the case to PENDING_REVIEW rather than an outright denial or approval.",
+    "gold": {
+      "expected_provider_status": "COMPLETED",
+      "expected_payer_decision": "PENDING_REVIEW",
+      "payer_override_reason": "duplicate_suspected"
+    }
   }
 ]

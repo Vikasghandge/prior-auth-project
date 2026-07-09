@@ -24,6 +24,7 @@
     <div class="tabbar" id="tabbar">
       <button class="tab-btn active" data-view="overview"><i data-lucide="layout-dashboard"></i>Overview</button>
       <button class="tab-btn" data-view="demo"><i data-lucide="play"></i>Live Demo</button>
+      <button class="tab-btn" data-view="review"><i data-lucide="user-check"></i>Human Review</button>
       <button class="tab-btn" data-view="trust"><i data-lucide="shield-check"></i>Trust &amp; Safety</button>
     </div>
 
@@ -161,6 +162,7 @@
               <span class="decision-badge" id="decisionBadge"></span>
               <div class="decision-title" id="decisionTitle"></div>
               <div class="decision-sub" id="decisionSub"></div>
+              <div id="payerSummary" class="payer-summary hidden"></div>
             </div>
             <div class="decision-side">
               <div class="decision-stat">
@@ -174,13 +176,43 @@
             </div>
           </div>
 
-          <!-- Pipeline -->
-          <div>
-            <div class="section-head">
-              <p class="section-title"><i data-lucide="git-commit-horizontal"></i>Agent pipeline</p>
-              <p class="section-sub">How this case moved through the six agents &mdash; the provider-side pipeline plus the payer's final review.</p>
+          <!-- ============ SECTION 1 · PROVIDER WORKFLOW ============ -->
+          <div class="org-section provider-org">
+            <div class="section-head org-head">
+              <div>
+                <p class="section-title"><i data-lucide="hospital"></i>Provider AI Workflow</p>
+                <p class="section-sub">Clinical information is extracted, validated, coded, and prepared before submission to the payer.</p>
+              </div>
+              <span class="org-chip provider"><i data-lucide="stethoscope"></i>Healthcare Provider</span>
             </div>
             <div id="pipeline" class="pipeline"></div>
+          </div>
+
+          <!-- ============ SECTION 2 · SUBMISSION DIVIDER ============ -->
+          <div id="submissionDivider" class="submission-divider hidden">
+            <div class="sub-line left"></div>
+            <div class="sub-core">
+              <div class="sub-track">
+                <span class="sub-node from"><i data-lucide="hospital"></i></span>
+                <span class="sub-wire"><span class="sub-packet"><i data-lucide="file-lock-2"></i></span></span>
+                <span class="sub-node to"><i data-lucide="landmark"></i></span>
+              </div>
+              <div class="sub-title">Authorization Package Submitted</div>
+              <div class="sub-caption"><i data-lucide="shield-check"></i>Secure Provider &rarr; Payer Transfer &middot; Encrypted Prior Authorization Request</div>
+            </div>
+            <div class="sub-line right"></div>
+          </div>
+
+          <!-- ============ SECTION 3 · INSURANCE COMPANY REVIEW ============ -->
+          <div id="payerPanel" class="org-section payer-org hidden">
+            <div class="section-head org-head">
+              <div>
+                <p class="section-title payer"><i data-lucide="landmark"></i>Insurance Company Review</p>
+                <p class="section-sub">The payer validates the submitted authorization package before issuing the final authorization decision.</p>
+              </div>
+              <span class="org-chip payer"><i data-lucide="building-2"></i>Insurance Company &middot; Payer</span>
+            </div>
+            <div id="payerGrid" class="payer-grid"></div>
           </div>
 
           <!-- Technical details -->
@@ -188,9 +220,18 @@
             <div class="card-pad">
               <div class="section-head" style="margin-bottom:14px">
                 <p class="section-title" style="font-size:16px"><i data-lucide="terminal"></i>Technical details</p>
-                <p class="section-sub">Typed input &rarr; output handoff for each agent, exactly as logged.</p>
+                <p class="section-sub">Typed input &rarr; output handoff for each stage, exactly as logged.</p>
               </div>
-              <div class="seg-tabs" id="detailTabs"></div>
+              <div class="tab-groups">
+                <div class="tab-group">
+                  <span class="tab-group-label provider">Provider outputs</span>
+                  <div class="seg-tabs" id="detailTabs"></div>
+                </div>
+                <div class="tab-group" id="payerTabGroup" style="display:none">
+                  <span class="tab-group-label payer">Payer</span>
+                  <div class="seg-tabs" id="payerTabs"></div>
+                </div>
+              </div>
               <div id="detailPanels"></div>
             </div>
           </div>
@@ -287,6 +328,19 @@
         <p>The evaluation set deliberately includes cases with missing conservative therapy, conflicting laterality, low-confidence rare diseases, unmet policy criteria, and incomplete notes &mdash; so the safety mechanisms are proven, not assumed.</p>
       </div>
     </div>
+  </section>
+
+  <!-- ============================== HUMAN REVIEW ============================== -->
+  <section id="view-review" class="view stack-lg">
+    <div class="section-head">
+      <p class="section-title"><i data-lucide="user-check"></i>Human review queue</p>
+      <p class="section-sub">Cases the pipeline stopped on rather than deciding automatically. Each card explains what's missing or uncertain.</p>
+    </div>
+    <div id="reviewQueueEmpty" class="empty-state hidden">
+      <div class="empty-orb"><i data-lucide="check-check" style="width:24px;height:24px"></i></div>
+      <p>No cases are waiting for review right now.</p>
+    </div>
+    <div id="reviewQueueList" class="stack-md"></div>
   </section>
 
 </main>

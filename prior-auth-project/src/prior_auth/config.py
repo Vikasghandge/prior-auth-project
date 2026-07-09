@@ -8,16 +8,11 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-RARE_DISEASE_CONFIDENCE_THRESHOLD = 0.90
-
-# General safety net: below this, ANY ICD coding candidate (not just flagged rare diseases) is
-# suspended for human review rather than silently proceeding. Chosen empirically: scoring the
-# matcher against all 90 labeled sample cases showed a clean split at this line — every prediction
-# below ~0.70 was wrong (21/21), while raising the bar much higher starts catching correct
-# predictions too (see data/doctor_notes calibration run). This is what stops a coverage gap (a
-# diagnosis with no real match in the knowledge graph, e.g. a specialty that isn't represented)
-# from silently producing a confident-looking wrong code instead of asking for a human.
-GENERAL_ICD_CONFIDENCE_THRESHOLD = 0.70
+# Global ICD confidence gate: ANY top candidate below this — rare disease or not — suspends the
+# workflow for human review rather than proceeding to Policy RAG. A single strict bar rather than
+# a rare-disease-only carve-out, so a wrong code is never let through just because the underlying
+# condition wasn't flagged rare.
+ICD_CONFIDENCE_THRESHOLD = 0.90
 
 # Below this, the Critique Agent (Agent 5, read-only QA) adds an advisory warning about an
 # upstream agent's confidence to its report. Warn-only by design: the critique never rejects
@@ -35,6 +30,12 @@ USE_LLM_EXTRACTION = os.getenv("PRIOR_AUTH_USE_LLM_EXTRACTION", "false").strip()
 # deterministic criteria checks are unaffected either way — embeddings only influence WHICH
 # policy is pulled off the shelf, never whether its rules are met.
 USE_EMBEDDING_RETRIEVAL = os.getenv("PRIOR_AUTH_USE_EMBEDDING_RETRIEVAL", "true").strip().lower() == "true"
+
+# ICD coding upgrades to hybrid embedding + keyword matching the same way (independent
+# switch from the Policy RAG one above). Embeddings only influence the blended confidence
+# score used to RANK candidates; the rare-disease (0.90) and general (0.70) confidence gates,
+# hedge-language dampening, and laterality penalty all still apply on top, unchanged.
+USE_ICD_EMBEDDING_MATCHING = os.getenv("PRIOR_AUTH_USE_ICD_EMBEDDINGS", "true").strip().lower() == "true"
 
 
 @dataclass(frozen=True)

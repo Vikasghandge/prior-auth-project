@@ -1,0 +1,179 @@
+[
+  {
+    "case_id": "GEN-0127",
+    "specialty": "urology",
+    "note_text": "Patient: 58F presenting with moderate benign prostatic hyperplasia.\nConservative management including antiarrhythmic medication, physical therapy was attempted over approximately 15 weeks without adequate improvement.\nImaging studies confirm findings consistent with benign prostatic hyperplasia.\nReferring urology physician requests authorization for turp.",
+    "gold": {
+      "age": 58,
+      "sex": "F",
+      "diagnosis": "moderate benign prostatic hyperplasia",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "antiarrhythmic medication",
+        "physical therapy"
+      ],
+      "conservative_therapy_duration_weeks": 15,
+      "imaging_evidence": "findings consistent with benign prostatic hyperplasia",
+      "requested_procedure": "turp",
+      "icd10_code": "N40.1",
+      "policy_id": "POL-URO-BPH-055",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0128",
+    "specialty": "urology",
+    "note_text": "Patient: 54F presenting with moderate benign prostatic hyperplasia.\nConservative management including preventive medication trial was attempted over approximately 2 weeks without adequate improvement.\nImaging studies confirm findings consistent with benign prostatic hyperplasia.\nReferring urology physician requests authorization for turp.",
+    "gold": {
+      "age": 54,
+      "sex": "F",
+      "diagnosis": "moderate benign prostatic hyperplasia",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "preventive medication trial"
+      ],
+      "conservative_therapy_duration_weeks": 2,
+      "imaging_evidence": "findings consistent with benign prostatic hyperplasia",
+      "requested_procedure": "turp",
+      "icd10_code": "N40.1",
+      "policy_id": "POL-URO-BPH-055",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0129",
+    "specialty": "urology",
+    "note_text": "Patient: 33F presenting with moderate benign prostatic hyperplasia.\nNo conservative therapy has been documented yet.\nImaging workup is still pending.\nReferring urology physician requests authorization for turp.",
+    "gold": {
+      "age": 33,
+      "sex": "F",
+      "diagnosis": "moderate benign prostatic hyperplasia",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 12,
+      "imaging_evidence": null,
+      "requested_procedure": "turp",
+      "icd10_code": "N40.1",
+      "policy_id": "POL-URO-BPH-055",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0130",
+    "specialty": "urology",
+    "note_text": "Patient: 54M presenting with erectile dysfunction.\nConservative management including preventive medication trial, antiarrhythmic medication was attempted over approximately 14 weeks without adequate improvement.\nImaging workup is still pending.\nReferring urology physician requests authorization for penile prosthesis.",
+    "gold": {
+      "age": 54,
+      "sex": "M",
+      "diagnosis": "erectile dysfunction",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "preventive medication trial",
+        "antiarrhythmic medication"
+      ],
+      "conservative_therapy_duration_weeks": 14,
+      "imaging_evidence": null,
+      "requested_procedure": "penile prosthesis",
+      "icd10_code": "N48.4",
+      "policy_id": "POL-URO-PROSTHESIS-057",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0131",
+    "specialty": "urology",
+    "note_text": "Patient: 76M presenting with erectile dysfunction.\nConservative management including bracing was attempted over approximately 5 weeks without adequate improvement.\nImaging studies confirm findings consistent with erectile dysfunction.\nReferring urology physician requests authorization for penile prosthesis.",
+    "gold": {
+      "age": 76,
+      "sex": "M",
+      "diagnosis": "erectile dysfunction",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "bracing"
+      ],
+      "conservative_therapy_duration_weeks": 5,
+      "imaging_evidence": "findings consistent with erectile dysfunction",
+      "requested_procedure": "penile prosthesis",
+      "icd10_code": "N48.4",
+      "policy_id": "POL-URO-PROSTHESIS-057",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0132",
+    "specialty": "urology",
+    "note_text": "Patient: 56F presenting with erectile dysfunction.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with erectile dysfunction.\nReferring urology physician requests authorization for penile prosthesis.",
+    "gold": {
+      "age": 56,
+      "sex": "F",
+      "diagnosis": "erectile dysfunction",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": "findings consistent with erectile dysfunction",
+      "requested_procedure": "penile prosthesis",
+      "icd10_code": "N48.4",
+      "policy_id": "POL-URO-PROSTHESIS-057",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0133",
+    "specialty": "urology",
+    "note_text": "Patient: 63M presenting with overactive bladder.\nConservative management including beta-blockers, physical therapy was attempted over approximately 17 weeks without adequate improvement.\nImaging studies confirm findings consistent with overactive bladder.\nReferring urology physician requests authorization for sacral nerve stimulation.",
+    "gold": {
+      "age": 63,
+      "sex": "M",
+      "diagnosis": "overactive bladder",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "beta-blockers",
+        "physical therapy"
+      ],
+      "conservative_therapy_duration_weeks": 17,
+      "imaging_evidence": "findings consistent with overactive bladder",
+      "requested_procedure": "sacral nerve stimulation",
+      "icd10_code": "N32.81",
+      "policy_id": "POL-URO-SACRAL-058",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0134",
+    "specialty": "urology",
+    "note_text": "Patient: 57M presenting with overactive bladder.\nConservative management including disease-modifying medication was attempted over approximately 6 weeks without adequate improvement.\nImaging workup is still pending.\nReferring urology physician requests authorization for sacral nerve stimulation.",
+    "gold": {
+      "age": 57,
+      "sex": "M",
+      "diagnosis": "overactive bladder",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "disease-modifying medication"
+      ],
+      "conservative_therapy_duration_weeks": 6,
+      "imaging_evidence": null,
+      "requested_procedure": "sacral nerve stimulation",
+      "icd10_code": "N32.81",
+      "policy_id": "POL-URO-SACRAL-058",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0135",
+    "specialty": "urology",
+    "note_text": "Patient: 54F presenting with overactive bladder.\nNo conservative therapy has been documented yet.\nImaging workup is still pending.\nReferring urology physician requests authorization for sacral nerve stimulation.",
+    "gold": {
+      "age": 54,
+      "sex": "F",
+      "diagnosis": "overactive bladder",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 22,
+      "imaging_evidence": null,
+      "requested_procedure": "sacral nerve stimulation",
+      "icd10_code": "N32.81",
+      "policy_id": "POL-URO-SACRAL-058",
+      "variant": "varied"
+    }
+  }
+]

@@ -1,7 +1,14 @@
-"""Mini ICD-10 knowledge graph (NetworkX) + keyword/fuzzy matcher used by the ICD Coder agent.
+"""Mini ICD-10 knowledge graph (NetworkX) + hybrid keyword/fuzzy + embedding matcher used by
+the ICD Coder agent.
 
-Deliberately NOT an LLM call: coding confidence must be deterministic and explainable so the
-confidence gate (rare-disease threshold 0.90) behaves consistently across runs.
+Coding confidence must stay deterministic and explainable so the confidence gate (a single
+global 0.90 threshold applied to every diagnosis) behaves consistently across runs — so this
+is NOT an LLM call. Embeddings
+(when configured) blend into the ranking score the same way as the Policy RAG hybrid retriever:
+they help find semantically-equivalent phrasing the keyword matcher misses (e.g. "osteoarthritis
+of the right knee" naturally rephrased vs. the code's own "right knee" keyword), but hedge-language
+dampening, the laterality penalty, and the confidence gates themselves are unchanged and still
+run deterministically on top of the blended score.
 """
 from __future__ import annotations
 
@@ -15,7 +22,31 @@ from prior_auth.utils.paths import LEGACY_DATA_ROOT, LOGS_ROOT, PROJECT_ROOT
 
 import networkx as nx
 
+from prior_auth.config import USE_ICD_EMBEDDING_MATCHING
+from prior_auth.rag.embeddings import cosine_similarity, get_embedding_client
+
 _DEFAULT_DATA_PATH = LEGACY_DATA_ROOT / "icd10_kg" / "icd10_codes.json"
+
+# Blend weights for the hybrid ICD fallback path (used only when no keyword/description phrase
+# matched verbatim — the confident-shortcut branch above already handles exact matches and is
+# left alone). Unlike Policy RAG's hybrid blend, semantic similarity gets the LARGER share here:
+# by construction, any code reaching this branch already failed to produce strong keyword
+# evidence (that's why the shortcut didn't fire), so a weak keyword score in this branch reflects
+# phrasing mismatch, not diagnostic irrelevance — while embeddings are exactly what recognize a
+# paraphrased/reordered clinical description ("osteoarthritis of the right knee" vs. the code's
+# own "right knee" keyword) that the fuzzy matcher misses.
+# Calibrated empirically: 0.30/0.70 under-trusted strong semantic matches (a clearly-identifiable
+# common diagnosis phrased in natural language capped out around 0.73 confidence instead of the
+# ~0.85-0.90 a human would assign on sight), while going further than 0.15/0.85 starts pushing
+# genuine knowledge-graph coverage gaps (no real match for the diagnosis at all) over the 0.70
+# general safety threshold. 0.15/0.85 is the empirical ceiling that fixes the former without
+# breaking the latter — see the coverage-gap test cases in doctor_notes/failure_modes.
+_KW_WEIGHT = 0.15
+_SEM_WEIGHT = 0.85
+# text-embedding-3 cosine similarities for related/unrelated clinical text typically span
+# ~0.15..0.70 — rescale that band to 0..1 so the semantic term is comparable to the keyword
+# score before blending (matches rag/retriever.py's calibration).
+_COS_FLOOR, _COS_CEIL = 0.15, 0.70
 
 _STOPWORDS = {
     "a", "an", "the", "of", "with", "for", "and", "or", "in", "on", "to", "is", "are",
@@ -119,6 +150,8 @@ class ICD10KnowledgeGraph:
         self.data_path = data_path or _DEFAULT_DATA_PATH
         self.graph = nx.DiGraph()
         self._load()
+        # Diagnostics for the most recent match() call, surfaced in the ICD Coder's rationale.
+        self.last_match_mode = "keyword"
 
     def _load(self) -> None:
         with open(self.data_path, "r", encoding="utf-8") as f:
@@ -137,11 +170,37 @@ class ICD10KnowledgeGraph:
         self._keyword_doc_count = Counter(
             kw.lower() for rec in records for kw in rec["keywords"]
         )
+        # One embedding chunk per code (each code is already an atomic diagnostic unit, unlike
+        # a multi-criterion policy document) — description first so it dominates the embedding,
+        # keywords appended for synonym coverage.
+        self._code_order = [rec["code"] for rec in records]
+        self._chunk_texts = [
+            f"{rec['description']}. {' '.join(rec['keywords'])}" for rec in records
+        ]
 
     def codes(self) -> list[dict]:
         return [
             data for _, data in self.graph.nodes(data=True) if data.get("kind") == "code"
         ]
+
+    def _semantic_scores(self, query_text: str) -> dict[str, float] | None:
+        """Per-code semantic score (query vs. that code's chunk), rescaled into the 0..1 band.
+        Returns None when embeddings are unavailable so the caller falls back to pure keyword
+        matching — the exact same fallback discipline as the Policy RAG hybrid retriever."""
+        if not USE_ICD_EMBEDDING_MATCHING:
+            return None
+        client = get_embedding_client()
+        if not client.is_available:
+            return None
+        vectors = client.embed([query_text] + self._chunk_texts)
+        if vectors is None:
+            return None
+        query_vec, chunk_vecs = vectors[0], vectors[1:]
+        scores: dict[str, float] = {}
+        for code, chunk_vec in zip(self._code_order, chunk_vecs):
+            sim = cosine_similarity(query_vec, chunk_vec)
+            scores[code] = max(0.0, min(1.0, (sim - _COS_FLOOR) / (_COS_CEIL - _COS_FLOOR)))
+        return scores
 
     def match(
         self,
@@ -154,6 +213,9 @@ class ICD10KnowledgeGraph:
         query_tokens = _tokenize(query_text)
         query_lower = diagnosis_text.lower()
         hedged = _has_hedge_language(diagnosis_text)
+
+        semantic_scores = self._semantic_scores(query_text)
+        self.last_match_mode = "hybrid keyword and semantic" if semantic_scores is not None else "keyword"
 
         scored: list[Candidate] = []
         for node in self.codes():
@@ -187,9 +249,13 @@ class ICD10KnowledgeGraph:
                 # Longer/more specific matched phrases nudge the score higher, so a
                 # disease-specific phrase outranks a short phrase shared across several
                 # related conditions (e.g. "lysosomal storage" appears for several disorders).
+                # This confident shortcut is exact-match evidence, stronger than any embedding
+                # similarity, so it is kept as-is rather than blended with the semantic score.
                 score = 0.90 + 0.07 * min(1.0, best_match_len / 35)
             else:
-                score = 0.15 * token_recall + 0.85 * best_fuzzy
+                kw_score = 0.15 * token_recall + 0.85 * best_fuzzy
+                sem_score = semantic_scores.get(node["code"], 0.0) if semantic_scores is not None else None
+                score = _KW_WEIGHT * kw_score + _SEM_WEIGHT * sem_score if sem_score is not None else kw_score
             if hedged:
                 score *= _HEDGE_DAMPENING
 

@@ -1,0 +1,239 @@
+[
+  {
+    "case_id": "GEN-0115",
+    "specialty": "dermatology",
+    "note_text": "Patient: 66M presenting with moderate psoriasis vulgaris.\nConservative management including disease-modifying medication, bracing was attempted over approximately 16 weeks without adequate improvement.\nImaging workup is still pending.\nReferring dermatology physician requests authorization for biologic therapy.",
+    "gold": {
+      "age": 66,
+      "sex": "M",
+      "diagnosis": "moderate psoriasis vulgaris",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "disease-modifying medication",
+        "bracing"
+      ],
+      "conservative_therapy_duration_weeks": 16,
+      "imaging_evidence": null,
+      "requested_procedure": "biologic therapy",
+      "icd10_code": "L40.0",
+      "policy_id": "POL-DERM-BIO-PSO-051",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0116",
+    "specialty": "dermatology",
+    "note_text": "Patient: 64M presenting with severe psoriasis vulgaris.\nConservative management including immunomodulator therapy was attempted over approximately 5 weeks without adequate improvement.\nImaging studies confirm findings consistent with psoriasis vulgaris.\nReferring dermatology physician requests authorization for biologic therapy.",
+    "gold": {
+      "age": 64,
+      "sex": "M",
+      "diagnosis": "severe psoriasis vulgaris",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "immunomodulator therapy"
+      ],
+      "conservative_therapy_duration_weeks": 5,
+      "imaging_evidence": "findings consistent with psoriasis vulgaris",
+      "requested_procedure": "biologic therapy",
+      "icd10_code": "L40.0",
+      "policy_id": "POL-DERM-BIO-PSO-051",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0117",
+    "specialty": "dermatology",
+    "note_text": "Patient: 70M presenting with severe psoriasis vulgaris.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with psoriasis vulgaris.\nReferring dermatology physician requests authorization for biologic therapy.",
+    "gold": {
+      "age": 70,
+      "sex": "M",
+      "diagnosis": "severe psoriasis vulgaris",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 2,
+      "imaging_evidence": "findings consistent with psoriasis vulgaris",
+      "requested_procedure": "biologic therapy",
+      "icd10_code": "L40.0",
+      "policy_id": "POL-DERM-BIO-PSO-051",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0118",
+    "specialty": "dermatology",
+    "note_text": "Patient: 54F presenting with basal cell carcinoma.\nConservative management including dietary and lifestyle modification, disease-modifying medication was attempted without adequate improvement.\nImaging studies confirm findings consistent with basal cell carcinoma.\nReferring dermatology physician requests authorization for mohs surgery.",
+    "gold": {
+      "age": 54,
+      "sex": "F",
+      "diagnosis": "basal cell carcinoma",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "dietary and lifestyle modification",
+        "disease-modifying medication"
+      ],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": "findings consistent with basal cell carcinoma",
+      "requested_procedure": "mohs surgery",
+      "icd10_code": "C44.91",
+      "policy_id": "POL-DERM-MOHS-052",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0119",
+    "specialty": "dermatology",
+    "note_text": "Patient: 30M presenting with basal cell carcinoma.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with basal cell carcinoma.\nReferring dermatology physician requests authorization for mohs surgery.",
+    "gold": {
+      "age": 30,
+      "sex": "M",
+      "diagnosis": "basal cell carcinoma",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 0,
+      "imaging_evidence": "findings consistent with basal cell carcinoma",
+      "requested_procedure": "mohs surgery",
+      "icd10_code": "C44.91",
+      "policy_id": "POL-DERM-MOHS-052",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0120",
+    "specialty": "dermatology",
+    "note_text": "Patient: 73F presenting with basal cell carcinoma.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with basal cell carcinoma.\nReferring dermatology physician requests authorization for mohs surgery.",
+    "gold": {
+      "age": 73,
+      "sex": "F",
+      "diagnosis": "basal cell carcinoma",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 16,
+      "imaging_evidence": "findings consistent with basal cell carcinoma",
+      "requested_procedure": "mohs surgery",
+      "icd10_code": "C44.91",
+      "policy_id": "POL-DERM-MOHS-052",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0121",
+    "specialty": "dermatology",
+    "note_text": "Patient: 55M presenting with severe hidradenitis suppurativa.\nConservative management including corticosteroid injection, bracing was attempted over approximately 18 weeks without adequate improvement.\nImaging studies confirm findings consistent with hidradenitis suppurativa.\nReferring dermatology physician requests authorization for biologic therapy.",
+    "gold": {
+      "age": 55,
+      "sex": "M",
+      "diagnosis": "severe hidradenitis suppurativa",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "corticosteroid injection",
+        "bracing"
+      ],
+      "conservative_therapy_duration_weeks": 18,
+      "imaging_evidence": "findings consistent with hidradenitis suppurativa",
+      "requested_procedure": "biologic therapy",
+      "icd10_code": "L73.2",
+      "policy_id": "POL-DERM-BIO-HS-053",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0122",
+    "specialty": "dermatology",
+    "note_text": "Patient: 31M presenting with moderate hidradenitis suppurativa.\nConservative management including disease-modifying medication was attempted over approximately 4 weeks without adequate improvement.\nImaging studies confirm findings consistent with hidradenitis suppurativa.\nReferring dermatology physician requests authorization for biologic therapy.",
+    "gold": {
+      "age": 31,
+      "sex": "M",
+      "diagnosis": "moderate hidradenitis suppurativa",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "disease-modifying medication"
+      ],
+      "conservative_therapy_duration_weeks": 4,
+      "imaging_evidence": "findings consistent with hidradenitis suppurativa",
+      "requested_procedure": "biologic therapy",
+      "icd10_code": "L73.2",
+      "policy_id": "POL-DERM-BIO-HS-053",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0123",
+    "specialty": "dermatology",
+    "note_text": "Patient: 72F presenting with moderate hidradenitis suppurativa.\nConservative management including preventive medication trial, disease-modifying medication was attempted over approximately 12 weeks without adequate improvement.\nImaging workup is still pending.\nReferring dermatology physician requests authorization for biologic therapy.",
+    "gold": {
+      "age": 72,
+      "sex": "F",
+      "diagnosis": "moderate hidradenitis suppurativa",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "preventive medication trial",
+        "disease-modifying medication"
+      ],
+      "conservative_therapy_duration_weeks": 12,
+      "imaging_evidence": null,
+      "requested_procedure": "biologic therapy",
+      "icd10_code": "L73.2",
+      "policy_id": "POL-DERM-BIO-HS-053",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0124",
+    "specialty": "dermatology",
+    "note_text": "Patient: 55F presenting with atopic dermatitis.\nConservative management including bracing, NSAIDs was attempted over approximately 13 weeks without adequate improvement.\nImaging studies confirm findings consistent with atopic dermatitis.\nReferring dermatology physician requests authorization for phototherapy.",
+    "gold": {
+      "age": 55,
+      "sex": "F",
+      "diagnosis": "atopic dermatitis",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "bracing",
+        "NSAIDs"
+      ],
+      "conservative_therapy_duration_weeks": 13,
+      "imaging_evidence": "findings consistent with atopic dermatitis",
+      "requested_procedure": "phototherapy",
+      "icd10_code": "L20.9",
+      "policy_id": "POL-DERM-PHOTO-054",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0125",
+    "specialty": "dermatology",
+    "note_text": "Patient: 71M presenting with atopic dermatitis.\nConservative management including dietary and lifestyle modification was attempted over approximately 2 weeks without adequate improvement.\nImaging studies confirm findings consistent with atopic dermatitis.\nReferring dermatology physician requests authorization for phototherapy.",
+    "gold": {
+      "age": 71,
+      "sex": "M",
+      "diagnosis": "atopic dermatitis",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "dietary and lifestyle modification"
+      ],
+      "conservative_therapy_duration_weeks": 2,
+      "imaging_evidence": "findings consistent with atopic dermatitis",
+      "requested_procedure": "phototherapy",
+      "icd10_code": "L20.9",
+      "policy_id": "POL-DERM-PHOTO-054",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0126",
+    "specialty": "dermatology",
+    "note_text": "Patient: 58F presenting with atopic dermatitis.\nNo conservative therapy has been documented yet.\nImaging workup is still pending.\nReferring dermatology physician requests authorization for phototherapy.",
+    "gold": {
+      "age": 58,
+      "sex": "F",
+      "diagnosis": "atopic dermatitis",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 8,
+      "imaging_evidence": null,
+      "requested_procedure": "phototherapy",
+      "icd10_code": "L20.9",
+      "policy_id": "POL-DERM-PHOTO-054",
+      "variant": "varied"
+    }
+  }
+]

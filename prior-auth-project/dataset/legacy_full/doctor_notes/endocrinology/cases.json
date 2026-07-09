@@ -1,0 +1,124 @@
+[
+  {
+    "case_id": "GEN-0100",
+    "specialty": "endocrinology",
+    "note_text": "Patient: 45F presenting with poorly controlled type 1 diabetes.\nConservative management including dietary and lifestyle modification, immunomodulator therapy was attempted over approximately 16 weeks without adequate improvement.\nImaging workup is still pending.\nReferring endocrinology physician requests authorization for insulin pump.",
+    "gold": {
+      "age": 45,
+      "sex": "F",
+      "diagnosis": "poorly controlled type 1 diabetes",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "dietary and lifestyle modification",
+        "immunomodulator therapy"
+      ],
+      "conservative_therapy_duration_weeks": 16,
+      "imaging_evidence": null,
+      "requested_procedure": "insulin pump",
+      "icd10_code": "E10.9",
+      "policy_id": "POL-ENDO-PUMP-044",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0101",
+    "specialty": "endocrinology",
+    "note_text": "Patient: 29F presenting with uncontrolled type 1 diabetes.\nConservative management including disease-modifying medication was attempted over approximately 6 weeks without adequate improvement.\nImaging studies confirm findings consistent with type 1 diabetes.\nReferring endocrinology physician requests authorization for insulin pump.",
+    "gold": {
+      "age": 29,
+      "sex": "F",
+      "diagnosis": "uncontrolled type 1 diabetes",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "disease-modifying medication"
+      ],
+      "conservative_therapy_duration_weeks": 6,
+      "imaging_evidence": "findings consistent with type 1 diabetes",
+      "requested_procedure": "insulin pump",
+      "icd10_code": "E10.9",
+      "policy_id": "POL-ENDO-PUMP-044",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0102",
+    "specialty": "endocrinology",
+    "note_text": "Patient: 79F presenting with uncontrolled type 1 diabetes.\nConservative management including bracing, preventive medication trial was attempted over approximately 12 weeks without adequate improvement.\nImaging studies confirm findings consistent with type 1 diabetes.\nReferring endocrinology physician requests authorization for insulin pump.",
+    "gold": {
+      "age": 79,
+      "sex": "F",
+      "diagnosis": "uncontrolled type 1 diabetes",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "bracing",
+        "preventive medication trial"
+      ],
+      "conservative_therapy_duration_weeks": 12,
+      "imaging_evidence": "findings consistent with type 1 diabetes",
+      "requested_procedure": "insulin pump",
+      "icd10_code": "E10.9",
+      "policy_id": "POL-ENDO-PUMP-044",
+      "variant": "varied"
+    }
+  },
+  {
+    "case_id": "GEN-0103",
+    "specialty": "endocrinology",
+    "note_text": "Patient: 43F presenting with severe hyperparathyroidism.\nConservative management including preventive medication trial, activity modification was attempted without adequate improvement.\nImaging studies confirm findings consistent with hyperparathyroidism.\nReferring endocrinology physician requests authorization for parathyroidectomy.",
+    "gold": {
+      "age": 43,
+      "sex": "F",
+      "diagnosis": "severe hyperparathyroidism",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "preventive medication trial",
+        "activity modification"
+      ],
+      "conservative_therapy_duration_weeks": null,
+      "imaging_evidence": "findings consistent with hyperparathyroidism",
+      "requested_procedure": "parathyroidectomy",
+      "icd10_code": "E21.0",
+      "policy_id": "POL-ENDO-PARATHY-045",
+      "variant": "approve"
+    }
+  },
+  {
+    "case_id": "GEN-0104",
+    "specialty": "endocrinology",
+    "note_text": "Patient: 69F presenting with severe hyperparathyroidism.\nNo conservative therapy has been documented yet.\nImaging studies confirm findings consistent with hyperparathyroidism.\nReferring endocrinology physician requests authorization for parathyroidectomy.",
+    "gold": {
+      "age": 69,
+      "sex": "F",
+      "diagnosis": "severe hyperparathyroidism",
+      "laterality": "not_applicable",
+      "failed_treatments": [],
+      "conservative_therapy_duration_weeks": 0,
+      "imaging_evidence": "findings consistent with hyperparathyroidism",
+      "requested_procedure": "parathyroidectomy",
+      "icd10_code": "E21.0",
+      "policy_id": "POL-ENDO-PARATHY-045",
+      "variant": "trap_conservative"
+    }
+  },
+  {
+    "case_id": "GEN-0105",
+    "specialty": "endocrinology",
+    "note_text": "Patient: 33F presenting with hyperparathyroidism.\nConservative management including activity modification, bracing was attempted over approximately 16 weeks without adequate improvement.\nImaging workup is still pending.\nReferring endocrinology physician requests authorization for parathyroidectomy.",
+    "gold": {
+      "age": 33,
+      "sex": "F",
+      "diagnosis": "hyperparathyroidism",
+      "laterality": "not_applicable",
+      "failed_treatments": [
+        "activity modification",
+        "bracing"
+      ],
+      "conservative_therapy_duration_weeks": 16,
+      "imaging_evidence": null,
+      "requested_procedure": "parathyroidectomy",
+      "icd10_code": "E21.0",
+      "policy_id": "POL-ENDO-PARATHY-045",
+      "variant": "varied"
+    }
+  }
+]

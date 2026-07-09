@@ -3,13 +3,16 @@
    (GET /api/eval-metrics, GET /api/sample-cases, POST /api/run) and the same
    request/response contracts. Only the rendering layer is redesigned. */
 
-const AGENT_ORDER = ["Extractor", "ICD Coder", "Policy RAG", "Form Filler", "Critique Agent", "Insurance Company"];
+/* Provider-side pipeline only — the Insurance Company is a DIFFERENT organization and is
+   rendered in its own payer review panel, never as "agent 6" of the provider pipeline. */
+const AGENT_ORDER = ["Extractor", "ICD Coder", "Policy RAG", "Form Filler", "Critique Agent"];
+const PAYER_AGENT = "Insurance Company";
 const AGENT_SUBTITLE = {
-  "Extractor": "Reads the clinical note",
-  "ICD Coder": "Assigns the diagnosis code",
-  "Policy RAG": "Checks the insurer's rules",
-  "Form Filler": "Prepares the paperwork",
-  "Critique Agent": "Independent QA verification",
+  "Extractor": "Reads doctor notes",
+  "ICD Coder": "Assigns ICD-10 codes",
+  "Policy RAG": "Matches insurer policy",
+  "Form Filler": "Generates authorization package",
+  "Critique Agent": "Performs final QA verification",
   "Insurance Company": "Payer-side final review",
 };
 const AGENT_ICON = {
@@ -58,6 +61,8 @@ const VERDICT_META = {
     sub: "The note doesn't yet document everything this insurer's policy requires for approval." },
   SUSPENDED_LATERALITY_CONFLICT: { key: "suspended", icon: "pause-circle", badge: "Human review", title: "Sent for human review — conflicting details",
     sub: "The note and the requested procedure disagree on left vs. right side — flagged rather than guessed." },
+  SUSPENDED_EXTRACTION_REVIEW: { key: "suspended", icon: "pause-circle", badge: "Human review", title: "Sent for human review — extraction quality",
+    sub: "The Extractor couldn't confidently or completely read the note's clinical details, so it stopped instead of guessing." },
   FAILED_VALIDATION: { key: "failed", icon: "x-circle", badge: "Rejected", title: "Rejected — incomplete information",
     sub: "Required information is missing or invalid, so the authorization form could not be completed." },
   ERROR: { key: "failed", icon: "x-circle", badge: "Error", title: "System error", sub: "An unexpected error stopped the workflow." },
@@ -138,8 +143,85 @@ function setupTabs() {
       document.querySelectorAll(".view").forEach((v) => v.classList.remove("active"));
       btn.classList.add("active");
       document.getElementById(`view-${btn.dataset.view}`).classList.add("active");
+      if (btn.dataset.view === "review") loadReviewQueue();
     });
   });
+}
+
+/* ---------------- Human review queue ---------------- */
+function reviewReasonLabel(status) {
+  const meta = VERDICT_META[status];
+  return meta ? meta.title.replace(/^Sent for human review — /, "") : status;
+}
+
+async function loadReviewQueue() {
+  const list = document.getElementById("reviewQueueList");
+  const empty = document.getElementById("reviewQueueEmpty");
+  list.innerHTML = `<div class="skel-tile"><div class="skel" style="width:40%"></div><div class="skel" style="width:80%"></div></div>`;
+  empty.classList.add("hidden");
+
+  let cases = [];
+  try {
+    const res = await fetch("/api/review-queue");
+    cases = await res.json();
+  } catch {
+    list.innerHTML = "";
+    return;
+  }
+
+  if (cases.length === 0) {
+    list.innerHTML = "";
+    empty.classList.remove("hidden");
+    return;
+  }
+
+  list.innerHTML = cases.map((c) => `
+    <div class="review-card" id="review-${escapeHtml(c.case_id)}">
+      <div class="review-head">
+        <span class="review-case">${escapeHtml(c.case_id)}</span>
+        <span class="review-status"><i data-lucide="pause-circle"></i>${escapeHtml(reviewReasonLabel(c.workflow_status))}</span>
+      </div>
+      <p class="review-reason">${escapeHtml(c.reason)}</p>
+      <div class="review-meta">Queued ${escapeHtml(new Date(c.queued_at).toLocaleString())}</div>
+      <div class="review-actions">
+        <button class="review-btn approve" data-case="${escapeHtml(c.case_id)}" data-decision="APPROVED">
+          <i data-lucide="check" style="width:14px;height:14px"></i>Approve
+        </button>
+        <button class="review-btn reject" data-case="${escapeHtml(c.case_id)}" data-decision="REJECTED">
+          <i data-lucide="x" style="width:14px;height:14px"></i>Reject
+        </button>
+      </div>
+    </div>
+  `).join("");
+
+  list.querySelectorAll(".review-btn").forEach((btn) => {
+    btn.addEventListener("click", () => resolveReview(btn.dataset.case, btn.dataset.decision));
+  });
+  icons();
+}
+
+async function resolveReview(caseId, decision) {
+  const card = document.getElementById(`review-${CSS.escape(caseId)}`);
+  card.querySelectorAll(".review-btn").forEach((b) => (b.disabled = true));
+
+  try {
+    const res = await fetch(`/api/review-queue/${encodeURIComponent(caseId)}/resolve`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ decision, reviewer: "ghandgevikas804@gmail.com" }),
+    });
+    if (!res.ok) throw new Error("Failed to submit decision");
+
+    const actions = card.querySelector(".review-actions");
+    const icon = decision === "APPROVED" ? "check-circle-2" : "x-circle";
+    const label = decision === "APPROVED" ? "Approved" : "Rejected";
+    actions.outerHTML = `<div class="review-resolved ${decision}"><i data-lucide="${icon}" style="width:14px;height:14px"></i>${label} by reviewer</div>`;
+    icons();
+    showToast(`Case ${caseId} ${label.toLowerCase()}`);
+  } catch (e) {
+    card.querySelectorAll(".review-btn").forEach((b) => (b.disabled = false));
+    showToast("Something went wrong — try again");
+  }
 }
 
 /* ---------------- Overview ---------------- */
@@ -173,13 +255,16 @@ async function loadOverview() {
 
   const flow = document.getElementById("overviewFlow");
   const steps = AGENT_ORDER.map((name) => ({
-    icon: AGENT_ICON[name], name,
+    icon: AGENT_ICON[name], name, payer: false,
     sub: name === "Extractor" ? "Reads the note, masks patient identifiers" : AGENT_SUBTITLE[name],
   }));
+  // The payer is a different organization — rendered as the distinct final stop.
+  steps.push({ icon: "landmark", name: "Insurance Company", payer: true,
+               sub: "Payer review → final authorization decision" });
   flow.innerHTML = steps.map((s, i) => `
-    <div class="flow-step">
-      <div class="flow-icon"><i data-lucide="${s.icon}"></i></div>
-      <div class="flow-name">${i + 1}. ${s.name}</div>
+    <div class="flow-step${s.payer ? " payer-step" : ""}">
+      <div class="flow-icon"${s.payer ? ' style="background:var(--good-tint);color:var(--good-text)"' : ""}><i data-lucide="${s.icon}"></i></div>
+      <div class="flow-name">${s.payer ? "" : (i + 1) + ". "}${s.name}</div>
       <div class="flow-sub">${s.sub}</div>
     </div>
     ${i < steps.length - 1 ? `<div class="flow-arrow"><i data-lucide="chevron-right"></i></div>` : ""}
@@ -252,6 +337,88 @@ function renderVerdict(status, reason, totalMs, events) {
   const confs = (events || []).map((e) => e.confidence).filter((c) => c != null);
   document.getElementById("decisionConfidence").textContent =
     confs.length ? `${Math.round(Math.min(...confs) * 100)}%` : "—";
+
+  // Payer review summary checklist under the banner text.
+  const summaryEl = document.getElementById("payerSummary");
+  const d = payerEv?.output_summary;
+  if (d) {
+    const items = [
+      { pass: d.member_status === "ACTIVE", ok: "Member Eligible", bad: `Member ${d.member_status}` },
+      { pass: d.policy_status === "ACTIVE", ok: "Policy Active", bad: `Policy ${d.policy_status}` },
+      { pass: d.coverage_status === "COVERED", ok: "Procedure Covered", bad: "Procedure Not Covered" },
+      { pass: d.provider_status === "IN_NETWORK", ok: "Provider In-Network", bad: "Provider Out-of-Network" },
+      { pass: d.fraud_check === "CLEAR", ok: "No Duplicate Submission", bad: "Possible Duplicate", warn: true },
+    ];
+    summaryEl.innerHTML = items.map((it) => `
+      <span class="chk ${it.pass ? "pass" : (it.warn ? "warn" : "fail")}">
+        <i data-lucide="${it.pass ? "check" : (it.warn ? "alert-triangle" : "x")}"></i>${escapeHtml(it.pass ? it.ok : it.bad)}
+      </span>`).join("");
+    summaryEl.classList.remove("hidden");
+  } else {
+    summaryEl.classList.add("hidden");
+    summaryEl.innerHTML = "";
+  }
+}
+
+/* ---------------- Insurance Company review panel ---------------- */
+const PAYER_CHECKS = [
+  { area: "elig",  icon: "id-card",     title: "Eligibility Check",       desc: "Member and policy validation",
+    value: (d) => d.member_status === "ACTIVE" && d.policy_status === "ACTIVE"
+      ? { label: "ACTIVE", tone: "good" }
+      : { label: d.member_status !== "ACTIVE" ? d.member_status : d.policy_status, tone: "bad" } },
+  { area: "cov",   icon: "shield",      title: "Coverage Check",          desc: "Procedure coverage verification",
+    value: (d) => d.coverage_status === "COVERED"
+      ? { label: "COVERED", tone: "good" } : { label: "NOT COVERED", tone: "bad" } },
+  { area: "prov",  icon: "hospital",    title: "Provider Check",          desc: "Network and provider validation",
+    value: (d) => d.provider_status === "IN_NETWORK"
+      ? { label: "IN-NETWORK", tone: "good" } : { label: "OUT-OF-NETWORK", tone: "bad" } },
+  { area: "fraud", icon: "fingerprint", title: "Fraud / Duplicate Check", desc: "Duplicate authorization screening",
+    value: (d) => d.fraud_check === "CLEAR"
+      ? { label: "CLEAR", tone: "good" } : { label: "DUPLICATE FOUND", tone: "warn" } },
+];
+const PAYER_TONE_ICON = { good: "check", bad: "x", warn: "alert-triangle" };
+
+function renderPayerPanel(payerEv) {
+  const divider = document.getElementById("submissionDivider");
+  const panel = document.getElementById("payerPanel");
+  if (!payerEv || !payerEv.output_summary?.final_decision) {
+    // Case never left the provider organization — no submission, no payer review.
+    divider.classList.add("hidden");
+    panel.classList.add("hidden");
+    return;
+  }
+  divider.classList.remove("hidden");
+  panel.classList.remove("hidden");
+
+  const d = payerEv.output_summary;
+  const decisionKey = PAYER_STATUS_KEY[d.final_decision] || "suspended";
+  const dCls = decisionKey === "ok" ? "d-ok" : decisionKey === "failed" ? "d-bad" : "d-warn";
+  const dIcon = decisionKey === "ok" ? "badge-check" : decisionKey === "failed" ? "ban" : "user-check";
+
+  const cards = PAYER_CHECKS.map((c) => {
+    const v = c.value(d);
+    return `
+      <div class="payer-card" style="grid-area:${c.area}">
+        <div class="payer-icon"><i data-lucide="${c.icon}"></i></div>
+        <h5>${c.title}</h5>
+        <div class="desc">${c.desc}</div>
+        <span class="payer-result ${v.tone}"><i data-lucide="${PAYER_TONE_ICON[v.tone]}"></i>${escapeHtml(v.label)}</span>
+      </div>`;
+  }).join("");
+
+  const ts = fmtTime(payerEv.timestamp);
+  const confPct = payerEv.confidence != null ? Math.round(payerEv.confidence * 100) + "%" : "—";
+  document.getElementById("payerGrid").innerHTML = cards + `
+    <div class="payer-decision ${dCls}">
+      <span class="pd-kicker">Final Payer Decision</span>
+      <span class="pd-badge"><i data-lucide="${dIcon}"></i>${escapeHtml(d.final_decision.replace(/_/g, " "))}</span>
+      <div class="pd-reason">${escapeHtml(d.reason || "")}</div>
+      <div class="pd-meta">
+        <span><i data-lucide="clock"></i>${ts}</span>
+        <span><i data-lucide="percent"></i>${confPct} confidence</span>
+        <span><i data-lucide="timer"></i>${payerEv.duration_ms.toFixed(1)} ms</span>
+      </div>
+    </div>`;
 }
 
 /* ---------------- Pipeline ---------------- */
@@ -288,14 +455,6 @@ function renderPipeline(events) {
       hoverTitle = ` title="${escapeHtml(report.summary || "")}"`;
     }
 
-    // The Insurance Company card reports the FINAL payer decision.
-    const payer = agentName === "Insurance Company" ? ev?.output_summary : null;
-    if (payer && payer.final_decision) {
-      key = PAYER_STATUS_KEY[payer.final_decision] || key;
-      statusLabel = payer.final_decision.replace(/_/g, " ");
-      confLabel = "Decision confidence";
-      hoverTitle = ` title="${escapeHtml(payer.reason || "")}"`;
-    }
 
     const s = STATUS_META[key];
     return `
@@ -325,28 +484,50 @@ function renderPipeline(events) {
   return byAgent;
 }
 
-/* ---------------- Technical detail tabs ---------------- */
+/* ---------------- Technical detail tabs (provider group + payer group) -------- */
 function renderDetailTabs(byAgent) {
   const reached = AGENT_ORDER.filter((a) => byAgent[a]);
+  const payerEv = byAgent[PAYER_AGENT];
   const tabsEl = document.getElementById("detailTabs");
+  const payerTabsEl = document.getElementById("payerTabs");
+  const payerGroup = document.getElementById("payerTabGroup");
   const panelsEl = document.getElementById("detailPanels");
 
   tabsEl.innerHTML = reached.map((a, i) =>
     `<button class="seg-tab${i === 0 ? " active" : ""}" data-agent="${a}"><i data-lucide="${AGENT_ICON[a]}"></i>${a}</button>`
   ).join("");
+  payerGroup.style.display = payerEv ? "" : "none";
+  payerTabsEl.innerHTML = payerEv
+    ? `<button class="seg-tab" data-agent="${PAYER_AGENT}"><i data-lucide="landmark"></i>Insurance Review</button>`
+    : "";
+
+  function payerChips(d) {
+    const rows = [
+      ["Eligibility", d.member_status, d.member_status === "ACTIVE"],
+      ["Coverage", d.coverage_status, d.coverage_status === "COVERED"],
+      ["Provider", d.provider_status, d.provider_status === "IN_NETWORK"],
+      ["Policy", d.policy_status, d.policy_status === "ACTIVE"],
+      ["Fraud check", d.fraud_check, d.fraud_check === "CLEAR"],
+      ["Decision", d.final_decision, d.final_decision === "APPROVED"],
+    ];
+    return `<div class="payer-summary" style="margin:0 0 14px">` + rows.map(([k, v, ok]) => `
+      <span class="chk ${ok ? "pass" : "fail"}"><i data-lucide="${ok ? "check" : "x"}"></i>${k}: ${escapeHtml(String(v).replace(/_/g, " "))}</span>`).join("") + `</div>`;
+  }
 
   function renderPanel(agentName) {
     const ev = byAgent[agentName];
+    const isPayer = agentName === PAYER_AGENT;
     panelsEl.innerHTML = `
+      ${isPayer && ev.output_summary ? payerChips(ev.output_summary) : ""}
       ${ev.errors && ev.errors.length ? `
         <div class="agent-errors"><i data-lucide="alert-triangle"></i><div>${ev.errors.map((e) => escapeHtml(e)).join("<br/>")}</div></div>` : ""}
       <div class="io-grid">
         <div>
-          <div class="io-col-head"><span class="io-kicker"><i data-lucide="arrow-down-to-line"></i>Input</span></div>
+          <div class="io-col-head"><span class="io-kicker"><i data-lucide="arrow-down-to-line"></i>${isPayer ? "Submitted package" : "Input"}</span></div>
           ${codeBlock(`${agentName.toLowerCase().replace(/\s+/g, "-")}.input.json`, ev.input_summary, "codeIn")}
         </div>
         <div>
-          <div class="io-col-head"><span class="io-kicker"><i data-lucide="arrow-up-from-line"></i>Output</span></div>
+          <div class="io-col-head"><span class="io-kicker"><i data-lucide="arrow-up-from-line"></i>${isPayer ? "Payer decision" : "Output"}</span></div>
           ${codeBlock(`${agentName.toLowerCase().replace(/\s+/g, "-")}.output.json`, ev.output_summary, "codeOut")}
         </div>
       </div>`;
@@ -354,10 +535,11 @@ function renderDetailTabs(byAgent) {
     icons();
   }
 
+  const allTabs = () => [...tabsEl.querySelectorAll(".seg-tab"), ...payerTabsEl.querySelectorAll(".seg-tab")];
   if (reached.length) renderPanel(reached[0]);
-  tabsEl.querySelectorAll(".seg-tab").forEach((tab) => {
+  allTabs().forEach((tab) => {
     tab.addEventListener("click", () => {
-      tabsEl.querySelectorAll(".seg-tab").forEach((t) => t.classList.remove("active"));
+      allTabs().forEach((t) => t.classList.remove("active"));
       tab.classList.add("active");
       renderPanel(tab.dataset.agent);
     });
@@ -469,18 +651,15 @@ function fmtTime(ts) {
 
 function renderTimeline(trace) {
   const el = document.getElementById("timeline");
-  const finalKey = (VERDICT_META[trace.final_status] || { key: "suspended" }).key;
 
-  const stepsHtml = trace.events.map((ev, i) => {
+  function eventStep(ev, i, displayName) {
     let key = stepStatusKey(ev);
     let statusLabel = ev.status;
-    // Critique event: surface the QA verdict, not the (always-OK) handoff status.
     if (ev.agent_name === "Critique Agent" && ev.output_summary?.status) {
       key = CRITIQUE_STATUS_KEY[ev.output_summary.status] || key;
       statusLabel = ev.output_summary.status.replace(/_/g, " ");
     }
-    // Payer event: surface the final authorization decision.
-    if (ev.agent_name === "Insurance Company" && ev.output_summary?.final_decision) {
+    if (ev.agent_name === PAYER_AGENT && ev.output_summary?.final_decision) {
       key = PAYER_STATUS_KEY[ev.output_summary.final_decision] || key;
       statusLabel = ev.output_summary.final_decision.replace(/_/g, " ");
     }
@@ -490,7 +669,7 @@ function renderTimeline(trace) {
       <div class="tl-step" data-idx="${i}">
         <span class="tl-node ${key}"><i data-lucide="${AGENT_ICON[ev.agent_name] || "circle"}"></i></span>
         <div class="tl-row" role="button" tabindex="0">
-          <span class="tl-name">${escapeHtml(ev.agent_name)}</span>
+          <span class="tl-name">${escapeHtml(displayName || ev.agent_name)}</span>
           <span class="tl-status ${key}"><i data-lucide="${s.icon}"></i>${escapeHtml(statusLabel)}</span>
           <span class="tl-meta">
             <span><i data-lucide="clock"></i>${fmtTime(ev.timestamp)}</span>
@@ -501,17 +680,48 @@ function renderTimeline(trace) {
         </div>
         <div class="tl-body">${codeBlock(`event-${ev.step}-${ev.agent_name.toLowerCase().replace(/\s+/g, "-")}.json`, ev, `tlCode${i}`)}</div>
       </div>`;
-  }).join("");
+  }
 
-  const verdict = VERDICT_META[trace.final_status] || { icon: "flag", title: trace.final_status };
-  el.innerHTML = stepsHtml + `
-    <div class="tl-step">
-      <span class="tl-node ${finalKey === "ok" ? "ok" : finalKey}"><i data-lucide="flag"></i></span>
-      <div class="tl-row" style="cursor:default">
-        <span class="tl-name">Final decision</span>
-        <span class="tl-status ${finalKey}"><i data-lucide="${verdict.icon}"></i>${escapeHtml(trace.final_status)}</span>
-      </div>
-    </div>`;
+  function milestone(icon, name, chipKey, chipIcon, chipText) {
+    return `
+      <div class="tl-step">
+        <span class="tl-node flag"><i data-lucide="${icon}"></i></span>
+        <div class="tl-row" style="cursor:default">
+          <span class="tl-name">${name}</span>
+          <span class="tl-status ${chipKey}"><i data-lucide="${chipIcon}"></i>${escapeHtml(chipText)}</span>
+        </div>
+      </div>`;
+  }
+
+  const providerSteps = trace.events
+    .map((ev, i) => ({ ev, i }))
+    .filter(({ ev }) => ev.agent_name !== PAYER_AGENT);
+  const payerEntry = trace.events.map((ev, i) => ({ ev, i })).find(({ ev }) => ev.agent_name === PAYER_AGENT);
+
+  let html = providerSteps.map(({ ev, i }) => eventStep(ev, i)).join("");
+
+  if (payerEntry) {
+    const d = payerEntry.ev.output_summary || {};
+    const decision = d.final_decision || "PENDING_REVIEW";
+    const dKey = PAYER_STATUS_KEY[decision] || "suspended";
+    const dMeta = PAYER_META[decision] || { icon: "flag" };
+    html += milestone("send", "Authorization package submitted", "ok", "lock", "Provider → Payer · encrypted");
+    html += eventStep(payerEntry.ev, payerEntry.i, "Insurance Company review");
+    html += milestone(dMeta.icon || "flag", "Final payer decision", dKey, dMeta.icon || "flag", decision.replace(/_/g, " "));
+  } else {
+    const finalKey = (VERDICT_META[trace.final_status] || { key: "suspended" }).key;
+    const verdict = VERDICT_META[trace.final_status] || { icon: "flag", title: trace.final_status };
+    html += `
+      <div class="tl-step">
+        <span class="tl-node ${finalKey === "ok" ? "ok" : finalKey}"><i data-lucide="flag"></i></span>
+        <div class="tl-row" style="cursor:default">
+          <span class="tl-name">Case stopped in provider workflow</span>
+          <span class="tl-status ${finalKey}"><i data-lucide="${verdict.icon}"></i>${escapeHtml(trace.final_status)}</span>
+        </div>
+      </div>`;
+  }
+
+  el.innerHTML = html;
 
   el.querySelectorAll(".tl-step[data-idx] .tl-row").forEach((row) => {
     const step = row.closest(".tl-step");
@@ -594,6 +804,7 @@ function renderResults(data) {
 
   renderVerdict(caseObj.status, caseObj.suspension_reason, data.total_duration_ms, data.trace.events);
   const byAgent = renderPipeline(data.trace.events);
+  renderPayerPanel(data.trace.events.find((e) => e.agent_name === PAYER_AGENT));
   renderDetailTabs(byAgent);
   renderPhiBoundary(caseObj);
   renderForm(caseObj);
